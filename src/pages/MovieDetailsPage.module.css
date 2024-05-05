@@ -1,0 +1,61 @@
+.nav {
+  display: flex;
+  gap: 8px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.isActive {
+  color: blue;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+}
+
+.list__item {
+  margin-right: 10px;
+}
+
+.add_info_list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.add_info_item {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 15%;
+}
+
+.btn {
+  display: flex;
+  margin: 20px;
+  width: 110px;
+}
+
+.btn:hover {
+  color: black;
+}

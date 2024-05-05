@@ -1,0 +1,9 @@
+.form {
+  display: flex;
+}
+
+.searchText {
+  width: 300px;
+  background-color: white;
+  color: black;
+}
