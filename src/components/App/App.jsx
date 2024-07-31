@@ -8,6 +8,7 @@ const MovieCast = lazy(() => import('../MovieCast/MovieCast'));
 const MovieReviews = lazy(() => import('../MovieReviews/MovieReviews'));
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import TvPage from '../../pages/TvPage';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="cast" element={<MovieCast />} />
             <Route path="reviews" element={<MovieReviews />} />
           </Route>
+          <Route path="/tv" element={<TvPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

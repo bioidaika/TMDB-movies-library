@@ -25,6 +25,7 @@ export default function HomePage() {
     }
     getData();
   }, []);
+
   return (
     <div>
       {isLoading && <b>Loading moviews...</b>}

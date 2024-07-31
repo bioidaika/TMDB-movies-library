@@ -1,2 +1,24 @@
 .list {
+  display: flex;
+  flex-wrap: wrap;
+  /* margin: 70px; */
+  width: 100%;
+  margin: 10px 80px;
+  justify-content: left;
+}
+
+.list_item {
+  margin-top: 0px;
+  margin-left: 20px;
+}
+
+.list_item:hover {
+  .title {
+    color: rgba(97, 200, 255, 0.844);
+  }
+}
+
+.title {
+  color: black;
+  width: 220px;
 }

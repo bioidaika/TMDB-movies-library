@@ -15,6 +15,9 @@ export default function Navigation() {
       <NavLink to="/movies" className={makeLinkClass}>
         Movies
       </NavLink>
+      <NavLink to="/tv" className={makeLinkClass}>
+        TV Shows
+      </NavLink>
     </nav>
   );
 }
