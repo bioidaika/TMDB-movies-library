@@ -20,6 +20,8 @@ export default function MovieDetailsPage() {
         setError(false);
         const data = await getMovieByID(movieID);
         setSelectedMovie(data);
+        console.log(data);
+
         data.length != 0 ? toast.success('Success') : toast.error('No results');
       } catch (e) {
         setError(true);

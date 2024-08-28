@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react';
 import Navigation from '../Navigation/Navigation';
 const HomePage = lazy(() => import('../../pages/HomePage'));
-const MoviesPage = lazy(() => import('../../pages/MoviesPage.tsx'));
+const MoviesPage = lazy(() => import('../../pages/MoviesPage'));
 const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
 const MovieDetailsPage = lazy(() => import('../../pages/MovieDetailsPage'));
 const MovieCast = lazy(() => import('../MovieCast/MovieCast'));

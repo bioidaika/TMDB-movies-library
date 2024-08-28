@@ -1,19 +1,27 @@
 import { Link, useLocation } from 'react-router-dom';
 import css from './MovieList.module.css';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 interface Movies {
   id: number;
   title: string;
   poster_path: string;
   original_language: string;
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: [];
+  overview: string;
+  release_date: string;
+  vote_average: number;
+  vote_count: number;
 }
 
 interface FilteredMovieProps {
   filtered: Movies[];
+  children?: ReactNode;
 }
 
-export default function MovieList({ filtered }: FilteredMovieProps) {
+const MovieList: FC<FilteredMovieProps> = ({ filtered, children }) => {
   const location = useLocation();
   return (
     <div>
@@ -32,6 +40,9 @@ export default function MovieList({ filtered }: FilteredMovieProps) {
           </li>
         ))}
       </ul>
+      {children}
     </div>
   );
-}
+};
+
+export default MovieList;
