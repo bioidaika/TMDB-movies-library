@@ -1,7 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 import css from './MovieList.module.css';
+import { FC } from 'react';
 
-export default function MovieList({ filtered }) {
+interface Movies {
+  id: number;
+  title: string;
+  poster_path: string;
+  original_language: string;
+}
+
+interface FilteredMovieProps {
+  filtered: Movies[];
+}
+
+export default function MovieList({ filtered }: FilteredMovieProps) {
   const location = useLocation();
   return (
     <div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import css from './MoviesPage.module.css';
 import toast, { Toaster } from 'react-hot-toast';
 import { searchMovieQuery } from '../components/api';
@@ -21,7 +21,7 @@ export default function MoviesPage() {
         if (query === ' ') return;
         const data = await searchMovieQuery(query);
         setFilteredList(data);
-      } catch (e) {
+      } catch (e: any) {
         setError(true);
         toast.error(e.response.data.status_message);
       } finally {
@@ -31,14 +31,19 @@ export default function MoviesPage() {
     getData();
   }, [query]);
 
-  const handleSubmit = evt => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const form = evt.target;
-    const { searchField } = form.elements;
-    params.set('query', query);
-    searchField.value !== ''
-      ? setParams({ query: searchField.value })
-      : toast.error('Search field is empty');
+    const form = evt.target as HTMLFormElement;
+    const { searchField } = form.elements as HTMLFormControlsCollection & {
+      searchField: HTMLInputElement;
+    };
+    const query = searchField.value.trim();
+    if (query !== '') {
+      params.set('query', query);
+      setParams({ query });
+    } else {
+      toast.error('Search field is empty');
+    }
   };
 
   return (
@@ -50,7 +55,9 @@ export default function MoviesPage() {
           name="searchField"
           placeholder="Search movies"
           className={css.searchText}
-          onSubmit={params.set('query', query)}
+          onSubmit={(event: any) => {
+            params.set('query', query);
+          }}
         />
         <button type="submit">Submit</button>
       </form>
