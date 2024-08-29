@@ -1,9 +1,11 @@
 import TvList from '../components/TvList/TvList';
 
-export default function TvPage() {
+const TvPage = () => {
   return (
     <div>
       <TvList></TvList>
     </div>
   );
-}
+};
+
+export default TvPage;

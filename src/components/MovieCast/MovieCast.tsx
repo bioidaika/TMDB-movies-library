@@ -3,12 +3,14 @@ import { getMovieCasts } from '../api';
 import toast, { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import css from './MovieCast.module.css';
+import { AxiosError } from 'axios';
+import { ICast } from '../../types/types';
 
 export default function MovieCast() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const { movieID } = useParams();
-  const [selectedCast, setSelectedCast] = useState(null);
+  const [selectedCast, setSelectedCast] = useState<ICast[] | null>(null);
   // const defaultSRC = `https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg`;
   const defaultSRC = `https://assets.mycast.io/actor_images/actor-an-unknown-actor-465215_large.jpg`;
   useEffect(() => {
@@ -16,13 +18,14 @@ export default function MovieCast() {
       try {
         setIsLoading(true);
         setError(false);
-        const data = await getMovieCasts(movieID);
+        const data = await getMovieCasts(movieID || '');
         setSelectedCast(data);
         data.length != 0 ? toast.success('Success') : toast.error('No results');
-      } catch (e) {
+      } catch (e: unknown) {
         setError(true);
-        toast.error(e.message);
-        toast.error(e.response.data.status_message);
+        e instanceof AxiosError
+          ? toast.error(e.response?.data?.status_message)
+          : toast.error('An unkown error occured');
       } finally {
         setIsLoading(false);
       }
@@ -52,7 +55,8 @@ export default function MovieCast() {
               />
 
               <h2>{item.name}</h2>
-              <p>Character: {item.character}</p>
+              <p>Character: {item.character || 'Unknown'}</p>
+              <p>Popularity: {item.popularity.toFixed(1)}</p>
             </li>
           ))}
       </ul>

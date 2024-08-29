@@ -1,23 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import css from './MovieList.module.css';
 import { FC, ReactNode } from 'react';
-
-interface Movies {
-  id: number;
-  title: string;
-  poster_path: string;
-  original_language: string;
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: [];
-  overview: string;
-  release_date: string;
-  vote_average: number;
-  vote_count: number;
-}
+import { IMovie } from '../../types/types';
 
 interface FilteredMovieProps {
-  filtered: Movies[];
+  filtered: IMovie[];
   children?: ReactNode;
 }
 
@@ -37,6 +24,7 @@ const MovieList: FC<FilteredMovieProps> = ({ filtered, children }) => {
               ></img>
               <div className={css.title}>{item.title}</div>
             </Link>
+            {/* <p>{item.overview}</p> */}
           </li>
         ))}
       </ul>

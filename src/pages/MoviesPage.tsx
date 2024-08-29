@@ -5,10 +5,10 @@ import { searchMovieQuery } from '../components/api';
 import { useSearchParams } from 'react-router-dom';
 import MovieList from '../components/MovieList/MovieList';
 
-export default function MoviesPage() {
+const MoviesPage: FC = () => {
   const [filteredList, setFilteredList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [params, setParams] = useSearchParams();
   const query = params.get('query') ?? ' ';
 
@@ -66,4 +66,5 @@ export default function MoviesPage() {
       <MovieList filtered={filteredList} />
     </div>
   );
-}
+};
+export default MoviesPage;

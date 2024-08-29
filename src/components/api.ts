@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IMovie, IMovieByID, ICast, IReviews } from '../types/types';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 const options = {
@@ -11,28 +12,28 @@ const options = {
   },
 };
 
-export const getTrendingMovies = async () => {
+export const getTrendingMovies = async (): Promise<IMovie[]> => {
   const response = await axios.get('trending/movie/day', options);
   //   console.log(response.data.results);
-  return response.data.results;
+  return response.data.results as IMovie[];
 };
 
-export const getMovieByID = async (movieID: number) => {
+export const getMovieByID = async (movieID: string): Promise<IMovieByID> => {
   const response = await axios.get(`movie/${movieID}`, options);
   // console.log(response.data);
-  return response.data;
+  return response.data as IMovieByID;
 };
 
-export const getMovieCasts = async (movieID: number) => {
+export const getMovieCasts = async (movieID: string): Promise<ICast[]> => {
   const response = await axios.get(`movie/${movieID}/credits`, options);
-  // console.log(response.data.cast);
-  return response.data.cast;
+  //   console.log(response.data.cast);
+  return response.data.cast as ICast[];
 };
 
-export const getMovieReviews = async (movieID: number) => {
+export const getMovieReviews = async (movieID: string) => {
   const response = await axios.get(`movie/${movieID}/reviews`, options);
-  // console.log(response.data.results);
-  return response.data.results;
+  //   console.log(response.data.results);
+  return response.data.results as IReviews[];
 };
 
 export const searchMovieQuery = async (searchQuery: string) => {

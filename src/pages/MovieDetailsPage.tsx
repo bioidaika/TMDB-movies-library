@@ -4,12 +4,14 @@ import { getMovieByID } from '../components/api';
 import toast, { Toaster } from 'react-hot-toast';
 import clsx from 'clsx';
 import css from './MovieDetailsPage.module.css';
+import { IMovieByID, isActive } from '../types/types';
+import { AxiosError } from 'axios';
 
 export default function MovieDetailsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const { movieID } = useParams();
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState<IMovieByID | null>(null);
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? '/movies');
 
@@ -18,14 +20,15 @@ export default function MovieDetailsPage() {
       try {
         setIsLoading(true);
         setError(false);
-        const data = await getMovieByID(movieID);
+        const data = await getMovieByID(movieID || '');
         setSelectedMovie(data);
-        console.log(data);
-
-        data.length != 0 ? toast.success('Success') : toast.error('No results');
-      } catch (e) {
+        // console.log(data);
+        toast.success('Success');
+      } catch (e: unknown) {
         setError(true);
-        toast.error(e.response.data.status_message);
+        e instanceof AxiosError
+          ? toast.error(e.response?.data?.status_message || e.message)
+          : toast.error('An unkown error occured');
       } finally {
         setIsLoading(false);
       }
@@ -33,7 +36,7 @@ export default function MovieDetailsPage() {
     getData();
   }, [movieID]);
 
-  const makeLinkClass = ({ isActive }) => {
+  const makeLinkClass = ({ isActive }: isActive) => {
     return clsx(css.link, isActive && css.isActive);
   };
 
@@ -68,6 +71,7 @@ export default function MovieDetailsPage() {
         </div>
       )}
       <h2>Additional information</h2>
+      {/* <h1>{selectedMovie?.budget}</h1> */}
       <ul className={css.add_info_list}>
         <li className={css.add_info_item}>
           <NavLink to="cast" className={makeLinkClass}>

@@ -5,7 +5,7 @@ export default function Loader() {
     <div>
       <RotatingLines
         visible={true}
-        height="55"
+        // height="55"
         width="55"
         animationDuration="0.75"
         ariaLabel="rotating-lines-loading"
