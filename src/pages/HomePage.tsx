@@ -3,11 +3,14 @@ import MovieList from '../components/MovieList/MovieList';
 import { getTrendingMovies } from '../components/api';
 import toast, { Toaster } from 'react-hot-toast';
 import { IMovie } from '../types/types';
+import { getMovieList } from '../redux/movie/operations';
+import { useDispatch } from 'react-redux';
 
 export default function HomePage() {
   const [movieList, setMovieList] = useState<IMovie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const dispatch = useDispatch<any>();
 
   async function getData() {
     try {
@@ -25,9 +28,13 @@ export default function HomePage() {
     }
   }
 
+  // useEffect(() => {
+  //   getData();
+  //   // dispatch(getMovieList());
+  // }, []);
   useEffect(() => {
-    getData();
-  }, []);
+    dispatch(getMovieList());
+  }, [dispatch]);
 
   return (
     <div>
@@ -35,7 +42,7 @@ export default function HomePage() {
       {error && <b>HTTP error!</b>}
       <Toaster />
       <h1>Trending Today</h1>
-      <MovieList filtered={movieList} />
+      <MovieList />
     </div>
   );
 }

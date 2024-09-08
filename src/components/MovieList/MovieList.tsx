@@ -2,18 +2,21 @@ import { Link, useLocation } from 'react-router-dom';
 import css from './MovieList.module.css';
 import { FC, ReactNode } from 'react';
 import { IMovie } from '../../types/types';
+import { useSelector } from 'react-redux';
+import { selectMovieList } from '../../redux/movie/selectors';
 
 interface FilteredMovieProps {
-  filtered: IMovie[];
+  // filtered: IMovie[];
   children?: ReactNode;
 }
 
-const MovieList: FC<FilteredMovieProps> = ({ filtered, children }) => {
+const MovieList: FC<FilteredMovieProps> = ({ children }) => {
   const location = useLocation();
+  const movieLister: IMovie[] = useSelector(selectMovieList);
   return (
     <div>
       <ul className={css.list}>
-        {filtered.map(item => (
+        {movieLister.map(item => (
           <li key={item.id} className={css.list_item}>
             <Link to={`/movies/${item.id}`} state={location}>
               <img
