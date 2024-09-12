@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectMovieList } from '../../redux/movie/selectors';
 
 interface FilteredMovieProps {
-  // filtered: IMovie[];
+  filtered?: IMovie[];
   children?: ReactNode;
 }
 

@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getTrendingMovies } from '../../components/api';
+import { getTrendingMoviesDay } from '../../components/api';
 import { IMovie } from '../../types/types';
 
 export const getMovieList = createAsyncThunk<IMovie[], void>(
   'movie/trending-movies',
   async (_, thunkAPI) => {
     try {
-      const response = await getTrendingMovies();
+      const response = await getTrendingMoviesDay();
       if (response) {
         return response as IMovie[];
       } else {
