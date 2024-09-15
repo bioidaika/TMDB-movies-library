@@ -15,13 +15,12 @@
   gap: 1rem;
   border: 1px solid #032541;
   border-radius: 30px;
-  /* visibility: hidden; */
 }
 
 .trending__item {
   color: rgb(3, 37, 65);
+  padding: 0px;
   background-color: transparent;
-  /* background: linear-gradient(to right, #f4943a 0, #6210df 100%); */
   font-weight: 600;
   border-radius: 30px;
   border: none;
@@ -31,8 +30,11 @@
   outline: none;
 }
 
-.active span {
-  /* background-color: rgba(3, 37, 65); */
+.trending__text {
+  display: flex;
+  padding: 10px 20px;
+}
+.active .trending__text {
   color: white;
   background: linear-gradient(in hsl, #72f183 0, #2594ee 100%);
   background-clip: text;
@@ -47,7 +49,7 @@
 .trending__item:hover {
   background-color: rgba(3, 37, 65);
 }
-span:hover {
+.trending__text:hover {
   color: white;
   background: linear-gradient(in hsl, #72f183 0, #2594ee 100%);
   background-clip: text;

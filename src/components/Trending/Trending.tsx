@@ -18,10 +18,10 @@ export const Trending: FC = () => {
       <h2 className={css.trending__header}>Trending</h2>
       <div className={css.trending__list}>
         <button className={makeLinkClass('today')} onClick={evt => HandleClick(evt, 'today')}>
-          <span>Today</span>
+          <span className={css.trending__text}>Today</span>
         </button>
         <button className={makeLinkClass('week')} onClick={evt => HandleClick(evt, 'week')}>
-          <span>Week</span>
+          <span className={css.trending__text}>Week</span>
         </button>
       </div>
     </div>
