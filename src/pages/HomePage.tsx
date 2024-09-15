@@ -5,6 +5,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { IMovie } from '../types/types';
 import { getMovieList } from '../redux/movie/operations';
 import { useDispatch } from 'react-redux';
+import { Link, NavLink } from 'react-router-dom';
+import { Trending } from '../components/Trending/Trending';
 
 export default function HomePage() {
   const [movieList, setMovieList] = useState<IMovie[]>([]);
@@ -32,10 +34,10 @@ export default function HomePage() {
 
   return (
     <div>
+      <Toaster />
       {isLoading && <b>Loading moviews...</b>}
       {error && <b>HTTP error!</b>}
-      <Toaster />
-      <h1>Trending Today</h1>
+      <Trending />
       <MovieList />
     </div>
   );
