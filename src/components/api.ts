@@ -12,15 +12,9 @@ const options = {
   },
 };
 
-export const getTrendingMoviesDay = async (): Promise<IMovie[]> => {
-  const response = await axios.get('trending/movie/day', options);
-  console.log(response.data.results);
-  return response.data.results as IMovie[];
-};
-
-export const getTrendingMoviesWeek = async (): Promise<IMovie[]> => {
-  const response = await axios.get('trending/movie/week', options);
-  console.log(response.data.results);
+export const getTrendingMovies = async (range: string): Promise<IMovie[]> => {
+  const response = await axios.get(`trending/movie/${range}`, options);
+  // console.log(response.data.results);
   return response.data.results as IMovie[];
 };
 

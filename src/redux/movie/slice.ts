@@ -6,12 +6,14 @@ interface MovieState {
   movieList: IMovie[];
   loading: boolean;
   error: string | null;
+  trending: 'day' | 'week';
 }
 
 export const initialState: MovieState = {
   movieList: [],
   loading: false,
   error: null,
+  trending: 'day',
 };
 
 const handlePending = (state: MovieState) => {
@@ -30,6 +32,9 @@ const movieSlice = createSlice({
     setMovieList(state, action) {
       state.movieList = action.payload;
     },
+    setTrendingOption(state, action) {
+      state.trending = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
@@ -41,5 +46,5 @@ const movieSlice = createSlice({
       .addCase(getMovieList.rejected, handleRejected);
   },
 });
-export const { setMovieList } = movieSlice.actions;
+export const { setMovieList, setTrendingOption } = movieSlice.actions;
 export const movieReducer = movieSlice.reducer;

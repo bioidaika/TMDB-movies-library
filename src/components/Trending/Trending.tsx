@@ -1,29 +1,41 @@
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, ReactNode, useState } from 'react';
 import css from './Trending.module.css';
 import clsx from 'clsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectTrendingOption } from '../../redux/movie/selectors';
+import { setTrendingOption } from '../../redux/movie/slice';
 
-export const Trending: FC = () => {
-  const [activeButton, setActiveButton] = useState<'today' | 'week'>('today');
+interface TrendingProps {
+  children?: ReactNode;
+}
 
-  const makeLinkClass = (buttonType: 'today' | 'week') => {
-    return clsx(css.trending__item, activeButton === buttonType ? css.active : '');
+export const Trending: FC<TrendingProps> = ({ children }) => {
+  const dispatch = useDispatch();
+  const trendingOption = useSelector(selectTrendingOption);
+
+  const makeLinkClass = (buttonType: 'day' | 'week') => {
+    return clsx(css.trending__item, trendingOption === buttonType ? css.active : '');
   };
-  const HandleClick = (evt: MouseEvent<HTMLButtonElement>, buttonType: 'today' | 'week') => {
-    setActiveButton(buttonType);
-    console.log('Hello');
+
+  const HandleClick = (evt: MouseEvent<HTMLButtonElement>, buttonType: 'day' | 'week') => {
+    dispatch(setTrendingOption(buttonType));
+    // console.log(buttonType);
   };
 
   return (
     <div className={css.trending}>
-      <h2 className={css.trending__header}>Trending</h2>
-      <div className={css.trending__list}>
-        <button className={makeLinkClass('today')} onClick={evt => HandleClick(evt, 'today')}>
-          <span className={css.trending__text}>Today</span>
-        </button>
-        <button className={makeLinkClass('week')} onClick={evt => HandleClick(evt, 'week')}>
-          <span className={css.trending__text}>Week</span>
-        </button>
+      <div className={css.trending__box}>
+        <h2 className={css.trending__header}>Trending</h2>
+        <div className={css.trending__list}>
+          <button className={makeLinkClass('day')} onClick={evt => HandleClick(evt, 'day')}>
+            <span className={css.trending__text}>Today</span>
+          </button>
+          <button className={makeLinkClass('week')} onClick={evt => HandleClick(evt, 'week')}>
+            <span className={css.trending__text}>Week</span>
+          </button>
+        </div>
       </div>
+      {children}
     </div>
   );
 };
