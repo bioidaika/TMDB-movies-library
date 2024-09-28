@@ -7,6 +7,7 @@ interface MovieState {
   loading: boolean;
   error: string | null;
   trending: 'day' | 'week';
+  random_Background: string | '';
 }
 
 export const initialState: MovieState = {
@@ -14,16 +15,20 @@ export const initialState: MovieState = {
   loading: false,
   error: null,
   trending: 'day',
+  random_Background: '',
 };
 
 const handlePending = (state: MovieState) => {
   state.loading = true;
+  console.log('Loading');
 };
 
 const handleRejected = (state: MovieState, action: PayloadAction<unknown>) => {
   state.loading = false;
   state.error = (action.payload as { message?: string })?.message || 'An error occurred';
 };
+
+const randomNumber = Math.floor(Math.random() * 19);
 
 const movieSlice = createSlice({
   name: 'movie',
@@ -35,16 +40,21 @@ const movieSlice = createSlice({
     setTrendingOption(state, action) {
       state.trending = action.payload;
     },
+    setRandomBackground(state, action) {
+      state.random_Background = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
       .addCase(getMovieList.pending, handlePending)
       .addCase(getMovieList.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
         state.movieList = action.payload;
+        state.random_Background = action.payload[randomNumber].backdrop_path;
         state.loading = false;
+        console.log('Finished');
       })
       .addCase(getMovieList.rejected, handleRejected);
   },
 });
-export const { setMovieList, setTrendingOption } = movieSlice.actions;
+export const { setMovieList, setTrendingOption, setRandomBackground } = movieSlice.actions;
 export const movieReducer = movieSlice.reducer;
