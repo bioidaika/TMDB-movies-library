@@ -1,12 +1,12 @@
 import css from './Welcome.module.css';
 import { useSelector } from 'react-redux';
 import { selectLoading, selectRandom_BG } from '../../redux/movie/selectors';
-import { FC, ReactNode, useMemo } from 'react';
+import { FC, ReactNode, useMemo, memo } from 'react';
 
 interface WelcomeI {
   children?: ReactNode;
 }
-const Welcome: FC<WelcomeI> = ({ children }) => {
+const Welcome: FC<WelcomeI> = memo(({ children }) => {
   const randomBG = useSelector(selectRandom_BG);
   const isLoading = useSelector(selectLoading);
   // const bgStyles = useMemo(() => {
@@ -37,6 +37,6 @@ const Welcome: FC<WelcomeI> = ({ children }) => {
       </div>
     )
   );
-};
+});
 
 export default Welcome;

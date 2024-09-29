@@ -1,22 +1,19 @@
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState, memo } from 'react';
 import toast from 'react-hot-toast';
-import { NavLink, redirect, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import css from './SearchForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchMovieQuery } from '../api';
-import { setMovieList } from '../../redux/movie/slice';
-import { selectRandom_BG } from '../../redux/movie/selectors';
 import { searchMovieReq } from '../../redux/movie/operations';
 
-const SearchForm = () => {
+const SearchForm = memo(() => {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [error, setError] = useState<boolean>(false);
   const dispatch = useDispatch<any>();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
-
-  // const randomBG = useSelector(selectRandom_BG);
   const queryURL = params.get('query') ?? ' ';
+  const [inputValue, setInputValue] = useState(queryURL);
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const form = evt.target as HTMLFormElement;
@@ -25,13 +22,12 @@ const SearchForm = () => {
     };
     const query = searchField.value.trim();
     if (query !== '') {
-      params.set('query', query);
       setParams({ query });
       dispatch(searchMovieReq(query));
+      navigate(`../search/movie/?query=${query}`);
     } else {
       toast.error('Search field is empty');
     }
-    navigate(`../search/movie/?query=${query}`);
   };
 
   async function getData() {
@@ -39,7 +35,6 @@ const SearchForm = () => {
       // setIsLoading(true);
       // setError(false);
       console.log('Query Request', queryURL);
-
       if (queryURL === ' ') return;
       console.log('Query Request 1', queryURL);
       dispatch(searchMovieReq(queryURL));
@@ -54,9 +49,10 @@ const SearchForm = () => {
 
   // useMemo(() => {
   //   return getData();
-  // }, [queryURL]);
+  // }, [inputValue]);
 
   useEffect(() => {
+    setInputValue(queryURL);
     getData();
   }, [queryURL]);
 
@@ -67,10 +63,16 @@ const SearchForm = () => {
         name="searchField"
         placeholder="Search movies"
         className={css.searchText}
+        value={inputValue}
+        onChange={e => setInputValue(e.target.value)}
       />
       <button type="submit">Submit</button>
     </form>
   );
-};
+});
 
+// function onChangeInput(e: FormEvent<HTMLInputElement>) {
+//   const sr = e.target;
+//   sr.value = 'Hello'
+// }
 export default SearchForm;
