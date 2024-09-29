@@ -16,6 +16,8 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
   return (
     <div>
       <ul className={css.list}>
+        {movieLister.length === 0 && <div>No results</div>}
+
         {movieLister.map(item => (
           <li key={item.id} className={css.list_item}>
             <Link to={`/movies/${item.id}`} state={location}>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
-import { getMovieList } from './operations';
+import { getMovieList, searchMovieReq } from './operations';
 import { IMovie } from '../../types/types';
 
 interface MovieState {
@@ -20,7 +20,6 @@ export const initialState: MovieState = {
 
 const handlePending = (state: MovieState) => {
   state.loading = true;
-  console.log('Loading');
 };
 
 const handleRejected = (state: MovieState, action: PayloadAction<unknown>) => {
@@ -49,11 +48,20 @@ const movieSlice = createSlice({
       .addCase(getMovieList.pending, handlePending)
       .addCase(getMovieList.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
         state.movieList = action.payload;
-        state.random_Background = action.payload[randomNumber].backdrop_path;
+        state.random_Background
+          ? ''
+          : (state.random_Background = action.payload[randomNumber].backdrop_path);
         state.loading = false;
-        console.log('Finished');
+        // console.log('Finished GetMovieList');
       })
-      .addCase(getMovieList.rejected, handleRejected);
+      .addCase(getMovieList.rejected, handleRejected)
+      .addCase(searchMovieReq.pending, handlePending)
+      .addCase(searchMovieReq.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
+        state.movieList = action.payload;
+        state.loading = false;
+        // console.log('Finished Search');
+      })
+      .addCase(searchMovieReq.rejected, handleRejected);
   },
 });
 export const { setMovieList, setTrendingOption, setRandomBackground } = movieSlice.actions;

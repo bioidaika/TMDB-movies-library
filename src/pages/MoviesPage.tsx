@@ -10,7 +10,7 @@ const MoviesPage: FC = () => {
   return (
     <div>
       <Toaster />
-      {/* <SearchForm /> */}
+      <SearchForm />
       {isLoading && <b>Loading...</b>}
       {error && <b>HTTP error!</b>}
       <MovieList />
