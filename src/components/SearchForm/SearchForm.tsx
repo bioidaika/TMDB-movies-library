@@ -61,9 +61,9 @@ const SearchForm = memo(() => {
       <input
         type="text"
         name="searchField"
-        placeholder="Search movies"
+        placeholder="Search for a movie, tv show, person......"
         className={css.searchText}
-        value={inputValue}
+        value={inputValue.trim()}
         onChange={e => setInputValue(e.target.value)}
       />
       <button type="submit">Submit</button>

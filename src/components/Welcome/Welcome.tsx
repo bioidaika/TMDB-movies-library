@@ -1,7 +1,7 @@
 import css from './Welcome.module.css';
 import { useSelector } from 'react-redux';
 import { selectLoading, selectRandom_BG } from '../../redux/movie/selectors';
-import { FC, ReactNode, useMemo, memo } from 'react';
+import { FC, ReactNode, memo } from 'react';
 
 interface WelcomeI {
   children?: ReactNode;
@@ -9,12 +9,6 @@ interface WelcomeI {
 const Welcome: FC<WelcomeI> = memo(({ children }) => {
   const randomBG = useSelector(selectRandom_BG);
   const isLoading = useSelector(selectLoading);
-  // const bgStyles = useMemo(() => {
-  //   const bg = {
-  //     backgroundImage: `image-set(url(https://media.themoviedb.org/t/p/w1920_and_h600_face${randomBG}) 1x, url(https://media.themoviedb.org/t/p/w3840_and_h1200_face${randomBG}) 2x)`,
-  //   };
-  //   return bg;
-  // }, [randomBG]);
 
   return (
     !isLoading && (

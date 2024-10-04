@@ -46,7 +46,7 @@ export default function MovieDetailsPage() {
         Back to Home
       </Link>
       <Toaster />
-      {isLoading && <b>Loading...</b>}
+      {isLoading && <b>Loading DDDD...</b>}
       {error && <b>HTTP error!</b>}
       {selectedMovie && (
         <div className={css.container}>

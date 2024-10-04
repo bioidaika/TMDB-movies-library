@@ -10,12 +10,13 @@ const TvPage = lazy(() => import('../../pages/TvPage'));
 const SearchPage = lazy(() => import('../../pages/SearchPage'));
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 export default function App() {
   return (
     <div>
       <Navigation />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />

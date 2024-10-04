@@ -1,4 +1,4 @@
-import { FC, MouseEvent, ReactNode, useState } from 'react';
+import { FC, MouseEvent, ReactNode, memo } from 'react';
 import css from './Trending.module.css';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ interface TrendingProps {
   children?: ReactNode;
 }
 
-export const Trending: FC<TrendingProps> = ({ children }) => {
+const Trending: FC<TrendingProps> = memo(({ children }) => {
   const dispatch = useDispatch();
   const trendingOption = useSelector(selectTrendingOption);
 
@@ -19,7 +19,6 @@ export const Trending: FC<TrendingProps> = ({ children }) => {
 
   const HandleClick = (evt: MouseEvent<HTMLButtonElement>, buttonType: 'day' | 'week') => {
     dispatch(setTrendingOption(buttonType));
-    // console.log(buttonType);
   };
 
   return (
@@ -38,4 +37,6 @@ export const Trending: FC<TrendingProps> = ({ children }) => {
       {children}
     </div>
   );
-};
+});
+
+export default Trending;
