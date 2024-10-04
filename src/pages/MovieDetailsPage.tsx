@@ -6,8 +6,12 @@ import clsx from 'clsx';
 import css from './MovieDetailsPage.module.css';
 import { IMovieByID, isActive } from '../types/types';
 import { AxiosError } from 'axios';
+import { useSelector } from 'react-redux';
+import { selectLoading } from '../redux/movie/selectors';
 
 export default function MovieDetailsPage() {
+  // const isLoading = useSelector(selectLoading);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const { movieID } = useParams();
@@ -35,6 +39,10 @@ export default function MovieDetailsPage() {
     }
     getData();
   }, [movieID]);
+
+  // useEffect(() => {
+  //   dispatch(getMovieList(trendingOption));
+  // }, [trendingOption, dispatch]);
 
   const makeLinkClass = ({ isActive }: isActive) => {
     return clsx(css.link, isActive && css.isActive);

@@ -1,14 +1,15 @@
-import { IMovie } from '../../types/types';
+import { MovieState } from '../../types/types';
 
-interface MovieState {
-  movie: {
-    movieList: IMovie[];
-    loading: boolean;
-    error: string | null;
-    trending: 'day' | 'week';
-    random_Background: string | '';
-  };
-}
+// in types.ts
+// export interface MovieState {
+//   movie: {
+//     movieList: IMovie[];
+//     loading: boolean;
+//     error: string | null;
+//     trending: 'day' | 'week';
+//     random_Background: string | '';
+//   };
+// }
 
 export const selectMovieList = (state: MovieState) => state.movie.movieList;
 export const selectTrendingOption = (state: MovieState) => state.movie.trending;

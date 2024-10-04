@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getMovieList, searchMovieReq } from './operations';
 import { IMovie } from '../../types/types';
 
@@ -48,9 +48,10 @@ const movieSlice = createSlice({
       .addCase(getMovieList.pending, handlePending)
       .addCase(getMovieList.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
         state.movieList = action.payload;
-        state.random_Background
-          ? ''
-          : (state.random_Background = action.payload[randomNumber].backdrop_path);
+        state.random_Background == ''
+          ? (state.random_Background = action.payload[randomNumber].backdrop_path)
+          : (state.random_Background = state.random_Background);
+
         state.loading = false;
         // console.log('Finished GetMovieList');
       })

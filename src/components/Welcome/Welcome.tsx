@@ -17,7 +17,6 @@ const Welcome: FC<WelcomeI> = memo(({ children }) => {
         style={{
           backgroundImage: `image-set(url(https://media.themoviedb.org/t/p/w1920_and_h600_face${randomBG}) 1x, url(https://media.themoviedb.org/t/p/w3840_and_h1200_face${randomBG}) 2x)`,
         }}
-        // style={bgStyles}
       >
         <div className={css.section}>
           <div className={css.title}>

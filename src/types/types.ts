@@ -60,3 +60,13 @@ export interface IReviews {
   updated_at: string;
   url: string;
 }
+
+export interface MovieState {
+  movie: {
+    movieList: IMovie[];
+    loading: boolean;
+    error: string | null;
+    trending: 'day' | 'week';
+    random_Background: string | '';
+  };
+}
