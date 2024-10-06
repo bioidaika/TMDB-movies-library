@@ -1,12 +1,6 @@
-import { useEffect, useState } from 'react';
 import MovieList from '../components/MovieList/MovieList';
 import toast, { Toaster } from 'react-hot-toast';
-import { getMovieList } from '../redux/movie/operations';
-import { useDispatch, useSelector } from 'react-redux';
-import Trending from '../components/Trending/Trending';
-import { selectTrendingOption } from '../redux/movie/selectors';
 import SearchForm from '../components/SearchForm/SearchForm';
-import Welcome from '../components/Welcome/Welcome';
 import { useSearchParams } from 'react-router-dom';
 
 export default function SearchPage() {

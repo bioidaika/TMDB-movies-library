@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import css from './MovieCast.module.css';
 import { AxiosError } from 'axios';
 import { ICast } from '../../types/types';
+import Loader from '../Loader/Loader';
 
 export default function MovieCast() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,31 +36,35 @@ export default function MovieCast() {
 
   return (
     <div>
+      {/* {error && <b>HTTP error!</b>} */}
       <Toaster />
-      {isLoading && <b>Loading...</b>}
-      {error && <b>HTTP error!</b>}
-      <h1>Casts</h1>
-      <ul className={css.cast__list}>
-        {selectedCast &&
-          selectedCast.map(item => (
-            <li key={item.cast_id} className={css.cast__card}>
-              <img
-                className={css.image}
-                src={
-                  item.profile_path !== null && item.profile_path !== ''
-                    ? `https://image.tmdb.org/t/p/w200${item.profile_path}`
-                    : defaultSRC
-                }
-                alt={item.name}
-                style={{ width: '200px', height: '300px', objectFit: 'cover' }}
-              />
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <>
+          <h1>Casts</h1>
+          <ul className={css.cast__list}>
+            {selectedCast &&
+              selectedCast.map(item => (
+                <li key={item.cast_id} className={css.cast__card}>
+                  <img
+                    className={css.image}
+                    src={
+                      item.profile_path !== null && item.profile_path !== ''
+                        ? `https://image.tmdb.org/t/p/w200${item.profile_path}`
+                        : defaultSRC
+                    }
+                    alt={item.name}
+                    style={{ width: '200px', height: '300px', objectFit: 'cover' }}
+                  />
 
-              <h2>{item.name}</h2>
-              <p>Character: {item.character || 'Unknown'}</p>
-              <p>Popularity: {item.popularity.toFixed(1)}</p>
-            </li>
-          ))}
-      </ul>
+                  <h2>{item.name}</h2>
+                  <p>Character: {item.character || 'Unknown'}</p>
+                  <p>Popularity: {item.popularity.toFixed(1)}</p>
+                </li>
+              ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }

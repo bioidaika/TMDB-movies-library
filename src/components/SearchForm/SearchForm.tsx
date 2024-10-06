@@ -34,9 +34,9 @@ const SearchForm = memo(() => {
     try {
       // setIsLoading(true);
       // setError(false);
-      console.log('Query Request', queryURL);
+      // console.log('Query Request', queryURL);
       if (queryURL === ' ') return;
-      console.log('Query Request 1', queryURL);
+      // console.log('Query Request 1', queryURL);
       dispatch(searchMovieReq(queryURL));
       console.log('Query Request 2');
     } catch (e: any) {

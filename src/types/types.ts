@@ -68,5 +68,6 @@ export interface MovieState {
     error: string | null;
     trending: 'day' | 'week';
     random_Background: string | '';
+    selectedMovie: IMovieByID | null;
   };
 }

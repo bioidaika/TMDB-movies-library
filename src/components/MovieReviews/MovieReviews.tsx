@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { IReviews } from '../../types/types';
+import Loader from '../Loader/Loader';
 
 export default function MovieReviews() {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,26 +34,30 @@ export default function MovieReviews() {
   return (
     <div>
       <Toaster />
-      {isLoading && <b>Loading...</b>}
-      {error && <b>HTTP error!</b>}
-      <h1>Reviews</h1>
-      <ul className={css.reviews__list}>
-        {selectedReviews &&
-          selectedReviews.map(item => (
-            <li key={item.id} className={css.reviews__card}>
-              <h2>
-                Written by {item.author} on{' '}
-                {new Date(item.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </h2>
-              <p>{item.content}</p>
-            </li>
-          ))}
-        {selectedReviews.length === 0 && <p>{`We don't have any reviews for this movie.`}</p>}
-      </ul>
+      {isLoading && <Loader />}
+      {/* {error && <b>HTTP error!</b>} */}
+      {!isLoading && (
+        <>
+          <h1>Reviews</h1>
+          <ul className={css.reviews__list}>
+            {selectedReviews &&
+              selectedReviews.map(item => (
+                <li key={item.id} className={css.reviews__card}>
+                  <h2>
+                    Written by {item.author} on{' '}
+                    {new Date(item.created_at).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </h2>
+                  <p>{item.content}</p>
+                </li>
+              ))}
+            {selectedReviews.length === 0 && <p>{`We don't have any reviews for this movie.`}</p>}
+          </ul>
+        </>
+      )}
     </div>
   );
 }

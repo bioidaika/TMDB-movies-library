@@ -1,48 +1,26 @@
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
-import { getMovieByID } from '../components/api';
 import toast, { Toaster } from 'react-hot-toast';
 import clsx from 'clsx';
 import css from './MovieDetailsPage.module.css';
-import { IMovieByID, isActive } from '../types/types';
-import { AxiosError } from 'axios';
-import { useSelector } from 'react-redux';
-import { selectLoading } from '../redux/movie/selectors';
+import { isActive } from '../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectError, selectLoading, selectSelectedMovie } from '../redux/movie/selectors';
+import { getSelectedMovieByID } from '../redux/movie/operations';
+import Loader from '../components/Loader/Loader';
 
 export default function MovieDetailsPage() {
-  // const isLoading = useSelector(selectLoading);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
   const { movieID } = useParams();
-  const [selectedMovie, setSelectedMovie] = useState<IMovieByID | null>(null);
+  const selectedMovie = useSelector(selectSelectedMovie);
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? '/movies');
+  const dispatch = useDispatch<any>();
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectLoading);
 
   useEffect(() => {
-    async function getData() {
-      try {
-        setIsLoading(true);
-        setError(false);
-        const data = await getMovieByID(movieID || '');
-        setSelectedMovie(data);
-        // console.log(data);
-        toast.success('Success');
-      } catch (e: unknown) {
-        setError(true);
-        e instanceof AxiosError
-          ? toast.error(e.response?.data?.status_message || e.message)
-          : toast.error('An unkown error occured');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    getData();
-  }, [movieID]);
-
-  // useEffect(() => {
-  //   dispatch(getMovieList(trendingOption));
-  // }, [trendingOption, dispatch]);
+    dispatch(getSelectedMovieByID(movieID!));
+  }, [movieID, dispatch]);
 
   const makeLinkClass = ({ isActive }: isActive) => {
     return clsx(css.link, isActive && css.isActive);
@@ -50,12 +28,12 @@ export default function MovieDetailsPage() {
 
   return (
     <div>
+      {isLoading && <Loader />}
+      {error && <div>The resource you requested could not be found.</div>}
       <Link to={backLinkRef.current} className={css.btn}>
         Back to Home
       </Link>
       <Toaster />
-      {isLoading && <b>Loading DDDD...</b>}
-      {error && <b>HTTP error!</b>}
       {selectedMovie && (
         <div className={css.container}>
           <img
@@ -78,23 +56,27 @@ export default function MovieDetailsPage() {
           </div>
         </div>
       )}
-      <h2>Additional information</h2>
-      {/* <h1>{selectedMovie?.budget}</h1> */}
-      <ul className={css.add_info_list}>
-        <li className={css.add_info_item}>
-          <NavLink to="cast" className={makeLinkClass}>
-            Cast
-          </NavLink>
-        </li>
-        <li className={css.add_info_item}>
-          <NavLink to="reviews" className={makeLinkClass}>
-            Reviews
-          </NavLink>
-        </li>
-      </ul>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Outlet />
-      </Suspense>
+
+      {selectedMovie && (
+        <>
+          <h2>Additional information</h2>
+          <ul className={css.add_info_list}>
+            <li className={css.add_info_item}>
+              <NavLink to="cast" className={makeLinkClass}>
+                Cast
+              </NavLink>
+            </li>
+            <li className={css.add_info_item}>
+              <NavLink to="reviews" className={makeLinkClass}>
+                Reviews
+              </NavLink>
+            </li>
+          </ul>
+          <Suspense fallback={<div>Loadingggggg</div>}>
+            <Outlet />
+          </Suspense>
+        </>
+      )}
     </div>
   );
 }
