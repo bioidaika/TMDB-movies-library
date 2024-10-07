@@ -1,12 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getMovieByID, getTrendingMovies, searchMovieQuery } from '../../components/api';
+import {
+  getMovieByID,
+  getMovieList,
+  getTrendingMovies,
+  searchMovieQuery,
+} from '../../components/api';
 import { IMovie, IMovieByID } from '../../types/types';
 
-export const getMovieList = createAsyncThunk<IMovie[], string>(
+export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   'movie/trending-movies',
   async (option, thunkAPI) => {
     try {
       const response = await getTrendingMovies(option);
+      if (response) {
+        return response as IMovie[];
+      } else {
+        return thunkAPI.rejectWithValue('No data available');
+      }
+    } catch (error) {
+      if (error instanceof Error) return thunkAPI.rejectWithValue(error.message);
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
+export const getMovieListOp = createAsyncThunk<IMovie[], string>(
+  'movie/category',
+  async (option, thunkAPI) => {
+    try {
+      const response = await getMovieList(option);
       if (response) {
         return response as IMovie[];
       } else {

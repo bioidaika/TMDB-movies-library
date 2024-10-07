@@ -6,11 +6,6 @@ import { useSearchParams } from 'react-router-dom';
 export default function SearchPage() {
   const [params, setParams] = useSearchParams();
   const queryURL = params.get('query') ?? ' ';
-  //   const dispatch = useDispatch<any>();
-  //   const trendingOption = useSelector(selectTrendingOption);
-  //   useEffect(() => {
-  //     dispatch(getMovieList(trendingOption));
-  //   }, [trendingOption, dispatch]);
 
   return (
     <>

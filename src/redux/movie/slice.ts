@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getMovieList, getSelectedMovieByID, searchMovieReq } from './operations';
+import {
+  getMovieListOp,
+  getSelectedMovieByID,
+  getTrendingMovieList,
+  searchMovieReq,
+} from './operations';
 import { IMovie, IMovieByID } from '../../types/types';
 
 interface MovieState {
@@ -47,8 +52,8 @@ const movieSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(getMovieList.pending, handlePending)
-      .addCase(getMovieList.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
+      .addCase(getTrendingMovieList.pending, handlePending)
+      .addCase(getTrendingMovieList.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
         state.movieList = action.payload;
         state.selectedMovie = null;
         state.random_Background == ''
@@ -56,24 +61,28 @@ const movieSlice = createSlice({
           : (state.random_Background = state.random_Background);
 
         state.loading = false;
-        // console.log('Finished GetMovieList');
       })
-      .addCase(getMovieList.rejected, handleRejected)
+      .addCase(getTrendingMovieList.rejected, handleRejected)
       .addCase(searchMovieReq.pending, handlePending)
       .addCase(searchMovieReq.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
         state.movieList = action.payload;
         state.selectedMovie = null;
         state.loading = false;
-        // console.log('Finished Search');
       })
       .addCase(searchMovieReq.rejected, handleRejected)
       .addCase(getSelectedMovieByID.pending, handlePending)
       .addCase(getSelectedMovieByID.fulfilled, (state, action: PayloadAction<IMovieByID>) => {
         state.selectedMovie = action.payload;
         state.loading = false;
-        // console.log('Finished Search');
       })
-      .addCase(getSelectedMovieByID.rejected, handleRejected);
+      .addCase(getSelectedMovieByID.rejected, handleRejected)
+      .addCase(getMovieListOp.pending, handlePending)
+      .addCase(getMovieListOp.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
+        state.movieList = action.payload;
+        state.selectedMovie = null;
+        state.loading = false;
+      })
+      .addCase(getMovieListOp.rejected, handleRejected);
   },
 });
 export const { setMovieList, setTrendingOption, setRandomBackground } = movieSlice.actions;

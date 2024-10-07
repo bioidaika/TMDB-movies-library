@@ -30,9 +30,11 @@ export default function MovieDetailsPage() {
     <div>
       {isLoading && <Loader />}
       {error && <div>The resource you requested could not be found.</div>}
-      <Link to={backLinkRef.current} className={css.btn}>
-        Back to Home
-      </Link>
+      {selectedMovie && (
+        <Link to={backLinkRef.current} className={css.btn}>
+          Back to Home
+        </Link>
+      )}
       <Toaster />
       {selectedMovie && (
         <div className={css.container}>
@@ -72,7 +74,7 @@ export default function MovieDetailsPage() {
               </NavLink>
             </li>
           </ul>
-          <Suspense fallback={<div>Loadingggggg</div>}>
+          <Suspense fallback={''}>
             <Outlet />
           </Suspense>
         </>
