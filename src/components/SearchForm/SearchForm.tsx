@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import css from './SearchForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchMovieReq } from '../../redux/movie/operations';
+import { IoSearch } from 'react-icons/io5';
 
 const SearchForm = memo(() => {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -66,7 +67,9 @@ const SearchForm = memo(() => {
         value={inputValue.trim()}
         onChange={e => setInputValue(e.target.value)}
       />
-      <button type="submit">Submit</button>
+      <button type="submit" className={css.submit}>
+        <IoSearch />
+      </button>
     </form>
   );
 });

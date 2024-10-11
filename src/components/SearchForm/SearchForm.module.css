@@ -1,11 +1,38 @@
 .form {
+  position: relative;
   display: flex;
   width: 100%;
+  align-items: center;
 }
 
 .searchText {
   width: 100%;
   font-size: 15px;
   background-color: white;
+  color: black;
+  padding: 10px 20px;
+  padding-right: 50px;
+  border-radius: 30px;
+  border: 1px solid #ddd;
+}
+.submit {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36px;
+  padding: 0 20px;
+  border: 0;
+  /* background: linear-gradient(to right, rgba(30, 213, 169, 1), rgba(1, 180, 228, 1)); */
+  color: grey;
+  background-color: transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit:hover {
   color: black;
 }
