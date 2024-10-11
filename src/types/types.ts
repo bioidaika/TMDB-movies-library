@@ -5,7 +5,7 @@ export interface IMovie {
   original_language: string;
   adult: boolean;
   backdrop_path: string;
-  genre_ids: [];
+  genre_ids: number[];
   overview: string;
   release_date: string;
   vote_average: number;

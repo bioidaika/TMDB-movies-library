@@ -14,9 +14,26 @@
   .title {
     color: rgba(1, 180, 228);
   }
+  .details {
+    color: rgba(1, 180, 228);
+  }
 }
 
 .title {
   color: black;
   width: 220px;
 }
+.details {
+  color: black;
+  /* width: 220px; */
+}
+
+.description {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* .details:last-child {
+  margin-left: 20px;
+} */

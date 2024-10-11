@@ -38,7 +38,7 @@ const SearchForm = memo(() => {
       if (queryURL === ' ') return;
       // console.log('Query Request 1', queryURL);
       dispatch(searchMovieReq(queryURL));
-      console.log('Query Request 2');
+      // console.log('Query Request 2');
     } catch (e: any) {
       // setError(true);
       toast.error(`Error: ${queryURL}`);
