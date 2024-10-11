@@ -25,14 +25,18 @@ const Trending: FC<TrendingProps> = memo(({ children }) => {
     <div className={css.trending}>
       <div className={css.trending__box}>
         <h2 className={css.trending__header}>Trending</h2>
-        <div className={css.trending__list}>
-          <button className={makeLinkClass('day')} onClick={evt => HandleClick(evt, 'day')}>
-            <span className={css.trending__text}>Today</span>
-          </button>
-          <button className={makeLinkClass('week')} onClick={evt => HandleClick(evt, 'week')}>
-            <span className={css.trending__text}>Week</span>
-          </button>
-        </div>
+        <ul className={css.trending__list}>
+          <li>
+            <button className={makeLinkClass('day')} onClick={evt => HandleClick(evt, 'day')}>
+              <span className={css.trending__text}>Today</span>
+            </button>
+          </li>
+          <li>
+            <button className={makeLinkClass('week')} onClick={evt => HandleClick(evt, 'week')}>
+              <span className={css.trending__text}>Week</span>
+            </button>
+          </li>
+        </ul>
       </div>
       {children}
     </div>

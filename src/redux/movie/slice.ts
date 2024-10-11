@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  getMovieListOp,
+  getMovieListByParam,
   getSelectedMovieByID,
   getTrendingMovieList,
   searchMovieReq,
@@ -12,6 +12,7 @@ interface MovieState {
   loading: boolean;
   error: string | null;
   trending: 'day' | 'week';
+  movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
   random_Background: string | '';
   selectedMovie: IMovieByID | null;
 }
@@ -23,6 +24,7 @@ export const initialState: MovieState = {
   trending: 'day',
   random_Background: '',
   selectedMovie: null,
+  movieParam: 'now_playing',
 };
 
 const handlePending = (state: MovieState) => {
@@ -48,6 +50,9 @@ const movieSlice = createSlice({
     },
     setRandomBackground(state, action) {
       state.random_Background = action.payload;
+    },
+    setMovieParam(state, action) {
+      state.movieParam = action.payload;
     },
   },
   extraReducers: builder => {
@@ -76,14 +81,15 @@ const movieSlice = createSlice({
         state.loading = false;
       })
       .addCase(getSelectedMovieByID.rejected, handleRejected)
-      .addCase(getMovieListOp.pending, handlePending)
-      .addCase(getMovieListOp.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
+      .addCase(getMovieListByParam.pending, handlePending)
+      .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
         state.movieList = action.payload;
         state.selectedMovie = null;
         state.loading = false;
       })
-      .addCase(getMovieListOp.rejected, handleRejected);
+      .addCase(getMovieListByParam.rejected, handleRejected);
   },
 });
-export const { setMovieList, setTrendingOption, setRandomBackground } = movieSlice.actions;
+export const { setMovieList, setTrendingOption, setRandomBackground, setMovieParam } =
+  movieSlice.actions;
 export const movieReducer = movieSlice.reducer;

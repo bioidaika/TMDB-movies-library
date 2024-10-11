@@ -69,5 +69,6 @@ export interface MovieState {
     trending: 'day' | 'week';
     random_Background: string | '';
     selectedMovie: IMovieByID | null;
+    movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
   };
 }
