@@ -11,20 +11,24 @@ const makeLinkClass = ({ isActive }: { isActive: boolean }) => {
 const Navigation = memo(function Navigation() {
   return (
     <nav className={css.nav}>
-      <NavLink to="/" className={makeLinkClass}>
-        <img
-          alt="The Movie Database (TMDB)"
-          className={css.headerLogo}
-          src="https://files.readme.io/29c6fee-blue_short.svg"
-        />
-      </NavLink>
-      <NavLink to="/movies" className={makeLinkClass}>
-        Movies
-      </NavLink>
-      <NavLink to="/tv" className={makeLinkClass}>
-        TV Shows
-      </NavLink>
-      <SearchForm />
+      <div className={css.menu}>
+        <NavLink to="/" className={makeLinkClass}>
+          <img
+            alt="The Movie Database (TMDB)"
+            className={css.headerLogo}
+            src="https://files.readme.io/29c6fee-blue_short.svg"
+          />
+        </NavLink>
+        <NavLink to="/movies" className={makeLinkClass}>
+          Movies
+        </NavLink>
+        <NavLink to="/tv" className={makeLinkClass}>
+          TV Shows
+        </NavLink>
+      </div>
+      <div className={css.searchField}>
+        <SearchForm />
+      </div>
     </nav>
   );
 });

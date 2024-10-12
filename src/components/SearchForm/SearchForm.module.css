@@ -2,12 +2,22 @@
   position: relative;
   display: flex;
   width: 100%;
+  /* width: 250px; */
   align-items: center;
+  /* transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0); 
+  overflow: hidden; */
 }
+
+/* .form:focus-within {
+  width: 1500px; 
+  transform: translateX(-80%); 
+} */
 
 .searchText {
   width: 100%;
   font-size: 15px;
+  text-overflow: ellipsis;
   background-color: white;
   color: black;
   padding: 10px 20px;
@@ -15,6 +25,7 @@
   border-radius: 30px;
   border: 1px solid #ddd;
 }
+
 .submit {
   position: absolute;
   right: 3px;
