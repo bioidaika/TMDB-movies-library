@@ -17,6 +17,9 @@
   .details {
     color: rgba(1, 180, 228);
   }
+  .description {
+    color: rgba(1, 180, 228);
+  }
 }
 
 .title {
@@ -29,11 +32,18 @@
 }
 
 .description {
+  color: black;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-/* .details:last-child {
-  margin-left: 20px;
-} */
+.img_poster {
+  width: 220px;
+  height: 330px;
+  justify-content: center;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center;
+}
