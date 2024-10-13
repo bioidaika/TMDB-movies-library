@@ -50,7 +50,9 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
                   <div className={css.details}>
                     {item.release_date.length != 0 ? item.release_date.substring(0, 4) : null}
                   </div>
-                  {item.release_date.length != 0 && item.genre_ids[0] != null && ','}
+                  {item.release_date.length != 0 && item.genre_ids[0] != null && (
+                    <span> ,&nbsp;</span>
+                  )}
                   <div className={css.details}>
                     {/* {item.genre_ids.map(id =>
                       genresOBJ.map((item: { id: number; name: string }) =>
