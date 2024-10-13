@@ -13,7 +13,7 @@ const options = {
 };
 
 export const getTrendingMovies = async (range: string): Promise<IMovie[]> => {
-  const response = await axios.get(`trending/movie/${range}`, options);
+  const response = await axios.get(`trending/movie/${range}?page=2`, options);
   // console.log(response.data.results);
   return response.data.results as IMovie[];
 };
@@ -43,7 +43,7 @@ export const searchMovieQuery = async (searchQuery: string) => {
 };
 
 export const getMovieList = async (range: string): Promise<IMovie[]> => {
-  const response = await axios.get(`movie/${range}`, options);
+  const response = await axios.get(`movie/${range}?page=2`, options);
   // console.log(response.data.results);
   return response.data.results as IMovie[];
 };

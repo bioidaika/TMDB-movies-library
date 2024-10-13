@@ -20,7 +20,6 @@ const MoviesPage: FC = () => {
     !isLoading && (
       <div>
         <Toaster />
-        <SearchForm />
         <MoviesCategory>
           <MovieList />
         </MoviesCategory>

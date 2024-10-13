@@ -70,5 +70,6 @@ export interface MovieState {
     random_Background: string | '';
     selectedMovie: IMovieByID | null;
     movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
+    currentPage: number;
   };
 }

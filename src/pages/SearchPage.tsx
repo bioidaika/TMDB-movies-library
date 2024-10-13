@@ -10,7 +10,6 @@ export default function SearchPage() {
   return (
     <>
       <Toaster />
-      <SearchForm />
       <h2>Search results for {queryURL}</h2>
       <MovieList />
     </>

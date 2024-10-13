@@ -7,3 +7,4 @@ export const selectRandom_BG = (state: MovieState) => state.movie.random_Backgro
 export const selectSelectedMovie = (state: MovieState) => state.movie.selectedMovie;
 export const selectError = (state: MovieState) => state.movie.error;
 export const selectMovieParam = (state: MovieState) => state.movie.movieParam;
+export const selectCurrentPage = (state: MovieState) => state.movie.currentPage;

@@ -15,6 +15,7 @@ interface MovieState {
   movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
   random_Background: string | '';
   selectedMovie: IMovieByID | null;
+  currentPage: number;
 }
 
 export const initialState: MovieState = {
@@ -25,6 +26,7 @@ export const initialState: MovieState = {
   random_Background: '',
   selectedMovie: null,
   movieParam: 'now_playing',
+  currentPage: 1,
 };
 
 const handlePending = (state: MovieState) => {
