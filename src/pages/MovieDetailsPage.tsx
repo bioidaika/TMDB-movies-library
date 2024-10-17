@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef } from 'react';
 import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import clsx from 'clsx';
 import css from './MovieDetailsPage.module.css';
 import { isActive } from '../types/types';

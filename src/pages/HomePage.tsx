@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import MovieList from '../components/MovieList/MovieList';
 import toast, { Toaster } from 'react-hot-toast';
 import { getTrendingMovieList } from '../redux/movie/operations';
