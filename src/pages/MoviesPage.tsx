@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import MovieList from '../components/MovieList/MovieList';
-import SearchForm from '../components/SearchForm/SearchForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovieListByParam } from '../redux/movie/operations';
 import { selectLoading, selectMovieParam } from '../redux/movie/selectors';
