@@ -42,8 +42,13 @@ export const searchMovieQuery = async (searchQuery: string) => {
   return response.data.results;
 };
 
-export const getMovieList = async (range: string): Promise<IMovie[]> => {
-  const response = await axios.get(`movie/${range}?page=2`, options);
-  // console.log(response.data.results);
+export const getMovieList = async (range: string, pageN: number): Promise<IMovie[]> => {
+  const response = await axios.get(`movie/${range}`, {
+    ...options,
+    params: {
+      page: pageN,
+    },
+  });
+  console.log(response.data);
   return response.data.results as IMovie[];
 };

@@ -26,11 +26,11 @@ export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   }
 );
 
-export const getMovieListByParam = createAsyncThunk<IMovie[], string>(
+export const getMovieListByParam = createAsyncThunk<IMovie[], { range: string; pageN: number }>(
   'movie/category',
-  async (option, thunkAPI) => {
+  async ({ range, pageN }, thunkAPI) => {
     try {
-      const response = await getMovieList(option);
+      const response = await getMovieList(range, pageN);
       if (response) {
         return response as IMovie[];
       } else {

@@ -12,7 +12,7 @@ const MoviesPage: FC = () => {
   const movieParams = useSelector(selectMovieParam);
 
   useEffect(() => {
-    dispatch(getMovieListByParam(movieParams));
+    dispatch(getMovieListByParam({ range: movieParams, pageN: 2 }));
   }, [movieParams, dispatch]);
 
   return (
