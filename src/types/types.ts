@@ -1,3 +1,5 @@
+import { MovieState } from '../redux/movie/slice';
+
 export interface IMovie {
   id: number;
   title: string;
@@ -10,6 +12,13 @@ export interface IMovie {
   release_date: string;
   vote_average: number;
   vote_count: number;
+}
+
+export interface Data {
+  page: number;
+  results: IMovie[];
+  total_pages: number;
+  total_results: number;
 }
 
 export interface IMovieByID {
@@ -61,15 +70,6 @@ export interface IReviews {
   url: string;
 }
 
-export interface MovieState {
-  movie: {
-    movieList: IMovie[];
-    loading: boolean;
-    error: string | null;
-    trending: 'day' | 'week';
-    random_Background: string | '';
-    selectedMovie: IMovieByID | null;
-    movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
-    currentPage: number;
-  };
+export interface Movie {
+  movie: MovieState;
 }

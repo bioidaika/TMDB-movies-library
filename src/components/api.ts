@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IMovie, IMovieByID, ICast, IReviews } from '../types/types';
+import { IMovie, IMovieByID, ICast, IReviews, Data } from '../types/types';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 const options = {
@@ -15,6 +15,7 @@ const options = {
 export const getTrendingMovies = async (range: string): Promise<IMovie[]> => {
   const response = await axios.get(`trending/movie/${range}?page=2`, options);
   // console.log(response.data.results);
+  console.log(response.data);
   return response.data.results as IMovie[];
 };
 
@@ -42,7 +43,7 @@ export const searchMovieQuery = async (searchQuery: string) => {
   return response.data.results;
 };
 
-export const getMovieList = async (range: string, pageN: number): Promise<IMovie[]> => {
+export const getMovieList = async (range: string, pageN: number): Promise<Data> => {
   const response = await axios.get(`movie/${range}`, {
     ...options,
     params: {
@@ -50,5 +51,6 @@ export const getMovieList = async (range: string, pageN: number): Promise<IMovie
     },
   });
   console.log(response.data);
-  return response.data.results as IMovie[];
+  // return response.data.results as IMovie[];
+  return response.data as Data;
 };

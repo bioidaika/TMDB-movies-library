@@ -5,9 +5,9 @@ import {
   getTrendingMovieList,
   searchMovieReq,
 } from './operations';
-import { IMovie, IMovieByID } from '../../types/types';
+import { Data, IMovie, IMovieByID } from '../../types/types';
 
-interface MovieState {
+export interface MovieState {
   movieList: IMovie[];
   loading: boolean;
   error: string | null;
@@ -16,6 +16,8 @@ interface MovieState {
   random_Background: string | '';
   selectedMovie: IMovieByID | null;
   currentPage: number;
+  totalPages: number;
+  totalResults: number;
 }
 
 export const initialState: MovieState = {
@@ -27,6 +29,8 @@ export const initialState: MovieState = {
   selectedMovie: null,
   movieParam: 'now_playing',
   currentPage: 1,
+  totalPages: 0,
+  totalResults: 0,
 };
 
 const handlePending = (state: MovieState) => {
@@ -84,8 +88,11 @@ const movieSlice = createSlice({
       })
       .addCase(getSelectedMovieByID.rejected, handleRejected)
       .addCase(getMovieListByParam.pending, handlePending)
-      .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
-        state.movieList = action.payload;
+      .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<Data>) => {
+        state.movieList = action.payload.results;
+        state.currentPage = action.payload.page;
+        state.totalPages = action.payload.total_pages;
+        state.totalResults = action.payload.total_results;
         state.selectedMovie = null;
         state.loading = false;
       })

@@ -4,6 +4,15 @@
   width: 100%;
   justify-content: left;
 }
+.pagination {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.paginationItem {
+  padding: 10px;
+}
 
 .list_item {
   margin-top: 0px;

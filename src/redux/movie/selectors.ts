@@ -1,10 +1,11 @@
-import { MovieState } from '../../types/types';
+import { Movie } from '../../types/types';
 
-export const selectMovieList = (state: MovieState) => state.movie.movieList;
-export const selectTrendingOption = (state: MovieState) => state.movie.trending;
-export const selectLoading = (state: MovieState) => state.movie.loading;
-export const selectRandom_BG = (state: MovieState) => state.movie.random_Background;
-export const selectSelectedMovie = (state: MovieState) => state.movie.selectedMovie;
-export const selectError = (state: MovieState) => state.movie.error;
-export const selectMovieParam = (state: MovieState) => state.movie.movieParam;
-export const selectCurrentPage = (state: MovieState) => state.movie.currentPage;
+export const selectMovieList = (state: Movie) => state.movie.movieList;
+export const selectTrendingOption = (state: Movie) => state.movie.trending;
+export const selectLoading = (state: Movie) => state.movie.loading;
+export const selectRandom_BG = (state: Movie) => state.movie.random_Background;
+export const selectSelectedMovie = (state: Movie) => state.movie.selectedMovie;
+export const selectError = (state: Movie) => state.movie.error;
+export const selectMovieParam = (state: Movie) => state.movie.movieParam;
+export const selectCurrentPage = (state: Movie) => state.movie.currentPage;
+export const selectTotalPages = (state: Movie) => state.movie.totalPages;

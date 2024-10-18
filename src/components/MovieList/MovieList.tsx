@@ -4,7 +4,7 @@ import genres from '../genres.json';
 import { FC, ReactNode } from 'react';
 import { IMovie } from '../../types/types';
 import { useSelector } from 'react-redux';
-import { selectLoading, selectMovieList } from '../../redux/movie/selectors';
+import { selectLoading, selectMovieList, selectTotalPages } from '../../redux/movie/selectors';
 
 interface FilteredMovieProps {
   filtered?: IMovie[];
@@ -15,8 +15,14 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
   const genresList = JSON.stringify(genres);
   const genresOBJ = JSON.parse(genresList);
   const isLoading = useSelector(selectLoading);
+  const totalPages = useSelector(selectTotalPages);
   const location = useLocation();
   const movieLister: IMovie[] = useSelector(selectMovieList);
+  const pagesArray = [];
+  for (let i = 0; i < totalPages; i++) {
+    pagesArray.push(i + 1);
+  }
+  console.log(pagesArray);
 
   return (
     !isLoading && (
@@ -69,6 +75,14 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
             </li>
           ))}
         </ul>
+        {/* <ul className={css.pagination}>
+          {pagesArray.map(item => (
+            <li key={item} className={css.paginationItem}>
+              {item}
+            </li>
+          ))}
+        </ul> */}
+
         {children}
       </div>
     )

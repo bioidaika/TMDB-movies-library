@@ -5,7 +5,7 @@ import {
   getTrendingMovies,
   searchMovieQuery,
 } from '../../components/api';
-import { IMovie, IMovieByID } from '../../types/types';
+import { Data, IMovie, IMovieByID } from '../../types/types';
 
 export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   'movie/trending-movies',
@@ -26,13 +26,13 @@ export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   }
 );
 
-export const getMovieListByParam = createAsyncThunk<IMovie[], { range: string; pageN: number }>(
+export const getMovieListByParam = createAsyncThunk<Data, { range: string; pageN: number }>(
   'movie/category',
   async ({ range, pageN }, thunkAPI) => {
     try {
       const response = await getMovieList(range, pageN);
       if (response) {
-        return response as IMovie[];
+        return response as Data;
       } else {
         return thunkAPI.rejectWithValue('No data available');
       }
