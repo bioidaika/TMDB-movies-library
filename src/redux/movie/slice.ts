@@ -60,6 +60,9 @@ const movieSlice = createSlice({
     setMovieParam(state, action) {
       state.movieParam = action.payload;
     },
+    setPage(state, action) {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
@@ -90,7 +93,7 @@ const movieSlice = createSlice({
       .addCase(getMovieListByParam.pending, handlePending)
       .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<Data>) => {
         state.movieList = action.payload.results;
-        state.currentPage = action.payload.page;
+        // state.currentPage = action.payload.page;
         state.totalPages = action.payload.total_pages;
         state.totalResults = action.payload.total_results;
         state.selectedMovie = null;
@@ -99,6 +102,6 @@ const movieSlice = createSlice({
       .addCase(getMovieListByParam.rejected, handleRejected);
   },
 });
-export const { setMovieList, setTrendingOption, setRandomBackground, setMovieParam } =
+export const { setMovieList, setTrendingOption, setRandomBackground, setMovieParam, setPage } =
   movieSlice.actions;
 export const movieReducer = movieSlice.reducer;
