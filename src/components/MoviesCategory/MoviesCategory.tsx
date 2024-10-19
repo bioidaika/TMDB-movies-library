@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import css from '../Trending/Trending.module.css';
 import clsx from 'clsx';
 import { selectMovieParam } from '../../redux/movie/selectors';
-import { setMovieParam } from '../../redux/movie/slice';
+import { setMovieParam, setPage } from '../../redux/movie/slice';
 
 interface MoviesProps {
   children?: ReactNode;
@@ -20,6 +20,7 @@ export const MoviesCategory: FC<MoviesProps> = memo(({ children }) => {
     buttonType: 'now_playing' | 'popular' | 'top_rated' | 'upcoming'
   ) => {
     dispatch(setMovieParam(buttonType));
+    dispatch(setPage(1));
   };
 
   return (
