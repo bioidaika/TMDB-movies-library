@@ -22,13 +22,15 @@ const Pagination = () => {
         onPageChange={handlePageClick}
         marginPagesDisplayed={3}
         pageClassName={css.paginationItem}
-        pageLinkClassName={css.paginationLink}
+        pageLinkClassName={css.pageLink}
         activeLinkClassName={css.activePage}
         pageRangeDisplayed={2}
         pageCount={totalPages}
         previousLabel="< previous"
         renderOnZeroPageCount={null}
         forcePage={currentPage - 1}
+        nextLinkClassName={css.nextLink}
+        previousLinkClassName={css.prevLink}
       />
     </div>
   );

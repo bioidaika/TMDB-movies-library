@@ -6,20 +6,34 @@
 }
 
 .paginationItem {
-  padding: 0px 10px;
-
-  /* background-color: green; */
+  margin: 0px 4px;
 }
 
-.activePage {
-  color: red;
-}
-
-.paginationLink {
-  /* color: black; */
+.pageLink {
+  color: black;
   cursor: pointer;
+  padding: 0px 10px;
+  border-radius: 100%;
+}
+.activePage {
+  color: black;
+  background: linear-gradient(in hsl, #72f183 0%, #2594ee 150%);
+  border: 1px solid rgba(1, 180, 228);
 }
 
-.paginationLink:hover {
+.pageLink:hover {
+  color: rgba(1, 180, 228);
+  border: 1px solid rgba(1, 180, 228);
+}
+
+.nextLink,
+.prevLink {
+  color: black;
+  cursor: pointer;
+  padding: 0px 10px;
+}
+
+.nextLink:hover,
+.prevLink:hover {
   color: rgba(1, 180, 228);
 }
