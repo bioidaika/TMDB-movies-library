@@ -4,31 +4,6 @@
   width: 100%;
   justify-content: left;
 }
-.pagination {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.paginationItem {
-  padding: 0px 10px;
-
-  /* background-color: green; */
-}
-
-.activePage {
-  color: red;
-}
-
-.paginationLink {
-  /* color: black; */
-  cursor: pointer;
-}
-
-.paginationLink:hover {
-  color: rgba(1, 180, 228);
-}
 
 .list_item {
   margin-top: 0px;

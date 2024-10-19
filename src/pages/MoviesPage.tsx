@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMovieListByParam } from '../redux/movie/operations';
 import { selectCurrentPage, selectLoading, selectMovieParam } from '../redux/movie/selectors';
 import { MoviesCategory } from '../components/MoviesCategory/MoviesCategory';
+import Pagination from '../utils/Pagination/Pagination';
 
 const MoviesPage: FC = () => {
   const isLoading = useSelector(selectLoading);
@@ -22,6 +23,7 @@ const MoviesPage: FC = () => {
         <Toaster />
         <MoviesCategory>
           <MovieList />
+          <Pagination />
         </MoviesCategory>
       </div>
     )

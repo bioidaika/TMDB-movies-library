@@ -13,7 +13,7 @@ const options = {
 };
 
 export const getTrendingMovies = async (range: string): Promise<IMovie[]> => {
-  const response = await axios.get(`trending/movie/${range}?page=2`, options);
+  const response = await axios.get(`trending/movie/${range}?page=1`, options);
   // console.log(response.data.results);
   console.log(response.data);
   return response.data.results as IMovie[];

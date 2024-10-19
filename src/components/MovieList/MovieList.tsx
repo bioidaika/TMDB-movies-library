@@ -1,17 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import css from './MovieList.module.css';
 import genres from '../genres.json';
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode } from 'react';
 import { IMovie } from '../../types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectCurrentPage,
-  selectLoading,
-  selectMovieList,
-  selectTotalPages,
-} from '../../redux/movie/selectors';
-import ReactPaginate from 'react-paginate';
-import { setPage } from '../../redux/movie/slice';
+import { useSelector } from 'react-redux';
+import { selectLoading, selectMovieList } from '../../redux/movie/selectors';
 
 interface FilteredMovieProps {
   filtered?: IMovie[];
@@ -22,35 +15,14 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
   const genresList = JSON.stringify(genres);
   const genresOBJ = JSON.parse(genresList);
   const isLoading = useSelector(selectLoading);
-  const currentPage = useSelector(selectCurrentPage);
-  const totalPages = useSelector(selectTotalPages);
   const location = useLocation();
   const movieLister: IMovie[] = useSelector(selectMovieList);
-  const dispatch = useDispatch();
-  // const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-  // const [itemOffset, setItemOffset] = useState(0);
-
-  const pagesArray = [];
-  for (let i = 0; i < totalPages; i++) {
-    pagesArray.push(i + 1);
-  }
-  // console.log(pagesArray);
-
-  const handlePageClick = (event: { selected: number }) => {
-    console.log('event.selected', event.selected + 1);
-    dispatch(setPage(event.selected + 1));
-    // console.log('movieLister.length', movieLister.length);
-    // const newOffset = (event.selected * 20) % movieLister.length;
-    // console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
-    // setItemOffset(newOffset);
-  };
 
   return (
     !isLoading && (
       <div>
         <ul className={css.list}>
           {movieLister.length === 0 && <div>No results</div>}
-
           {movieLister.map(item => (
             <li key={item.id} className={css.list_item}>
               <Link to={`/movies/${item.id}`} state={location}>
@@ -96,28 +68,6 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
             </li>
           ))}
         </ul>
-        {/* <ul className={css.pagination}>
-          {pagesArray.map(item => (
-            <li key={item} className={css.paginationItem}>
-              {item}
-            </li>
-          ))}
-        </ul> */}
-        <ReactPaginate
-          className={css.pagination}
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          marginPagesDisplayed={3}
-          pageClassName={css.paginationItem}
-          pageLinkClassName={css.paginationLink}
-          activeLinkClassName={css.activePage}
-          pageRangeDisplayed={2}
-          pageCount={totalPages}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          forcePage={currentPage - 1}
-        />
         {children}
       </div>
     )
