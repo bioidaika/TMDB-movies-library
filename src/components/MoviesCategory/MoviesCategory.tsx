@@ -12,6 +12,7 @@ interface MoviesProps {
 export const MoviesCategory: FC<MoviesProps> = memo(({ children }) => {
   const dispatch = useDispatch();
   const movieParams = useSelector(selectMovieParam);
+
   const makeLinkClass = (buttonType: 'now_playing' | 'popular' | 'top_rated' | 'upcoming') => {
     return clsx(css.trending__item, movieParams === buttonType ? css.active : '');
   };

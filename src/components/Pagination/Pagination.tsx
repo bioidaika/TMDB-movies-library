@@ -3,14 +3,19 @@ import css from './Pagination.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '../../redux/movie/slice';
 import { selectCurrentPage, selectTotalPages } from '../../redux/movie/selectors';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Pagination = () => {
+  const navigate = useNavigate();
   const totalPages = useSelector(selectTotalPages);
   const currentPage = useSelector(selectCurrentPage);
+  const [params, setParams] = useSearchParams();
   const dispatch = useDispatch();
   const handlePageClick = (event: { selected: number }) => {
     console.log('event.selected', event.selected + 1);
     dispatch(setPage(event.selected + 1));
+    const pageNumber = event.selected + 1;
+    setParams({ page: pageNumber.toString() });
   };
 
   return (

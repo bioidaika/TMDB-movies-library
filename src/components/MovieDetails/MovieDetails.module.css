@@ -1,26 +1,7 @@
-.nav {
-  display: flex;
-  gap: 8px;
-}
-
-.link {
-  text-decoration: none;
-  color: black;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-
-.isActive {
-  color: blue;
-}
-
 .container {
   display: flex;
   flex-direction: row;
 }
-
 .description {
   display: flex;
   flex-direction: column;
@@ -37,6 +18,10 @@
   margin-right: 10px;
 }
 
+.isActive {
+  color: blue;
+}
+
 .add_info_list {
   display: flex;
   flex-direction: row;
@@ -50,10 +35,19 @@
   border-radius: 15%;
 }
 
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
 .btn {
   display: flex;
-  margin: 20px;
-  width: 110px;
+  flex-direction: row;
+  width: 150px;
 }
 
 .btn:hover {
