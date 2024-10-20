@@ -15,7 +15,11 @@ const Pagination = () => {
     console.log('event.selected', event.selected + 1);
     dispatch(setPage(event.selected + 1));
     const pageNumber = event.selected + 1;
-    setParams({ page: pageNumber.toString() });
+    setParams(prevParams => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set('page', pageNumber.toString());
+      return newParams;
+    });
   };
 
   return (

@@ -4,6 +4,7 @@ import css from '../Trending/Trending.module.css';
 import clsx from 'clsx';
 import { selectMovieParam } from '../../redux/movie/selectors';
 import { setMovieParam, setPage } from '../../redux/movie/slice';
+import { useSearchParams } from 'react-router-dom';
 
 interface MoviesProps {
   children?: ReactNode;
@@ -12,6 +13,7 @@ interface MoviesProps {
 export const MoviesCategory: FC<MoviesProps> = memo(({ children }) => {
   const dispatch = useDispatch();
   const movieParams = useSelector(selectMovieParam);
+  const [params, setParams] = useSearchParams();
 
   const makeLinkClass = (buttonType: 'now_playing' | 'popular' | 'top_rated' | 'upcoming') => {
     return clsx(css.trending__item, movieParams === buttonType ? css.active : '');
@@ -22,6 +24,7 @@ export const MoviesCategory: FC<MoviesProps> = memo(({ children }) => {
   ) => {
     dispatch(setMovieParam(buttonType));
     dispatch(setPage(1));
+    setParams({ section: buttonType });
   };
 
   return (
