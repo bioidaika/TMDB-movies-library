@@ -24,7 +24,7 @@ export const initialState: MovieState = {
   movieList: [],
   loading: false,
   error: null,
-  trending: 'day',
+  trending: 'week',
   random_Background: '',
   selectedMovie: null,
   movieParam: 'now_playing',
