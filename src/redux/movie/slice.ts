@@ -94,10 +94,10 @@ const movieSlice = createSlice({
       .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<Data>) => {
         state.movieList = action.payload.results;
         //limit for pages = 500 themoviedb API
-        // action.payload.total_pages >= 500
-        //   ? (state.totalPages = 500)
-        //   : (state.totalPages = action.payload.total_pages);
-        // state.totalResults = action.payload.total_results;
+        action.payload.total_pages >= 500
+          ? (state.totalPages = 500)
+          : (state.totalPages = action.payload.total_pages);
+        state.totalResults = action.payload.total_results;
         state.selectedMovie = null;
         state.loading = false;
       })
