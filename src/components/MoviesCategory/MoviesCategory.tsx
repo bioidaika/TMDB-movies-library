@@ -1,4 +1,4 @@
-import { FC, memo, MouseEvent, ReactNode } from 'react';
+import { FC, memo, MouseEvent, ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from '../Trending/Trending.module.css';
 import clsx from 'clsx';

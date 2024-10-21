@@ -7,6 +7,7 @@ import { selectCurrentPage, selectLoading, selectMovieParam } from '../redux/mov
 import { MoviesCategory } from '../components/MoviesCategory/MoviesCategory';
 import Pagination from '../components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
+import { setMovieParam, setPage } from '../redux/movie/slice';
 
 const MoviesPage: FC = () => {
   const isLoading = useSelector(selectLoading);
@@ -14,11 +15,19 @@ const MoviesPage: FC = () => {
   const movieParams = useSelector(selectMovieParam);
   const currentPage = useSelector(selectCurrentPage);
   const [params, setParams] = useSearchParams();
-  const queryURL = params.get('page') ?? '1';
+  const pageParam = params.get('page') ?? '1';
+  const sectionParam = params.get('section') ?? 'now_playing';
 
   useEffect(() => {
-    dispatch(getMovieListByParam({ range: movieParams, pageN: currentPage }));
-  }, [movieParams, dispatch, currentPage]);
+    dispatch(setMovieParam(sectionParam));
+    dispatch(setPage(Number(pageParam)));
+  }, [dispatch, sectionParam, pageParam]);
+
+  useEffect(() => {
+    dispatch(getMovieListByParam({ range: sectionParam, pageN: Number(pageParam) }));
+    console.log('pageParam:', pageParam);
+    console.log('sectionParam:', sectionParam);
+  }, [dispatch, sectionParam, pageParam]);
 
   return (
     !isLoading && (

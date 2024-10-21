@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '../../redux/movie/slice';
 import { selectCurrentPage, selectTotalPages } from '../../redux/movie/selectors';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Pagination = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Pagination = () => {
   const currentPage = useSelector(selectCurrentPage);
   const [params, setParams] = useSearchParams();
   const dispatch = useDispatch();
+
   const handlePageClick = (event: { selected: number }) => {
     console.log('event.selected', event.selected + 1);
     dispatch(setPage(event.selected + 1));
