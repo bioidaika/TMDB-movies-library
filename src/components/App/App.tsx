@@ -11,6 +11,7 @@ const SearchPage = lazy(() => import('../../pages/SearchPage'));
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import Footer from '../Footer/Footer';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
+      {/* <Footer /> */}
     </div>
   );
 }
