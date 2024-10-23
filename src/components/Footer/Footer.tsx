@@ -23,7 +23,7 @@ const Footer = memo(() => {
             <FaGithub className={css.social_media} />
           </a>
           <a
-            href="https://www.linkedin.com/in/DmytriiTsybuliak"
+            href="https://www.linkedin.com/in/dmytrii-tsybuliak-9a6320155/"
             target="_blank"
             rel="noopener noreferrer"
             className={css.link}

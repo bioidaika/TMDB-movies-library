@@ -90,7 +90,16 @@
 }
 
 .link:hover {
-  background-color: #555555;
+  /* background-color: #555555;
+  color: #1db954; */
+  color: white;
+  /* background: linear-gradient(in hsl, #72f183 0%, #2594ee 20%); */
+  /* background: linear-gradient(in hsl, #72f183 0%, #2594ee 25%); */
+  background: linear-gradient(to right, rgb(81, 240, 229), rgb(121, 177, 244));
+
+  /* background-clip: text; */
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
 }
 
 .isActive {
