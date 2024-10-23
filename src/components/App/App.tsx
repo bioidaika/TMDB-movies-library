@@ -30,7 +30,7 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

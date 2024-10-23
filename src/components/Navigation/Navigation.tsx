@@ -12,7 +12,7 @@ const Navigation = memo(function Navigation() {
   return (
     <nav className={css.nav}>
       <div className={css.menu}>
-        <NavLink to="/" className={makeLinkClass}>
+        <NavLink to="/">
           <img
             alt="The Movie Database (TMDB)"
             className={css.headerLogo}
