@@ -29,8 +29,8 @@ export default function App() {
           <Route path="/tv" element={<TvPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <Footer />
       </Suspense>
-      <Footer />
     </div>
   );
 }
