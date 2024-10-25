@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState, memo } from 'react';
+import { FormEvent, useEffect, useMemo, useState, memo, FC } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import css from './SearchForm.module.css';
@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { searchMovieReq } from '../../redux/movie/operations';
 import { IoSearch } from 'react-icons/io5';
 
-const SearchForm = memo(() => {
+interface SearchFormProps {
+  styleModule?: { [key: string]: string };
+}
+
+const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [error, setError] = useState<boolean>(false);
   const dispatch = useDispatch<any>();
@@ -48,34 +52,26 @@ const SearchForm = memo(() => {
     }
   }
 
-  // useMemo(() => {
-  //   return getData();
-  // }, [inputValue]);
-
   useEffect(() => {
     setInputValue(queryURL);
     getData();
   }, [queryURL]);
 
   return (
-    <form onSubmit={handleSubmit} className={css.form}>
+    <form onSubmit={handleSubmit} className={styleModule.searchForm}>
       <input
         type="text"
         name="searchField"
         placeholder="Search for a movie, tv show, person......"
-        className={css.searchText}
+        className={styleModule.searchInput}
         value={inputValue.trim()}
         onChange={e => setInputValue(e.target.value)}
       />
-      <button type="submit" className={css.submit}>
+      <button type="submit" className={styleModule.searchButton}>
         <IoSearch />
       </button>
     </form>
   );
 });
 
-// function onChangeInput(e: FormEvent<HTMLInputElement>) {
-//   const sr = e.target;
-//   sr.value = 'Hello'
-// }
 export default SearchForm;

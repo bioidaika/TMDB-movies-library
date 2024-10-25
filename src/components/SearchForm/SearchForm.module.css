@@ -1,11 +1,11 @@
-.form {
+.searchForm {
   position: relative;
   display: flex;
   width: 100%;
   align-items: center;
 }
 
-.searchText {
+.searchInput {
   width: 100%;
   font-size: 15px;
   text-overflow: ellipsis;
@@ -17,7 +17,7 @@
   border: 1px solid #ddd;
 }
 
-.submit {
+.searchButton {
   position: absolute;
   right: 3px;
   top: 50%;
@@ -25,7 +25,6 @@
   height: 36px;
   padding: 0 20px;
   border: 0;
-  /* background: linear-gradient(to right, rgba(30, 213, 169, 1), rgba(1, 180, 228, 1)); */
   color: grey;
   background-color: transparent;
   border-radius: 20px;
@@ -35,6 +34,39 @@
   justify-content: center;
 }
 
-.submit:hover {
+.searchButton:hover {
   color: black;
 }
+
+/* .searchForm {
+  display: flex;
+  align-items: center;
+  background-color: #333333;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.searchInput {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.searchButton {
+  background-color: #1db954;
+  border: none;
+  color: #ffffff;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 5px;
+  transition: background-color 0.3s;
+}
+
+.searchButton:hover {
+  background-color: #17a444;
+} */
