@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState, memo, FC } from 'react';
+import { FormEvent, useEffect, useState, memo, FC } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import css from './SearchForm.module.css';
@@ -11,8 +11,6 @@ interface SearchFormProps {
 }
 
 const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [error, setError] = useState<boolean>(false);
   const dispatch = useDispatch<any>();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
@@ -37,13 +35,8 @@ const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
 
   async function getData() {
     try {
-      // setIsLoading(true);
-      // setError(false);
-      // console.log('Query Request', queryURL);
       if (queryURL === ' ') return;
-      // console.log('Query Request 1', queryURL);
       dispatch(searchMovieReq(queryURL));
-      // console.log('Query Request 2');
     } catch (e: any) {
       // setError(true);
       toast.error(`Error: ${queryURL}`);
@@ -62,7 +55,7 @@ const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
       <input
         type="text"
         name="searchField"
-        placeholder="Search for a movie, tv show, person......"
+        placeholder="Search for a movie, tv show, person..."
         className={styleModule.searchInput}
         value={inputValue.trim()}
         onChange={e => setInputValue(e.target.value)}
