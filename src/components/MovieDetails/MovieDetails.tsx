@@ -16,7 +16,7 @@ const MovieDetails = () => {
   return (
     <>
       {selectedMovie && (
-        <div>
+        <div className={css.section}>
           <Link to={backLinkRef.current} className={css.btn}>
             Back to Home
           </Link>

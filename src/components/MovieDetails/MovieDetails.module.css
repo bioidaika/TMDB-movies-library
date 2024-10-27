@@ -1,6 +1,11 @@
+.section {
+  margin: 10px 10px;
+}
+
 .container {
   display: flex;
   flex-direction: row;
+  margin: 0px 20%;
 }
 .description {
   display: flex;
@@ -19,37 +24,60 @@
 }
 
 .isActive {
-  color: blue;
+  border: none;
+  color: white;
+  background: linear-gradient(to right, rgb(81, 240, 229), rgb(121, 177, 244));
 }
 
 .add_info_list {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  gap: 30px;
+  margin: 20px;
 }
 
 .add_info_item {
-  margin: 10px;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 15%;
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add_info_item:hover {
+  transform: scale(1.2);
 }
 
 .link {
   text-decoration: none;
   color: black;
+  margin: 10px;
+  padding: 10px 20px;
+  border: 2px solid #51f0e5;
+  border-radius: 20px;
+  transform: scale(1);
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .link:hover {
-  text-decoration: underline;
+  border: none;
+  color: white;
+  background: linear-gradient(to right, rgb(81, 240, 229), rgb(121, 177, 244));
+  transform: scale(1.5);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn {
+  color: black;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 150px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn:hover {
-  color: black;
+  color: rgba(1, 180, 228);
+  background-color: rgba(1, 180, 228, 0.1);
+  transform: translateY(-3px);
 }

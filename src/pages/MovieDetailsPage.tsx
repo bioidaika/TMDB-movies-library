@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectError, selectLoading } from '../redux/movie/selectors';
 import { getSelectedMovieByID } from '../redux/movie/operations';
@@ -21,7 +20,6 @@ export default function MovieDetailsPage() {
     <div>
       {isLoading && <Loader />}
       {error && <div>The resource you requested could not be found.</div>}
-      <Toaster />
       <MovieDetails />
     </div>
   );
