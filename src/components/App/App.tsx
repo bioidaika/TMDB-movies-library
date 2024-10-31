@@ -25,6 +25,10 @@ export default function App() {
             <Route path="cast" element={<MovieCast />} />
             <Route path="reviews" element={<MovieReviews />} />
           </Route>
+          <Route path="/tv/:movieID" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
           <Route path="/search/movie/" element={<SearchPage />} />
           <Route path="/tv" element={<TvPage />} />
           <Route path="*" element={<NotFoundPage />} />

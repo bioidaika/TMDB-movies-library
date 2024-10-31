@@ -25,7 +25,9 @@ const TvList: FC<FilteredTVProps> = ({ children }) => {
           {tvLister.length === 0 && <div>No results</div>}
           {tvLister.map(item => (
             <li key={item.id} className={css.list_item}>
+              {/* нужно заменить нижнюю строку */}
               <Link to={`/movies/${item.id}`} state={location}>
+                {/* нужно заменить верхнюю строку */}
                 {item.poster_path != null && (
                   <img
                     loading="lazy"

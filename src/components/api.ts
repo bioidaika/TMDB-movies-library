@@ -25,6 +25,12 @@ export const getMovieByID = async (movieID: string): Promise<IMovieByID> => {
   return response.data as IMovieByID;
 };
 
+// export const getTVByID = async (movieID: string): Promise<IMovieByID> => {
+//   const response = await axios.get(`tv/${movieID}`, options);
+//   console.log(response.data);
+//   return response.data as IMovieByID;
+// };
+
 export const getMovieCasts = async (movieID: string): Promise<ICast[]> => {
   const response = await axios.get(`movie/${movieID}/credits`, options);
   //   console.log(response.data.cast);
