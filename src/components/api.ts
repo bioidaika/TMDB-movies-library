@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IMovie, IMovieByID, ICast, IReviews, Data } from '../types/types';
+import { IMovie, IMovieByID, ICast, IReviews, IData, IDataTV } from '../types/types';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 const options = {
@@ -43,7 +43,7 @@ export const searchMovieQuery = async (searchQuery: string) => {
   return response.data.results;
 };
 
-export const getMovieList = async (range: string, pageN: number): Promise<Data> => {
+export const getMovieList = async (range: string, pageN: number): Promise<IData> => {
   const response = await axios.get(`movie/${range}`, {
     ...options,
     params: {
@@ -52,5 +52,17 @@ export const getMovieList = async (range: string, pageN: number): Promise<Data> 
   });
   // console.log(response.data);
   // return response.data.results as IMovie[];
-  return response.data as Data;
+  return response.data as IData;
+};
+
+export const getTVList = async (range: string, pageN: number): Promise<IDataTV> => {
+  const response = await axios.get(`tv/${range}`, {
+    ...options,
+    params: {
+      page: pageN,
+    },
+  });
+  // console.log(response.data);
+  // return response.data.results as IMovie[];
+  return response.data as IDataTV;
 };

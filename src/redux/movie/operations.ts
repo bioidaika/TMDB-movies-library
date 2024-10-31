@@ -3,9 +3,10 @@ import {
   getMovieByID,
   getMovieList,
   getTrendingMovies,
+  getTVList,
   searchMovieQuery,
 } from '../../components/api';
-import { Data, IMovie, IMovieByID } from '../../types/types';
+import { IData, IDataTV, IMovie, IMovieByID } from '../../types/types';
 
 export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   'movie/trending-movies',
@@ -26,13 +27,32 @@ export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   }
 );
 
-export const getMovieListByParam = createAsyncThunk<Data, { range: string; pageN: number }>(
+export const getMovieListByParam = createAsyncThunk<IData, { range: string; pageN: number }>(
   'movie/category',
   async ({ range, pageN }, thunkAPI) => {
     try {
       const response = await getMovieList(range, pageN);
       if (response) {
-        return response as Data;
+        return response as IData;
+      } else {
+        return thunkAPI.rejectWithValue('No data available');
+      }
+    } catch (error) {
+      if (error instanceof Error) return thunkAPI.rejectWithValue(error.message);
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
+export const getTVShowByParam = createAsyncThunk<IDataTV, { range: string; pageN: number }>(
+  'tv/category',
+  async ({ range, pageN }, thunkAPI) => {
+    try {
+      const response = await getTVList(range, pageN);
+      if (response) {
+        return response as IDataTV;
       } else {
         return thunkAPI.rejectWithValue('No data available');
       }

@@ -14,9 +14,29 @@ export interface IMovie {
   vote_count: number;
 }
 
-export interface Data {
+export interface ITVShow {
+  id: number;
+  name: string;
+  poster_path: string;
+  original_language: string;
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  overview: string;
+  vote_average: number;
+  vote_count: number;
+  first_air_date: string;
+}
+
+export interface IData {
   page: number;
   results: IMovie[];
+  total_pages: number;
+  total_results: number;
+}
+export interface IDataTV {
+  page: number;
+  results: ITVShow[];
   total_pages: number;
   total_results: number;
 }

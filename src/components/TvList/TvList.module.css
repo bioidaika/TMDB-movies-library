@@ -1,0 +1,49 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: left;
+}
+
+.list_item {
+  margin-top: 0px;
+  margin-left: 20px;
+}
+
+.list_item:hover {
+  .title {
+    color: rgba(1, 180, 228);
+  }
+  .details {
+    color: rgba(1, 180, 228);
+  }
+  .description {
+    color: rgba(1, 180, 228);
+  }
+}
+
+.title {
+  color: black;
+  width: 220px;
+}
+.details {
+  color: black;
+  /* width: 220px; */
+}
+
+.description {
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.img_poster {
+  width: 220px;
+  height: 330px;
+  justify-content: center;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center;
+}

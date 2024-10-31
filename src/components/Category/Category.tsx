@@ -8,20 +8,24 @@ import { useSearchParams } from 'react-router-dom';
 
 interface MoviesProps {
   children?: ReactNode;
+  queryParams?: string[];
 }
 
-export const MoviesCategory: FC<MoviesProps> = memo(({ children }) => {
+export const Category: FC<MoviesProps> = memo(({ children, queryParams }) => {
   const dispatch = useDispatch();
   const movieParams = useSelector(selectMovieParam);
   const [params, setParams] = useSearchParams();
 
-  const makeLinkClass = (buttonType: 'now_playing' | 'popular' | 'top_rated' | 'upcoming') => {
+  //function for array in queryParams
+  const formatQueryParam = (param: string) => {
+    return param.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+  };
+
+  const makeLinkClass = (buttonType: string) => {
     return clsx(css.trending__item, movieParams === buttonType ? css.active : '');
   };
-  const HandleClick = (
-    evt: MouseEvent<HTMLButtonElement>,
-    buttonType: 'now_playing' | 'popular' | 'top_rated' | 'upcoming'
-  ) => {
+
+  const HandleClick = (evt: MouseEvent<HTMLButtonElement>, buttonType: string) => {
     dispatch(setMovieParam(buttonType));
     dispatch(setPage(1));
     setParams({ section: buttonType });
@@ -32,7 +36,18 @@ export const MoviesCategory: FC<MoviesProps> = memo(({ children }) => {
       <div className={css.trending__box}>
         <h2 className={css.trending__header}>Category</h2>
         <ul className={css.trending__list}>
-          <li>
+          {/* // мой код ниже */}
+          {queryParams?.map((item, index) => {
+            return (
+              <li key={index}>
+                <button className={makeLinkClass(item)} onClick={evt => HandleClick(evt, item)}>
+                  <span className={css.trending__text}>{formatQueryParam(item)}</span>
+                </button>
+              </li>
+            );
+          })}
+          {/* //конец кода */}
+          {/* <li>
             <button
               className={makeLinkClass('now_playing')}
               onClick={evt => HandleClick(evt, 'now_playing')}
@@ -63,7 +78,7 @@ export const MoviesCategory: FC<MoviesProps> = memo(({ children }) => {
             >
               <span className={css.trending__text}>Upcoming</span>
             </button>
-          </li>
+          </li> */}
         </ul>
       </div>
       {children}

@@ -4,7 +4,7 @@ import MovieList from '../components/MovieList/MovieList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovieListByParam } from '../redux/movie/operations';
 import { selectCurrentPage, selectLoading, selectMovieParam } from '../redux/movie/selectors';
-import { MoviesCategory } from '../components/MoviesCategory/MoviesCategory';
+import { Category } from '../components/Category/Category';
 import Pagination from '../components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { setMovieParam, setPage } from '../redux/movie/slice';
@@ -17,6 +17,7 @@ const MoviesPage: FC = () => {
   const [params, setParams] = useSearchParams();
   const pageParam = params.get('page') ?? '1';
   const sectionParam = params.get('section') ?? 'now_playing';
+  const queryParams = ['now_playing', 'popular', 'top_rated', 'upcoming'];
 
   useEffect(() => {
     dispatch(setMovieParam(sectionParam));
@@ -33,10 +34,10 @@ const MoviesPage: FC = () => {
     !isLoading && (
       <div>
         <Toaster />
-        <MoviesCategory>
+        <Category queryParams={queryParams}>
           <MovieList />
           <Pagination />
-        </MoviesCategory>
+        </Category>
       </div>
     )
   );

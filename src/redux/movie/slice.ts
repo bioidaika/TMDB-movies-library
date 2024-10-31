@@ -3,16 +3,19 @@ import {
   getMovieListByParam,
   getSelectedMovieByID,
   getTrendingMovieList,
+  getTVShowByParam,
   searchMovieReq,
 } from './operations';
-import { Data, IMovie, IMovieByID } from '../../types/types';
+import { IData, IDataTV, IMovie, IMovieByID, ITVShow } from '../../types/types';
 
 export interface MovieState {
   movieList: IMovie[];
+  tvList: ITVShow[];
   loading: boolean;
   error: string | null;
   trending: 'day' | 'week';
-  movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
+  movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming' | 'airing_today' | 'on_the_air';
+  // tvShowParam: 'airing_today' | 'on_the_air' | 'popular' | 'top_rated';
   random_Background: string | '';
   selectedMovie: IMovieByID | null;
   currentPage: number;
@@ -22,12 +25,14 @@ export interface MovieState {
 
 export const initialState: MovieState = {
   movieList: [],
+  tvList: [],
   loading: false,
   error: null,
   trending: 'week',
+  // tvShowParam: 'airing_today',
+  movieParam: 'now_playing',
   random_Background: '',
   selectedMovie: null,
-  movieParam: 'now_playing',
   currentPage: 1,
   totalPages: 0,
   totalResults: 0,
@@ -91,7 +96,7 @@ const movieSlice = createSlice({
       })
       .addCase(getSelectedMovieByID.rejected, handleRejected)
       .addCase(getMovieListByParam.pending, handlePending)
-      .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<Data>) => {
+      .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<IData>) => {
         state.movieList = action.payload.results;
         //limit for pages = 500 themoviedb API
         action.payload.total_pages >= 500
@@ -101,7 +106,19 @@ const movieSlice = createSlice({
         state.selectedMovie = null;
         state.loading = false;
       })
-      .addCase(getMovieListByParam.rejected, handleRejected);
+      .addCase(getMovieListByParam.rejected, handleRejected)
+      .addCase(getTVShowByParam.pending, handlePending)
+      .addCase(getTVShowByParam.fulfilled, (state, action: PayloadAction<IDataTV>) => {
+        state.tvList = action.payload.results;
+        //limit for pages = 500 themoviedb API
+        action.payload.total_pages >= 500
+          ? (state.totalPages = 500)
+          : (state.totalPages = action.payload.total_pages);
+        state.totalResults = action.payload.total_results;
+        state.selectedMovie = null;
+        state.loading = false;
+      })
+      .addCase(getTVShowByParam.rejected, handleRejected);
   },
 });
 export const { setMovieList, setTrendingOption, setRandomBackground, setMovieParam, setPage } =
