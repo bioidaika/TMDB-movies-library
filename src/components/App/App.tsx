@@ -12,6 +12,7 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import Footer from '../Footer/Footer';
+import TvDetailsPage from '../../pages/TvDetailsPage';
 
 export default function App() {
   return (
@@ -25,12 +26,13 @@ export default function App() {
             <Route path="cast" element={<MovieCast />} />
             <Route path="reviews" element={<MovieReviews />} />
           </Route>
-          <Route path="/tv/:movieID" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
+          <Route path="/tv" element={<TvPage />} />
+          <Route path="/tv/:series_id" element={<TvDetailsPage />}>
+            {/* <Route path="cast" element={<TvCast />} /> */}
+            {/* <Route path="reviews" element={<TvReviews />} /> */}
           </Route>
           <Route path="/search/movie/" element={<SearchPage />} />
-          <Route path="/tv" element={<TvPage />} />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IMovie, IMovieByID, ICast, IReviews, IData, IDataTV } from '../types/types';
+import { IMovie, IMovieByID, ICast, IReviews, IData, IDataTV, ITVByID } from '../types/types';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 const options = {
@@ -25,11 +25,11 @@ export const getMovieByID = async (movieID: string): Promise<IMovieByID> => {
   return response.data as IMovieByID;
 };
 
-// export const getTVByID = async (movieID: string): Promise<IMovieByID> => {
-//   const response = await axios.get(`tv/${movieID}`, options);
-//   console.log(response.data);
-//   return response.data as IMovieByID;
-// };
+export const getTvByID = async (series_id: string): Promise<ITVByID> => {
+  const response = await axios.get(`tv/${series_id}`, options);
+  console.log(response.data);
+  return response.data as ITVByID;
+};
 
 export const getMovieCasts = async (movieID: string): Promise<ICast[]> => {
   const response = await axios.get(`movie/${movieID}/credits`, options);

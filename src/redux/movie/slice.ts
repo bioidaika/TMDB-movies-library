@@ -2,11 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getMovieListByParam,
   getSelectedMovieByID,
+  getSelectedTvByID,
   getTrendingMovieList,
   getTVShowByParam,
   searchMovieReq,
 } from './operations';
-import { IData, IDataTV, IMovie, IMovieByID, ITVShow } from '../../types/types';
+import { IData, IDataTV, IMovie, IMovieByID, ITVByID, ITVShow } from '../../types/types';
 
 export interface MovieState {
   movieList: IMovie[];
@@ -15,9 +16,9 @@ export interface MovieState {
   error: string | null;
   trending: 'day' | 'week';
   movieParam: 'now_playing' | 'popular' | 'top_rated' | 'upcoming' | 'airing_today' | 'on_the_air';
-  // tvShowParam: 'airing_today' | 'on_the_air' | 'popular' | 'top_rated';
   random_Background: string | '';
   selectedMovie: IMovieByID | null;
+  selectedTV: ITVByID | null;
   currentPage: number;
   totalPages: number;
   totalResults: number;
@@ -29,10 +30,10 @@ export const initialState: MovieState = {
   loading: false,
   error: null,
   trending: 'week',
-  // tvShowParam: 'airing_today',
   movieParam: 'now_playing',
   random_Background: '',
   selectedMovie: null,
+  selectedTV: null,
   currentPage: 1,
   totalPages: 0,
   totalResults: 0,
@@ -115,10 +116,16 @@ const movieSlice = createSlice({
           ? (state.totalPages = 500)
           : (state.totalPages = action.payload.total_pages);
         state.totalResults = action.payload.total_results;
-        state.selectedMovie = null;
+        state.selectedTV = null;
         state.loading = false;
       })
-      .addCase(getTVShowByParam.rejected, handleRejected);
+      .addCase(getTVShowByParam.rejected, handleRejected)
+      .addCase(getSelectedTvByID.pending, handlePending)
+      .addCase(getSelectedTvByID.fulfilled, (state, action: PayloadAction<ITVByID>) => {
+        state.selectedTV = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSelectedTvByID.rejected, handleRejected);
   },
 });
 export const { setMovieList, setTrendingOption, setRandomBackground, setMovieParam, setPage } =

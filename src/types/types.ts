@@ -61,6 +61,24 @@ export interface IMovieByID {
   tagline: string;
 }
 
+export interface ITVByID {
+  id: number;
+  adult: boolean;
+  name: string;
+  original_name: string;
+  original_language: string;
+  backdrop_path: string;
+  poster_path: string;
+  genres: [{ id: number; name: string }];
+  overview: string;
+  first_air_date: string;
+  vote_average: number;
+  vote_count: number;
+  popularity: number;
+  status: string;
+  tagline: string;
+}
+
 export interface isActive {
   isActive: boolean;
 }
