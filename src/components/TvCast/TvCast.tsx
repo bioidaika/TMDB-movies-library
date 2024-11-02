@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
-import { getMovieCasts } from '../api';
+import { getTVCasts } from '../api';
 import toast, { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import css from './MovieCast.module.css';
 import { AxiosError } from 'axios';
-import { ICast } from '../../types/types';
+import { ITVCast } from '../../types/types';
 import Loader from '../Loader/Loader';
 
 export default function MovieCast() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const { movieID } = useParams();
-  const [selectedCast, setSelectedCast] = useState<ICast[] | null>(null);
+  const { series_id } = useParams();
+  const [selectedCast, setSelectedCast] = useState<ITVCast[] | null>(null);
   const defaultSRC = `https://assets.mycast.io/actor_images/actor-an-unknown-actor-465215_large.jpg`;
   useEffect(() => {
     async function getData() {
       try {
         setIsLoading(true);
         setError(false);
-        const data = await getMovieCasts(movieID || '');
+        const data = await getTVCasts(series_id || '');
         setSelectedCast(data);
         data.length != 0 ? toast.success('Success') : toast.error('No results');
       } catch (e: unknown) {
@@ -31,7 +31,7 @@ export default function MovieCast() {
       }
     }
     getData();
-  }, [movieID]);
+  }, [series_id]);
 
   return (
     <div>
@@ -43,7 +43,7 @@ export default function MovieCast() {
           <ul className={css.cast__list}>
             {selectedCast &&
               selectedCast.map(item => (
-                <li key={item.cast_id} className={css.cast__card}>
+                <li key={item.id} className={css.cast__card}>
                   <img
                     className={css.image}
                     src={
