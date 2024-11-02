@@ -13,6 +13,8 @@ import { Route, Routes } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import Footer from '../Footer/Footer';
 import TvDetailsPage from '../../pages/TvDetailsPage';
+import TvCast from '../TvCast/TvCast';
+import TvReviews from '../TvReviews/TvReviews';
 
 export default function App() {
   return (
@@ -28,8 +30,8 @@ export default function App() {
           </Route>
           <Route path="/tv" element={<TvPage />} />
           <Route path="/tv/:series_id" element={<TvDetailsPage />}>
-            {/* <Route path="cast" element={<TvCast />} /> */}
-            {/* <Route path="reviews" element={<TvReviews />} /> */}
+            <Route path="cast" element={<TvCast />} />
+            <Route path="reviews" element={<TvReviews />} />
           </Route>
           <Route path="/search/movie/" element={<SearchPage />} />
 
