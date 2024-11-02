@@ -9,7 +9,6 @@ import Loader from '../Loader/Loader';
 
 export default function MovieCast() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  //s
   const [error, setError] = useState<boolean>(false);
   const { movieID } = useParams();
   const [selectedCast, setSelectedCast] = useState<ICast[] | null>(null);
