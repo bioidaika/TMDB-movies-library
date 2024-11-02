@@ -12,6 +12,8 @@ export default function SearchPage() {
       <Toaster />
       <h2>Search results for {queryURL}</h2>
       <MovieList />
+
+      {/* стилизировать результаты на SearchPage */}
     </>
   );
 }

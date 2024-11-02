@@ -49,11 +49,9 @@ const TvList: FC<FilteredTVProps> = ({ children }) => {
                 <div className={css.title}>{item.name}</div>
                 <div className={css.description}>
                   <div className={css.details}>
-                    {item.first_air_date.length != 0 ? item.first_air_date.substring(0, 4) : null}
+                    {item.first_air_date ? item.first_air_date.substring(0, 4) : null}
                   </div>
-                  {item.first_air_date.length != 0 && item.genre_ids[0] != null && (
-                    <span> ,&nbsp;</span>
-                  )}
+                  {item.first_air_date && item.genre_ids[0] != null && <span> ,&nbsp;</span>}
                   <div className={css.details}>
                     {item.genre_ids[0] != null &&
                       genresOBJ.map((key: { id: number; name: string }) =>

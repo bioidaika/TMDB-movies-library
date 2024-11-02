@@ -2,21 +2,21 @@ import { MovieState } from '../redux/movie/slice';
 
 export interface IMovie {
   id: number;
-  title: string;
+  title?: string;
   poster_path: string;
   original_language: string;
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   overview: string;
-  release_date: string;
+  release_date?: string;
   vote_average: number;
   vote_count: number;
 }
 
 export interface ITVShow {
   id: number;
-  name: string;
+  name?: string;
   poster_path: string;
   original_language: string;
   adult: boolean;
@@ -25,8 +25,10 @@ export interface ITVShow {
   overview: string;
   vote_average: number;
   vote_count: number;
-  first_air_date: string;
+  first_air_date?: string;
 }
+
+export interface IMovieTV extends ITVShow, IMovie {}
 
 export interface IData {
   page: number;

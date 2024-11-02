@@ -67,8 +67,15 @@ export const getTvReviews = async (series_id: string) => {
 
 export const searchMovieQuery = async (searchQuery: string) => {
   const response = await axios.get(`search/movie?query=${searchQuery}`, options);
+  const responseTV = await axios.get(`search/tv?query=${searchQuery}`, options);
   // console.log(response.data.results);
-  return response.data.results;
+  const data = [...response.data.results, ...responseTV.data.results];
+  console.log('data', data);
+  console.log('response Movie', response.data.results);
+  console.log('response TV', responseTV.data.results);
+
+  // return response.data.results;
+  return data;
 };
 
 export const getMovieList = async (range: string, pageN: number): Promise<IData> => {
