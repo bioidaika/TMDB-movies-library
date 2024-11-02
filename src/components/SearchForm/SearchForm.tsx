@@ -14,7 +14,7 @@ const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
   const dispatch = useDispatch<any>();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
-  const queryURL = params.get('query') ?? ' ';
+  const queryURL = params.get('query') ?? '';
   const [inputValue, setInputValue] = useState(queryURL);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -35,13 +35,11 @@ const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
 
   async function getData() {
     try {
-      if (queryURL === ' ') return;
+      if (queryURL === '') return;
       dispatch(searchMovieReq(queryURL));
     } catch (e: any) {
-      // setError(true);
       toast.error(`Error: ${queryURL}`);
     } finally {
-      // setIsLoading(false);
     }
   }
 
@@ -57,7 +55,7 @@ const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
         name="searchField"
         placeholder="Search for a movie, tv show, person..."
         className={styleModule.searchInput}
-        value={inputValue.trim()}
+        value={inputValue}
         onChange={e => setInputValue(e.target.value)}
       />
       <button type="submit" className={styleModule.searchButton}>
