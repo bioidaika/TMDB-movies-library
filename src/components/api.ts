@@ -8,6 +8,7 @@ import {
   IDataTV,
   ITVByID,
   ITVCast,
+  ITVReviews,
 } from '../types/types';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
@@ -56,6 +57,12 @@ export const getMovieReviews = async (movieID: string) => {
   const response = await axios.get(`movie/${movieID}/reviews`, options);
   //   console.log(response.data.results);
   return response.data.results as IReviews[];
+};
+
+export const getTvReviews = async (series_id: string) => {
+  const response = await axios.get(`tv/${series_id}/reviews`, options);
+  //   console.log(response.data.results);
+  return response.data.results as ITVReviews[];
 };
 
 export const searchMovieQuery = async (searchQuery: string) => {
