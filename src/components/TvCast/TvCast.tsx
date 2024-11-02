@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { getTVCasts } from '../api';
 import toast, { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
-import css from './MovieCast.module.css';
+import css from './TvCast.module.css';
 import { AxiosError } from 'axios';
 import { ITVCast } from '../../types/types';
 import Loader from '../Loader/Loader';
 
-export default function MovieCast() {
+export default function TvCast() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { series_id } = useParams();
