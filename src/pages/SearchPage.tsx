@@ -1,7 +1,8 @@
 import MovieList from '../components/MovieList/MovieList';
-import toast, { Toaster } from 'react-hot-toast';
-import SearchForm from '../components/SearchForm/SearchForm';
+import { Toaster } from 'react-hot-toast';
 import { useSearchParams } from 'react-router-dom';
+import Container from '../components/Container/Container';
+import Title from '../components/Title/Title';
 
 export default function SearchPage() {
   const [params, setParams] = useSearchParams();
@@ -10,10 +11,10 @@ export default function SearchPage() {
   return (
     <>
       <Toaster />
-      <h2>Search results for {queryURL}</h2>
-      <MovieList />
-
-      {/* стилизировать результаты на SearchPage */}
+      <Title text={`Search results for ${queryURL}`} />
+      <Container>
+        <MovieList />
+      </Container>
     </>
   );
 }
