@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { selectLoading, selectRandom_BG } from '../../redux/movie/selectors';
 import { FC, ReactNode, memo } from 'react';
 
-interface WelcomeI {
+interface IWelcome {
   children?: ReactNode;
 }
-const Welcome: FC<WelcomeI> = memo(({ children }) => {
+const Welcome: FC<IWelcome> = memo(({ children }) => {
   const randomBG = useSelector(selectRandom_BG);
   const isLoading = useSelector(selectLoading);
 
