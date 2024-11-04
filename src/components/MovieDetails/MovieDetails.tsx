@@ -5,6 +5,7 @@ import { Suspense, useRef } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { isActive } from '../../types/types';
 import clsx from 'clsx';
+import Title from '../Title/Title';
 
 const MovieDetails = () => {
   const selectedMovie = useSelector(selectSelectedMovie);
@@ -26,11 +27,11 @@ const MovieDetails = () => {
               alt={selectedMovie.original_title}
             />
             <div className={css.description}>
-              <h1>{selectedMovie.original_title}</h1>
+              <Title text={selectedMovie.original_title} size="45px" />
               <p>{`Vote Average: ${selectedMovie.vote_average.toFixed(1)}`}</p>
-              <h2>Overview</h2>
+              <Title text={`Overview`} />
               <p>{selectedMovie.overview}</p>
-              <h2>Genres</h2>
+              <Title text={`Genres`} />
               <ul className={css.list}>
                 {selectedMovie.genres.map(item => (
                   <li className={css.list__item} key={item.id}>
@@ -40,7 +41,7 @@ const MovieDetails = () => {
               </ul>
             </div>
           </div>
-          <h2>Additional information</h2>
+          <Title text={`Additional information`} />
           <ul className={css.add_info_list}>
             <li className={css.add_info_item}>
               <NavLink to="cast" className={makeLinkClass}>
