@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import css from './MovieList.module.css';
 import genres from '../genres.json';
 import { FC, ReactNode } from 'react';
-import { IMovie, IMovieTV } from '../../types/types';
+import { IMovieTV } from '../../types/types';
 import { useSelector } from 'react-redux';
 import { selectLoading, selectMovieList } from '../../redux/movie/selectors';
 
@@ -53,11 +53,6 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
                   {item.release_date && item.genre_ids[0] != null && <span> ,&nbsp;</span>}
                   {item.first_air_date && item.genre_ids[0] != null && <span> ,&nbsp;</span>}
                   <div className={css.details}>
-                    {/* {item.genre_ids.map(id =>
-                      genresOBJ.map((item: { id: number; name: string }) =>
-                        item.id == id ? item.name + ' ' : null
-                      )
-                    )} */}
                     {item.genre_ids[0] != null &&
                       genresOBJ.map((key: { id: number; name: string }) =>
                         key.id == item.genre_ids[0] ? key.name : null
