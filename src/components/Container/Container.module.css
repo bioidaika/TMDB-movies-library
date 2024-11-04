@@ -1,0 +1,6 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  max-width: 1500px;
+  margin: 20px auto;
+}
