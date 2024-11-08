@@ -26,8 +26,8 @@ const MoviesPage: FC = () => {
 
   useEffect(() => {
     dispatch(getMovieListByParam({ range: sectionParam, pageN: Number(pageParam) }));
-    console.log('pageParam:', pageParam);
-    console.log('sectionParam:', sectionParam);
+    // console.log('pageParam:', pageParam);
+    // console.log('sectionParam:', sectionParam);
   }, [dispatch, sectionParam, pageParam]);
 
   return (

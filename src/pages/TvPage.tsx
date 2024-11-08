@@ -21,8 +21,8 @@ const TvPage = () => {
 
   useEffect(() => {
     dispatch(getTVShowByParam({ range: sectionParam, pageN: Number(pageParam) }));
-    console.log('pageParam:', pageParam);
-    console.log('sectionParam:', sectionParam);
+    // console.log('pageParam:', pageParam);
+    // console.log('sectionParam:', sectionParam);
   }, [dispatch, sectionParam, pageParam]);
 
   return (
