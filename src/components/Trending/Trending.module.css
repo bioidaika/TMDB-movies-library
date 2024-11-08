@@ -8,8 +8,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 20px;
   margin-bottom: 10px;
+  justify-content: center;
 }
 
 .trending__header {
