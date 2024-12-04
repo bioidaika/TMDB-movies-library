@@ -15,7 +15,8 @@ const Welcome: FC<IWelcome> = memo(({ children }) => {
       <div
         className={css.container}
         style={{
-          backgroundImage: `image-set(url(https://media.themoviedb.org/t/p/w1920_and_h600_face${randomBG}) 1x, url(https://media.themoviedb.org/t/p/w3840_and_h1200_face${randomBG}) 2x)`,
+          // backgroundImage: `image-set(url(https://image.tmdb.org/t/p/w1920_and_h600_face${randomBG}) 1x, url(https://image.tmdb.org/t/p/w3840_and_h1200_face${randomBG}) 2x)`,
+          backgroundImage: `url(https://image.tmdb.org/t/p/w1920_and_h600_face${randomBG}`,
         }}
       >
         <div className={css.section}>

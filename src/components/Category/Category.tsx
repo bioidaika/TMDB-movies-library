@@ -1,4 +1,4 @@
-import { FC, memo, MouseEvent, ReactNode, useEffect } from 'react';
+import { FC, memo, MouseEvent, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from '../Trending/Trending.module.css';
 import clsx from 'clsx';
@@ -14,6 +14,7 @@ interface MoviesProps {
 export const Category: FC<MoviesProps> = memo(({ children, queryParams }) => {
   const dispatch = useDispatch();
   const movieParams = useSelector(selectMovieParam);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [params, setParams] = useSearchParams();
 
   //function for array in queryParams

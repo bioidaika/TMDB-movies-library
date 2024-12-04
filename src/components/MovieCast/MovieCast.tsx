@@ -9,6 +9,7 @@ import Loader from '../Loader/Loader';
 
 export default function MovieCast() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<boolean>(false);
   const { movieID } = useParams();
   const [selectedCast, setSelectedCast] = useState<ICast[] | null>(null);
@@ -20,9 +21,11 @@ export default function MovieCast() {
         setError(false);
         const data = await getMovieCasts(movieID || '');
         setSelectedCast(data);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         data.length != 0 ? toast.success('Success') : toast.error('No results');
       } catch (e: unknown) {
         setError(true);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         e instanceof AxiosError
           ? toast.error(e.response?.data?.status_message)
           : toast.error('An unkown error occured');

@@ -29,7 +29,7 @@ export const initialState: MovieState = {
   tvList: [],
   loading: false,
   error: null,
-  trending: 'week',
+  trending: 'day',
   movieParam: 'now_playing',
   random_Background: '',
   selectedMovie: null,
@@ -76,10 +76,7 @@ const movieSlice = createSlice({
       .addCase(getTrendingMovieList.fulfilled, (state, action: PayloadAction<IMovie[]>) => {
         state.movieList = action.payload;
         state.selectedMovie = null;
-        state.random_Background == ''
-          ? (state.random_Background = action.payload[randomNumber].backdrop_path)
-          : (state.random_Background = state.random_Background);
-
+        state.random_Background = action.payload[randomNumber].backdrop_path;
         state.loading = false;
       })
       .addCase(getTrendingMovieList.rejected, handleRejected)
@@ -100,6 +97,7 @@ const movieSlice = createSlice({
       .addCase(getMovieListByParam.fulfilled, (state, action: PayloadAction<IData>) => {
         state.movieList = action.payload.results;
         //limit for pages = 500 themoviedb API
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         action.payload.total_pages >= 500
           ? (state.totalPages = 500)
           : (state.totalPages = action.payload.total_pages);
@@ -112,6 +110,7 @@ const movieSlice = createSlice({
       .addCase(getTVShowByParam.fulfilled, (state, action: PayloadAction<IDataTV>) => {
         state.tvList = action.payload.results;
         //limit for pages = 500 themoviedb API
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         action.payload.total_pages >= 500
           ? (state.totalPages = 500)
           : (state.totalPages = action.payload.total_pages);
