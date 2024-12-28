@@ -43,13 +43,13 @@
 .searchField {
   width: 200px;
   max-width: 100%;
-  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1); */
   overflow: hidden;
 }
 
-.searchField:focus-within {
+/* .searchField:focus-within {
   width: 40%;
-}
+} */
 
 .icon {
   margin-right: 8px;

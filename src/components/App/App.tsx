@@ -15,6 +15,8 @@ import Footer from '../Footer/Footer';
 import TvDetailsPage from '../../pages/TvDetailsPage';
 import TvCast from '../TvCast/TvCast';
 import TvReviews from '../TvReviews/TvReviews';
+import SignUp from '../SignUp/SignUp';
+import SignIn from '../SignIn/SignIn';
 
 export default function App() {
   return (
@@ -34,7 +36,8 @@ export default function App() {
             <Route path="reviews" element={<TvReviews />} />
           </Route>
           <Route path="/search/movie/" element={<SearchPage />} />
-
+          <Route path="/auth/login" element={<SignIn />} />
+          <Route path="/auth/signin" element={<SignUp />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

@@ -37,7 +37,7 @@ export const Category: FC<MoviesProps> = memo(({ children, queryParams }) => {
       <div className={css.trending__box}>
         <h2 className={css.trending__header}>Category</h2>
         <ul className={css.trending__list}>
-          {/* // мой код ниже */}
+          {/* // code start */}
           {queryParams?.map((item, index) => {
             return (
               <li key={index}>
@@ -47,7 +47,7 @@ export const Category: FC<MoviesProps> = memo(({ children, queryParams }) => {
               </li>
             );
           })}
-          {/* //конец кода */}
+          {/* //code end */}
           {/* <li>
             <button
               className={makeLinkClass('now_playing')}

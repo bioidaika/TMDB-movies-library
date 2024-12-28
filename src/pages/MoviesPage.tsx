@@ -3,7 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import MovieList from '../components/MovieList/MovieList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovieListByParam } from '../redux/movie/operations';
-import { selectCurrentPage, selectLoading, selectMovieParam } from '../redux/movie/selectors';
+import { selectLoading } from '../redux/movie/selectors';
 import { Category } from '../components/Category/Category';
 import Pagination from '../components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
@@ -12,8 +12,6 @@ import { setMovieParam, setPage } from '../redux/movie/slice';
 const MoviesPage: FC = () => {
   const isLoading = useSelector(selectLoading);
   const dispatch = useDispatch<any>();
-  const movieParams = useSelector(selectMovieParam);
-  const currentPage = useSelector(selectCurrentPage);
   const [params, setParams] = useSearchParams();
   const pageParam = params.get('page') ?? '1';
   const sectionParam = params.get('section') ?? 'now_playing';
@@ -26,8 +24,6 @@ const MoviesPage: FC = () => {
 
   useEffect(() => {
     dispatch(getMovieListByParam({ range: sectionParam, pageN: Number(pageParam) }));
-    // console.log('pageParam:', pageParam);
-    // console.log('sectionParam:', sectionParam);
   }, [dispatch, sectionParam, pageParam]);
 
   return (

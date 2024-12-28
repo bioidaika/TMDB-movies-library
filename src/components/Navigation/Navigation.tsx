@@ -28,8 +28,18 @@ const Navigation = memo(function Navigation() {
           <FaTv className={css.icon} /> TV Shows
         </NavLink>
       </div>
-      <div className={css.searchField}>
-        <SearchForm styleModule={searchFormStyles} />
+      <div className={css.menu}>
+        <div className={css.searchField}>
+          <SearchForm styleModule={searchFormStyles} />
+        </div>
+        <div>
+          <NavLink to="/auth/login" className={css.link}>
+            Log In
+          </NavLink>
+          <NavLink to="/auth/signin" className={css.link}>
+            Sign In
+          </NavLink>
+        </div>
       </div>
     </nav>
   );
