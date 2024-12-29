@@ -5,6 +5,7 @@ import {
   getSelectedTvByID,
   getTrendingMovieList,
   getTVShowByParam,
+  loginUserOP,
   searchMovieReq,
 } from './operations';
 import { IData, IDataTV, IMovie, IMovieByID, ITVByID, ITVShow } from '../../types/types';
@@ -124,7 +125,12 @@ const movieSlice = createSlice({
         state.selectedTV = action.payload;
         state.loading = false;
       })
-      .addCase(getSelectedTvByID.rejected, handleRejected);
+      .addCase(getSelectedTvByID.rejected, handleRejected)
+      .addCase(loginUserOP.pending, handlePending)
+      .addCase(loginUserOP.fulfilled, state => {
+        state.loading = false;
+      })
+      .addCase(loginUserOP.rejected, handleRejected);
   },
 });
 export const { setMovieList, setTrendingOption, setRandomBackground, setMovieParam, setPage } =

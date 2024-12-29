@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState, memo, FC } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import css from './SearchForm.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { searchMovieReq } from '../../redux/movie/operations';
 import { IoSearch } from 'react-icons/io5';
 

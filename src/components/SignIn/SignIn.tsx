@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import css from './SignIn.module.css';
 import { NavLink } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
+import { useDispatch } from 'react-redux';
+import { loginUserOP } from '../../redux/movie/operations';
+import { AppDispatch } from '../../redux/store';
 
 const LogIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Handle login logic here
+    dispatch(loginUserOP({ email, password }));
     console.log('Email:', email);
     console.log('Password:', password);
   };
