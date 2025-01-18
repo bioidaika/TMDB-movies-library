@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import css from './SignIn.module.css';
 import { NavLink } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import { useDispatch } from 'react-redux';
-import { loginUserOP } from '../../redux/movie/operations';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
+import { loginUserOP } from '../../redux/auth/operations';
+import { isError, isLoading } from '../../redux/auth/selectors';
+import LoadingNotification from './LoadingNotification/LoadingNotification';
 
 const LogIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
+  // const isLogged = useSelector(isLoggedIn);
+  const isLoadingServer = useSelector(isLoading);
+  const error = useSelector(isError);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -28,6 +33,8 @@ const LogIn: React.FC = () => {
 
   return (
     <div className={css.container}>
+      {isLoadingServer && <LoadingNotification />}
+      {error && <div className={css.error}>{error}</div>}
       <div className={css.form}>
         <form onSubmit={handleSubmit} className={css.innerForm}>
           <input

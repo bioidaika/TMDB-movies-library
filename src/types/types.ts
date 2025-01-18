@@ -1,3 +1,4 @@
+import { authState } from '../redux/auth/slice';
 import { MovieState } from '../redux/movie/slice';
 
 export interface IMovie {
@@ -141,4 +142,8 @@ export interface ITVReviews {
 
 export interface Movie {
   movie: MovieState;
+}
+
+export interface Auth {
+  auth: authState;
 }
