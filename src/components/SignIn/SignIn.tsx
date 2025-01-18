@@ -33,9 +33,9 @@ const LogIn: React.FC = () => {
 
   return (
     <div className={css.container}>
-      {isLoadingServer && <LoadingNotification />}
-      {error && <div className={css.error}>{error}</div>}
       <div className={css.form}>
+        {isLoadingServer && <LoadingNotification />}
+        {error && <div className={css.error}>{error}</div>}
         <form onSubmit={handleSubmit} className={css.innerForm}>
           <input
             className={css.input}
