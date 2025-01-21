@@ -21,10 +21,10 @@ const handleServerPending = (state: authState) => {
   state.error = null;
 };
 
-const handleServerRejected = (state: authState, action: PayloadAction<string | null>) => {
+const handleServerRejected = (state: authState, action: PayloadAction<string | unknown>) => {
   state.isLoading = false;
   // state.error = (action.payload as { message?: string })?.message || 'An error occurred';
-  state.error = action.payload || 'An error occurred';
+  state.error = (action.payload as string) || 'An error occurred';
 };
 
 const authSlice = createSlice({

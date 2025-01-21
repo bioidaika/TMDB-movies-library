@@ -5,7 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { loginUserOP } from '../../redux/auth/operations';
-import { isError, isLoading } from '../../redux/auth/selectors';
+import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import LoadingNotification from './LoadingNotification/LoadingNotification';
 
 const LogIn: React.FC = () => {
@@ -13,8 +13,8 @@ const LogIn: React.FC = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   // const isLogged = useSelector(isLoggedIn);
-  const isLoadingServer = useSelector(isLoading);
-  const error = useSelector(isError);
+  const isLoadingServer = useSelector(selectIsLoading);
+  const error = useSelector(selectIsError);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

@@ -16,7 +16,9 @@ export const loginUserOP = createAsyncThunk('auth/login', async (data: LoginData
     }
   } catch (error) {
     if (error instanceof Error && 'response' in error)
-      return thunkAPI.rejectWithValue((error as any).response.data.error);
+      return thunkAPI.rejectWithValue(
+        (error as { response: { data: { error: string } } }).response.data.error
+      );
     else {
       return thunkAPI.rejectWithValue('An unknown error occurred');
     }

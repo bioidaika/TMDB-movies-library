@@ -17,6 +17,7 @@ import TvCast from '../TvCast/TvCast';
 import TvReviews from '../TvReviews/TvReviews';
 import SignUp from '../SignUp/SignUp';
 import SignIn from '../SignIn/SignIn';
+import { PrivateRoute } from '../../pages/PrivateRoute';
 
 export default function App() {
   return (
@@ -36,8 +37,12 @@ export default function App() {
             <Route path="reviews" element={<TvReviews />} />
           </Route>
           <Route path="/search/movie/" element={<SearchPage />} />
-          <Route path="/auth/login" element={<SignIn />} />
-          <Route path="/auth/signin" element={<SignUp />} />
+          <Route
+            path="/auth/login"
+            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignIn />} />}
+          />
+          <Route path="/auth/signup" element={<SignUp />} />
+          <Route path="/auth/my-profile" element={<div>My profile</div>} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

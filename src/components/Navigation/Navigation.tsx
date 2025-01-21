@@ -36,8 +36,8 @@ const Navigation = memo(function Navigation() {
           <NavLink to="/auth/login" className={css.link}>
             Log In
           </NavLink>
-          <NavLink to="/auth/signin" className={css.link}>
-            Sign In
+          <NavLink to="/auth/signup" className={css.link}>
+            Sign Up
           </NavLink>
         </div>
       </div>
