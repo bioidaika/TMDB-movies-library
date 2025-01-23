@@ -9,5 +9,5 @@ interface RestrictRouteProps {
 
 export const RestrictRoute = ({ component, redirectTo }: RestrictRouteProps) => {
   const isLogged = useSelector(selectIsLoggedIn);
-  return isLogged ? <Navigate to={redirectTo} /> : component;
+  return !isLogged ? <Navigate to={redirectTo} /> : component;
 };

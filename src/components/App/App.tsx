@@ -41,8 +41,16 @@ export default function App() {
             path="/auth/login"
             element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignIn />} />}
           />
-          <Route path="/auth/signup" element={<SignUp />} />
-          <Route path="/auth/my-profile" element={<div>My profile</div>} />
+          <Route
+            path="/auth/signup"
+            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignUp />} />}
+          />
+          <Route
+            path="/auth/my-profile"
+            element={
+              <PrivateRoute redirectTo="/auth/my-profile" component={<div>My profile</div>} />
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

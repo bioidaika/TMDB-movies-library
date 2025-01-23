@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginUserOP } from './operations';
+import { loginUserOP, logoutUserOP } from './operations';
 
 export interface authState {
   token: string | null;
@@ -38,7 +38,13 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoggedIn = true;
       })
-      .addCase(loginUserOP.rejected, handleServerRejected);
+      .addCase(loginUserOP.rejected, handleServerRejected)
+      .addCase(logoutUserOP.pending, handleServerPending)
+      .addCase(logoutUserOP.fulfilled, state => {
+        state.isLoading = false;
+        state.isLoggedIn = true;
+      })
+      .addCase(logoutUserOP.rejected, handleServerRejected);
   },
 });
 

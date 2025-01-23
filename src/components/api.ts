@@ -119,3 +119,10 @@ export const loginUser = async (data: { email: string; password: string }) => {
   // console.log(response.data);
   return response.data;
 };
+
+export const logoutUser = async () => {
+  const response = await myBackendAxios.post(`auth/logout/`);
+  // console.log(response.data.results);
+  // console.log(response.data);
+  return response.data;
+};

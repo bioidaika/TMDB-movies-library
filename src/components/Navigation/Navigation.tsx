@@ -5,12 +5,24 @@ import clsx from 'clsx';
 import { memo } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import { FaFilm, FaTv } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { logoutUserOP } from '../../redux/auth/operations';
+import { AsyncThunk } from '@reduxjs/toolkit';
+import { AppDispatch } from '../../redux/store';
 
 const makeLinkClass = ({ isActive }: { isActive: boolean }) => {
   return clsx(css.link, isActive && css.isActive);
 };
 
 const Navigation = memo(function Navigation() {
+  const isLogged = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch<AppDispatch>();
+  const handleLogout = () => {
+    dispatch(logoutUserOP());
+    console.log('User logged out');
+  };
+
   return (
     <nav className={css.nav}>
       <div className={css.menu}>
@@ -32,14 +44,26 @@ const Navigation = memo(function Navigation() {
         <div className={css.searchField}>
           <SearchForm styleModule={searchFormStyles} />
         </div>
-        <div>
-          <NavLink to="/auth/login" className={css.link}>
-            Log In
-          </NavLink>
-          <NavLink to="/auth/signup" className={css.link}>
-            Sign Up
-          </NavLink>
-        </div>
+        {isLogged && (
+          <div>
+            <NavLink to="/auth/login" className={css.link}>
+              Log In
+            </NavLink>
+            <NavLink to="/auth/signup" className={css.link}>
+              Sign Up
+            </NavLink>
+          </div>
+        )}
+        {!isLogged && (
+          <div>
+            <NavLink to="/auth/my-profile" className={css.link}>
+              UserName
+            </NavLink>
+            <NavLink onClick={handleLogout} to="/" className={css.link}>
+              Log Out
+            </NavLink>
+          </div>
+        )}
       </div>
     </nav>
   );
