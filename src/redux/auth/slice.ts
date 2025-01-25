@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginUserOP, logoutUserOP } from './operations';
+import { loginUserOP, logoutUserOP, signinGoogleOauthOP, signinUserOP } from './operations';
 
 export interface authState {
   token: string | null;
@@ -30,7 +30,11 @@ const handleServerRejected = (state: authState, action: PayloadAction<string | u
 const authSlice = createSlice({
   name: 'user',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(loginUserOP.pending, handleServerPending)
@@ -42,10 +46,22 @@ const authSlice = createSlice({
       .addCase(logoutUserOP.pending, handleServerPending)
       .addCase(logoutUserOP.fulfilled, state => {
         state.isLoading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(logoutUserOP.rejected, handleServerRejected)
+      .addCase(signinUserOP.pending, handleServerPending)
+      .addCase(signinUserOP.fulfilled, state => {
+        state.isLoading = false;
         state.isLoggedIn = true;
       })
-      .addCase(logoutUserOP.rejected, handleServerRejected);
+      .addCase(signinUserOP.rejected, handleServerRejected)
+      .addCase(signinGoogleOauthOP.pending, handleServerPending)
+      .addCase(signinGoogleOauthOP.fulfilled, state => {
+        state.isLoading = false;
+        state.isLoggedIn = true;
+      })
+      .addCase(signinGoogleOauthOP.rejected, handleServerRejected);
   },
 });
-
+export const setError = authSlice.actions.setError;
 export const authReducer = authSlice.reducer;

@@ -1,16 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUser, logoutUser } from '../../components/api';
+import { loginUser, logoutUser, myBackendAxios, signupUser } from '../../components/api';
 
 interface LoginData {
   email: string;
   password: string;
 }
 
+interface RegisterData {
+  email: string;
+  password: string;
+}
+export const setAuthHeader = (token: string) => {
+  myBackendAxios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+const clearAuthHeader = () => {
+  myBackendAxios.defaults.headers.common.Authorization = '';
+};
+
 export const loginUserOP = createAsyncThunk('auth/login', async (data: LoginData, thunkAPI) => {
   try {
     const response = await loginUser(data);
     if (response) {
-      return response as LoginData;
+      setAuthHeader(response.data.accessToken);
     } else {
       return thunkAPI.rejectWithValue('No data available');
     }
@@ -28,11 +40,7 @@ export const loginUserOP = createAsyncThunk('auth/login', async (data: LoginData
 export const logoutUserOP = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await logoutUser();
-    // if (response) {
-    //   return response as { message: string };
-    // } else {
-    //   return thunkAPI.rejectWithValue('No data available');
-    // }
+    clearAuthHeader();
   } catch (error) {
     if (error instanceof Error && 'response' in error)
       return thunkAPI.rejectWithValue(
@@ -43,3 +51,47 @@ export const logoutUserOP = createAsyncThunk('auth/logout', async (_, thunkAPI) 
     }
   }
 });
+
+export const signinUserOP = createAsyncThunk(
+  'auth/signup',
+  async (data: RegisterData, thunkAPI) => {
+    try {
+      const response = await signupUser(data);
+      if (response) {
+        return response as RegisterData;
+      } else {
+        return thunkAPI.rejectWithValue('No data available');
+      }
+    } catch (error) {
+      if (error instanceof Error && 'response' in error)
+        return thunkAPI.rejectWithValue(
+          (error as { response: { data: { error: string } } }).response.data.error
+        );
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
+export const signinGoogleOauthOP = createAsyncThunk(
+  'auth/confirmGoogleAuth',
+  async (code: string, thunkAPI) => {
+    try {
+      const response = await myBackendAxios.post('auth/confirm-google-auth', { code });
+      if (response) {
+        setAuthHeader(response.data.accessToken);
+      } else {
+        return thunkAPI.rejectWithValue('No data available');
+      }
+    } catch (error) {
+      if (error instanceof Error && 'response' in error)
+        return thunkAPI.rejectWithValue(
+          (error as { response: { data: { error: string } } }).response.data.error
+        );
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);

@@ -7,6 +7,7 @@ import { AppDispatch } from '../../redux/store';
 import { loginUserOP } from '../../redux/auth/operations';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import LoadingNotification from './LoadingNotification/LoadingNotification';
+import { getGoogleOAuthURL } from '../api';
 
 const LogIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -19,16 +20,14 @@ const LogIn: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(loginUserOP({ email, password }));
-    console.log('Email:', email);
-    console.log('Password:', password);
+    // console.log('Email:', email);
+    // console.log('Password:', password);
   };
 
-  const handleGoogleSignIn = () => {
-    window.open(
-      'https://movies-library-backend-s1fd.onrender.com/auth/get-oauth-url',
-      '_blank',
-      'width=500,height=600'
-    );
+  const handleGoogleSignIn = async () => {
+    const url = await getGoogleOAuthURL();
+    // window.open(url, '_blank', 'width=500,height=600');
+    window.location.href = url;
   };
 
   return (

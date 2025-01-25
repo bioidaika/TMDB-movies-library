@@ -22,7 +22,7 @@ const axiosTheMovieDB = axios.create({
   },
 });
 // axiosTheMovieDB.defaults.baseURL = 'https://api.themoviedb.org/3/';
-const myBackendAxios = axios.create({
+export const myBackendAxios = axios.create({
   baseURL: 'https://movies-library-backend-s1fd.onrender.com/',
 });
 // myBackendAxios.defaults.baseURL = 'https://movies-library-backend-s1fd.onrender.com/';
@@ -115,14 +115,30 @@ export const getTVList = async (range: string, pageN: number): Promise<IDataTV> 
 
 export const loginUser = async (data: { email: string; password: string }) => {
   const response = await myBackendAxios.post(`auth/login/`, data);
+  return response.data;
+};
+
+export const signupUser = async (data: { email: string; password: string }) => {
+  const response = await myBackendAxios.post(`auth/register/`, data);
   // console.log(response.data.results);
   // console.log(response.data);
   return response.data;
 };
 
 export const logoutUser = async () => {
-  const response = await myBackendAxios.post(`auth/logout/`);
-  // console.log(response.data.results);
-  // console.log(response.data);
-  return response.data;
+  await myBackendAxios.post(`auth/logout/`);
 };
+
+export const getGoogleOAuthURL = async () => {
+  const response = await myBackendAxios.get(`auth/get-oauth-url`);
+  console.log('response', response.data);
+
+  return response.data.data.url;
+};
+
+// export const confirmGoogleOAuthURL = async () => {
+//   const response = await myBackendAxios.get(`auth/get-oauth-url`);
+//   console.log('response', response.data);
+
+//   return response.data.data.url;
+// };

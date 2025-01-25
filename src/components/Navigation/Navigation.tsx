@@ -8,7 +8,6 @@ import { FaFilm, FaTv } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { logoutUserOP } from '../../redux/auth/operations';
-import { AsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch } from '../../redux/store';
 
 const makeLinkClass = ({ isActive }: { isActive: boolean }) => {
@@ -44,7 +43,7 @@ const Navigation = memo(function Navigation() {
         <div className={css.searchField}>
           <SearchForm styleModule={searchFormStyles} />
         </div>
-        {isLogged && (
+        {!isLogged && (
           <div>
             <NavLink to="/auth/login" className={css.link}>
               Log In
@@ -54,7 +53,7 @@ const Navigation = memo(function Navigation() {
             </NavLink>
           </div>
         )}
-        {!isLogged && (
+        {isLogged && (
           <div>
             <NavLink to="/auth/my-profile" className={css.link}>
               UserName

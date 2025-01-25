@@ -1,63 +1,86 @@
 import React, { useState } from 'react';
+import css from './SignUp.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
+import { AppDispatch } from '../../redux/store';
+import { signinUserOP } from '../../redux/auth/operations';
+import LoadingNotification from '../SignIn/LoadingNotification/LoadingNotification';
+import { FcGoogle } from 'react-icons/fc';
+import { setError } from '../../redux/auth/slice';
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
+
+  const isLoadingServer = useSelector(selectIsLoading);
+  const error = useSelector(selectIsError);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Handle sign up logic here
     if (password !== confirmPassword) {
       console.error('Passwords do not match');
+      setError('Passwords do not match');
       return;
     }
-    console.log('Email:', email);
-    console.log('Password:', password);
+    dispatch(signinUserOP({ email, password }));
+    // console.log('Email:', email);
+    // console.log('Password:', password);
   };
 
   const handleGoogleSignIn = () => {
-    // Handle Google sign in logic here
+    window.open(
+      'https://movies-library-backend-s1fd.onrender.com/auth/get-oauth-url',
+      '_blank',
+      'width=500,height=600'
+    );
     console.log('Google Sign In');
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+    <div className={css.container}>
+      <div className={css.form}>
+        {isLoadingServer && <LoadingNotification />}
+        {error && <div className={css.error}>{error}</div>}
+        <form onSubmit={handleSubmit}>
           <input
+            className={css.input}
             type="email"
+            placeholder="Email"
             id="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
           <input
+            className={css.input}
             type="password"
+            placeholder="Password"
             id="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
           <input
+            className={css.input}
             type="password"
+            placeholder="Confirm Password"
             id="confirmPassword"
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
             required
           />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
-      <button onClick={handleGoogleSignIn}>Sign In with Google</button>
+          <button type="submit" className={css.submitBtn}>
+            Sign Up
+          </button>
+          <div className={css.divider} />
+        </form>
+        <button onClick={handleGoogleSignIn} className={css.googleBtn}>
+          <FcGoogle className={css.googleIcon} />
+          Sign In with Google
+        </button>
+      </div>
     </div>
   );
 };

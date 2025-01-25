@@ -18,6 +18,8 @@ import TvReviews from '../TvReviews/TvReviews';
 import SignUp from '../SignUp/SignUp';
 import SignIn from '../SignIn/SignIn';
 import { PrivateRoute } from '../../pages/PrivateRoute';
+import { RestrictRoute } from '../../pages/RestrictRoute';
+import ConfirmGoogleAuth from '../ConfirmGoogleAuth/ConfirmGoogleAuth';
 
 export default function App() {
   return (
@@ -47,10 +49,10 @@ export default function App() {
           />
           <Route
             path="/auth/my-profile"
-            element={
-              <PrivateRoute redirectTo="/auth/my-profile" component={<div>My profile</div>} />
-            }
+            element={<RestrictRoute redirectTo="/auth/login" component={<div>My profile</div>} />}
           />
+          <Route path="/confirm-google-auth" element={<ConfirmGoogleAuth />} />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
