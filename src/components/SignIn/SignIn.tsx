@@ -4,16 +4,14 @@ import { NavLink } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
-import { loginUserOP } from '../../redux/auth/operations';
+import { getGoogleOAuthUrlOP, loginUserOP } from '../../redux/auth/operations';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import LoadingNotification from './LoadingNotification/LoadingNotification';
-import { getGoogleOAuthURL } from '../api';
 
 const LogIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
-  // const isLogged = useSelector(isLoggedIn);
   const isLoadingServer = useSelector(selectIsLoading);
   const error = useSelector(selectIsError);
 
@@ -24,12 +22,9 @@ const LogIn: React.FC = () => {
     // console.log('Password:', password);
   };
 
-  const handleGoogleSignIn = async () => {
-    const url = await getGoogleOAuthURL();
-    // window.open(url, '_blank', 'width=500,height=600');
-    window.location.href = url;
+  const handleGoogleSignIn = () => {
+    dispatch(getGoogleOAuthUrlOP());
   };
-
   return (
     <div className={css.container}>
       <div className={css.form}>

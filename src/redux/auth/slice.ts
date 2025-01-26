@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginUserOP, logoutUserOP, signinGoogleOauthOP, signinUserOP } from './operations';
+import {
+  getGoogleOAuthUrlOP,
+  loginUserOP,
+  logoutUserOP,
+  signinGoogleOauthOP,
+  signinUserOP,
+} from './operations';
 
 export interface authState {
   token: string | null;
@@ -60,7 +66,12 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoggedIn = true;
       })
-      .addCase(signinGoogleOauthOP.rejected, handleServerRejected);
+      .addCase(signinGoogleOauthOP.rejected, handleServerRejected)
+      .addCase(getGoogleOAuthUrlOP.pending, handleServerPending)
+      .addCase(getGoogleOAuthUrlOP.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(getGoogleOAuthUrlOP.rejected, handleServerRejected);
   },
 });
 export const setError = authSlice.actions.setError;

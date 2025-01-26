@@ -1,5 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUser, logoutUser, myBackendAxios, signupUser } from '../../components/api';
+import {
+  getGoogleOAuthURL,
+  loginUser,
+  logoutUser,
+  myBackendAxios,
+  signupUser,
+} from '../../components/api';
 
 interface LoginData {
   email: string;
@@ -74,8 +80,32 @@ export const signinUserOP = createAsyncThunk(
   }
 );
 
+export const getGoogleOAuthUrlOP = createAsyncThunk(
+  'auth/getGoogleOAuthURL',
+  async (_, thunkAPI) => {
+    try {
+      const response = await getGoogleOAuthURL();
+      if (response) {
+        // window.open(response, '_self');
+        window.location.href = response;
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue('No data available');
+      }
+    } catch (error) {
+      if (error instanceof Error && 'response' in error)
+        return thunkAPI.rejectWithValue(
+          (error as { response: { data: { error: string } } }).response.data.error
+        );
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
 export const signinGoogleOauthOP = createAsyncThunk(
-  'auth/confirmGoogleAuth',
+  'auth/confirmGoogleOAuth',
   async (code: string, thunkAPI) => {
     try {
       const response = await myBackendAxios.post('auth/confirm-google-auth', { code });

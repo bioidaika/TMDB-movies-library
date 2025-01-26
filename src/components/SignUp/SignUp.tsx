@@ -3,7 +3,7 @@ import css from './SignUp.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import { AppDispatch } from '../../redux/store';
-import { signinUserOP } from '../../redux/auth/operations';
+import { getGoogleOAuthUrlOP, signinUserOP } from '../../redux/auth/operations';
 import LoadingNotification from '../SignIn/LoadingNotification/LoadingNotification';
 import { FcGoogle } from 'react-icons/fc';
 import { setError } from '../../redux/auth/slice';
@@ -30,12 +30,7 @@ const SignUp: React.FC = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.open(
-      'https://movies-library-backend-s1fd.onrender.com/auth/get-oauth-url',
-      '_blank',
-      'width=500,height=600'
-    );
-    console.log('Google Sign In');
+    dispatch(getGoogleOAuthUrlOP());
   };
 
   return (
