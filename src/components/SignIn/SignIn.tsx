@@ -8,7 +8,7 @@ import { getGoogleOAuthUrlOP, loginUserOP } from '../../redux/auth/operations';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import LoadingNotification from './LoadingNotification/LoadingNotification';
 
-const LogIn: React.FC = () => {
+const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
@@ -66,4 +66,4 @@ const LogIn: React.FC = () => {
   );
 };
 
-export default LogIn;
+export default SignIn;

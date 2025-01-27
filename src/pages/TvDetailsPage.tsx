@@ -5,10 +5,11 @@ import { selectError, selectLoading } from '../redux/movie/selectors';
 import { getSelectedTvByID } from '../redux/movie/operations';
 import Loader from '../components/Loader/Loader';
 import TvDetails from '../components/TvDetails/TvDetails';
+import { AppDispatch } from '../redux/store';
 
 export default function TvDetailsPage() {
   const { series_id } = useParams();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const error = useSelector(selectError);
   const isLoading = useSelector(selectLoading);
 

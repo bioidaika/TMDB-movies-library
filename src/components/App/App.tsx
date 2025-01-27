@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react';
 import Navigation from '../Navigation/Navigation';
 const HomePage = lazy(() => import('../../pages/HomePage'));
 const MoviesPage = lazy(() => import('../../pages/MoviesPage'));
-const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
+const NotFoundPage = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'));
 const MovieDetailsPage = lazy(() => import('../../pages/MovieDetailsPage'));
 const MovieCast = lazy(() => import('../MovieCast/MovieCast'));
 const MovieReviews = lazy(() => import('../MovieReviews/MovieReviews'));
@@ -15,11 +15,11 @@ import Footer from '../Footer/Footer';
 import TvDetailsPage from '../../pages/TvDetailsPage';
 import TvCast from '../TvCast/TvCast';
 import TvReviews from '../TvReviews/TvReviews';
-import SignUp from '../SignUp/SignUp';
-import SignIn from '../SignIn/SignIn';
 import { PrivateRoute } from '../../pages/PrivateRoute';
 import { RestrictRoute } from '../../pages/RestrictRoute';
 import ConfirmGoogleAuth from '../ConfirmGoogleAuth/ConfirmGoogleAuth';
+import SignInPage from '../../pages/SignInPage';
+import SignUpPage from '../../pages/SignUpPage';
 
 export default function App() {
   return (
@@ -41,11 +41,11 @@ export default function App() {
           <Route path="/search/movie/" element={<SearchPage />} />
           <Route
             path="/auth/login"
-            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignIn />} />}
+            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignInPage />} />}
           />
           <Route
             path="/auth/signup"
-            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignUp />} />}
+            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignUpPage />} />}
           />
           <Route
             path="/auth/my-profile"

@@ -5,10 +5,11 @@ import { selectError, selectLoading } from '../redux/movie/selectors';
 import { getSelectedMovieByID } from '../redux/movie/operations';
 import Loader from '../components/Loader/Loader';
 import MovieDetails from '../components/MovieDetails/MovieDetails';
+import { AppDispatch } from '../redux/store';
 
 export default function MovieDetailsPage() {
   const { movieID } = useParams();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const error = useSelector(selectError);
   const isLoading = useSelector(selectLoading);
 
