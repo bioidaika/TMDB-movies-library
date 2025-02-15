@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import Navigation from '../Navigation/Navigation';
 const HomePage = lazy(() => import('../../pages/HomePage'));
 const MoviesPage = lazy(() => import('../../pages/MoviesPage'));
@@ -20,43 +20,70 @@ import { RestrictRoute } from '../../pages/RestrictRoute';
 import ConfirmGoogleAuth from '../ConfirmGoogleAuth/ConfirmGoogleAuth';
 import SignInPage from '../../pages/SignInPage';
 import SignUpPage from '../../pages/SignUpPage';
+import { AppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshPage } from '../../redux/auth/operations';
+import { selectIsLoading, selectToken } from '../../redux/auth/selectors';
 
 export default function App() {
+  const isLoading = useSelector(selectIsLoading);
+  const token = useSelector(selectToken);
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    if (token) dispatch(refreshPage());
+  }, [dispatch]);
+  // useEffect(() => {
+  //   console.log('App useEffect');
+
+  //   const token = localStorage.getItem('accessToken');
+  //   console.log(token);
+
+  //   if (!token) {
+  //     // Попробуйте обновить токен
+  //     dispatch(refreshTokenOP());
+  //     console.log(1);
+  //   }
+  //   console.log(2);
+  // }, [dispatch]);
+
   return (
     <div>
       <Navigation />
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviesPage />} />
-          <Route path="/movies/:movieID" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
-          </Route>
-          <Route path="/tv" element={<TvPage />} />
-          <Route path="/tv/:series_id" element={<TvDetailsPage />}>
-            <Route path="cast" element={<TvCast />} />
-            <Route path="reviews" element={<TvReviews />} />
-          </Route>
-          <Route path="/search/movie/" element={<SearchPage />} />
-          <Route
-            path="/auth/login"
-            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignInPage />} />}
-          />
-          <Route
-            path="/auth/signup"
-            element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignUpPage />} />}
-          />
-          <Route
-            path="/auth/my-profile"
-            element={<RestrictRoute redirectTo="/auth/login" component={<div>My profile</div>} />}
-          />
-          <Route path="/confirm-google-auth" element={<ConfirmGoogleAuth />} />
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/movies" element={<MoviesPage />} />
+            <Route path="/movies/:movieID" element={<MovieDetailsPage />}>
+              <Route path="cast" element={<MovieCast />} />
+              <Route path="reviews" element={<MovieReviews />} />
+            </Route>
+            <Route path="/tv" element={<TvPage />} />
+            <Route path="/tv/:series_id" element={<TvDetailsPage />}>
+              <Route path="cast" element={<TvCast />} />
+              <Route path="reviews" element={<TvReviews />} />
+            </Route>
+            <Route path="/search/movie/" element={<SearchPage />} />
+            <Route
+              path="/auth/login"
+              element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignInPage />} />}
+            />
+            <Route
+              path="/auth/signup"
+              element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignUpPage />} />}
+            />
+            <Route
+              path="/auth/my-profile"
+              element={<RestrictRoute redirectTo="/auth/login" component={<div>My profile</div>} />}
+            />
+            <Route path="/confirm-google-auth" element={<ConfirmGoogleAuth />} />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Footer />
-      </Suspense>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <Footer />
+        </Suspense>
+      )}
     </div>
   );
 }

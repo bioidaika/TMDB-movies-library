@@ -21,20 +21,10 @@ const axiosTheMovieDB = axios.create({
       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTRhZmQxZDVkNTdiZTY3OWE5MzI4MzU3MWMzYTVmMyIsInN1YiI6IjY2MWY0MmM2NTI4YjJlMDE3ZDQwMTI4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sGsosBQkBz_InFEWck73LFH_aRCFp19xkfDWyzON9d4',
   },
 });
-// axiosTheMovieDB.defaults.baseURL = 'https://api.themoviedb.org/3/';
 export const myBackendAxios = axios.create({
   baseURL: 'https://movies-library-backend-s1fd.onrender.com/',
+  withCredentials: true,
 });
-// myBackendAxios.defaults.baseURL = 'https://movies-library-backend-s1fd.onrender.com/';
-// const options = {
-// method: 'GET',
-// params: { language: 'en-US' },
-// headers: {
-//   accept: 'application/json',
-//   Authorization:
-//     'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTRhZmQxZDVkNTdiZTY3OWE5MzI4MzU3MWMzYTVmMyIsInN1YiI6IjY2MWY0MmM2NTI4YjJlMDE3ZDQwMTI4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sGsosBQkBz_InFEWck73LFH_aRCFp19xkfDWyzON9d4',
-// },
-// };
 
 export const getTrendingMovies = async (range: string): Promise<IMovie[]> => {
   const response = await axiosTheMovieDB.get(`trending/movie/${range}`);
@@ -82,12 +72,10 @@ export const getTvReviews = async (series_id: string) => {
 export const searchMovieQuery = async (searchQuery: string) => {
   const response = await axiosTheMovieDB.get(`search/movie?query=${searchQuery}`);
   const responseTV = await axiosTheMovieDB.get(`search/tv?query=${searchQuery}`);
-  // console.log(response.data.results);
   const data = [...response.data.results, ...responseTV.data.results];
   // console.log('data', data);
   // console.log('response Movie', response.data.results);
   // console.log('response TV', responseTV.data.results);
-  // return response.data.results;
   return data;
 };
 
@@ -131,14 +119,12 @@ export const logoutUser = async () => {
 
 export const getGoogleOAuthURL = async () => {
   const response = await myBackendAxios.get(`auth/get-oauth-url`);
-  console.log('response', response.data);
-
+  // console.log('response', response.data);
   return response.data.data.url;
 };
 
-// export const confirmGoogleOAuthURL = async () => {
-//   const response = await myBackendAxios.get(`auth/get-oauth-url`);
-//   console.log('response', response.data);
-
-//   return response.data.data.url;
-// };
+export const signInGoogle = async (code: string) => {
+  const response = await myBackendAxios.post('auth/confirm-google-auth', { code });
+  // console.log('response', response.data);
+  return response.data;
+};
