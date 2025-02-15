@@ -8,7 +8,8 @@ import {
   signupUser,
 } from '../../components/api';
 import { RootState } from '../store';
-import { setAccessToken } from './slice';
+import { logoutAction, setAccessToken } from './slice';
+import { Store } from '@reduxjs/toolkit';
 interface LoginData {
   email: string;
   password: string;
@@ -145,7 +146,7 @@ export const refreshPage = createAsyncThunk('auth/refreshPage', async (_, thunkA
   }
 });
 
-export const setupAxiosInterceptors = store => {
+export const setupAxiosInterceptors = (store: Store) => {
   myBackendAxios.interceptors.response.use(
     response => response,
     async error => {
@@ -154,19 +155,14 @@ export const setupAxiosInterceptors = store => {
         originalRequest._retry = true;
         try {
           console.log('0');
-          // await myBackendAxios.post('auth/refresh');
-          const { data } = await myBackendAxios.post('auth/refresh', null, {
-            withCredentials: true,
-          });
+          const { data } = await myBackendAxios.post('auth/refresh');
           setAuthHeader(data.data.accessToken);
           originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
           store.dispatch(setAccessToken(data.accessToken));
           console.log('1');
           return myBackendAxios(originalRequest);
-          //return axios.request(originalRequest);
         } catch (err) {
-          console.log('2');
-          store.dispatch(logoutUserOP());
+          store.dispatch(logoutAction());
           // logoutUserOP();
           return Promise.reject(err);
         }
