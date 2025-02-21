@@ -67,14 +67,18 @@ export default function App() {
             <Route path="/search/movie/" element={<SearchPage />} />
             <Route
               path="/auth/login"
-              element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignInPage />} />}
+              element={<PrivateRoute redirectTo="/favorite" component={<SignInPage />} />}
             />
             <Route
               path="/auth/signup"
-              element={<PrivateRoute redirectTo="/auth/my-profile" component={<SignUpPage />} />}
+              element={<PrivateRoute redirectTo="/favorite" component={<SignUpPage />} />}
             />
             <Route
-              path="/auth/my-profile"
+              path="/favorite"
+              element={<RestrictRoute redirectTo="/auth/login" component={<div>My profile</div>} />}
+            />
+            <Route
+              path="/profile-settings"
               element={<RestrictRoute redirectTo="/auth/login" component={<div>My profile</div>} />}
             />
             <Route path="/confirm-google-auth" element={<ConfirmGoogleAuth />} />

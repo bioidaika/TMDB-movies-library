@@ -3,7 +3,7 @@ import css from './SignUp.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import { AppDispatch } from '../../redux/store';
-import { getGoogleOAuthUrlOP, signinUserOP } from '../../redux/auth/operations';
+import { getGoogleOAuthUrlOP, signupUserOP } from '../../redux/auth/operations';
 import LoadingNotification from '../SignIn/LoadingNotification/LoadingNotification';
 import { FcGoogle } from 'react-icons/fc';
 import { setError } from '../../redux/auth/slice';
@@ -24,7 +24,7 @@ const SignUp: React.FC = () => {
       setError('Passwords do not match');
       return;
     }
-    dispatch(signinUserOP({ email, password }));
+    dispatch(signupUserOP({ email, password }));
     // console.log('Email:', email);
     // console.log('Password:', password);
   };

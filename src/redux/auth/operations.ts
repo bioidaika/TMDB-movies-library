@@ -32,7 +32,7 @@ export const loginUserOP = createAsyncThunk('auth/login', async (data: LoginData
     const response = await loginUser(data);
     if (response) {
       setAuthHeader(response.data.accessToken);
-      return response.data.accessToken;
+      return response.data;
     } else {
       return thunkAPI.rejectWithValue('No data available');
     }
@@ -62,7 +62,7 @@ export const logoutUserOP = createAsyncThunk('auth/logout', async (_, thunkAPI) 
   }
 });
 
-export const signinUserOP = createAsyncThunk(
+export const signupUserOP = createAsyncThunk(
   'auth/signup',
   async (data: RegisterData, thunkAPI) => {
     try {
@@ -116,7 +116,7 @@ export const signinGoogleOauthOP = createAsyncThunk(
       const response = await signInGoogle(code);
       if (response) {
         setAuthHeader(response.data.accessToken);
-        return response.data.accessToken;
+        return response.data;
       } else {
         return thunkAPI.rejectWithValue('No data available');
       }

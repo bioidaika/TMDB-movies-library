@@ -56,3 +56,54 @@
   font-size: 18px;
   vertical-align: middle;
 }
+
+.profileContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.profileButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.userIcon {
+  font-size: 18px;
+}
+
+.profileContainer:hover .dropdownMenu {
+  display: block;
+}
+
+.dropdownMenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: -75px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  width: 150px;
+  z-index: 10;
+}
+
+.dropdownItem {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: none;
+  background: none;
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dropdownItem:hover {
+  background: #f0f0f0;
+}

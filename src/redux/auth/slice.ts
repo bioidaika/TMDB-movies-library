@@ -5,11 +5,31 @@ import {
   logoutUserOP,
   refreshPage,
   signinGoogleOauthOP,
-  signinUserOP,
+  signupUserOP,
 } from './operations';
+export interface user {
+  _id: string | null;
+  name: string | null;
+  email: string | null;
+  gender: string | null;
+  avatar: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+}
+export interface favorite {
+  _id: string | null;
+  title: string | null;
+  releaseDate: string | null;
+  genre: string | null;
+  userId: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+}
 
 export interface authState {
   token: string | null;
+  user: user | null;
+  favorites: favorite[] | null;
   isLoading: boolean | null;
   isLoggedIn: boolean | null;
   isRefreshing: boolean;
@@ -17,6 +37,8 @@ export interface authState {
 }
 export const initialState: authState = {
   token: null,
+  user: null,
+  favorites: null,
   isLoading: null,
   isLoggedIn: null,
   isRefreshing: false,
@@ -60,7 +82,9 @@ const authSlice = createSlice({
       .addCase(loginUserOP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
-        state.token = action.payload;
+        state.token = action.payload.accessToken;
+        state.user = action.payload.user;
+        state.favorites = action.payload.favorites;
       })
       .addCase(loginUserOP.rejected, handleServerRejected)
       .addCase(logoutUserOP.pending, handleServerPending)
@@ -70,13 +94,13 @@ const authSlice = createSlice({
         state.token = null;
       })
       .addCase(logoutUserOP.rejected, handleServerRejected)
-      .addCase(signinUserOP.pending, handleServerPending)
-      .addCase(signinUserOP.fulfilled, (state, action) => {
+      .addCase(signupUserOP.pending, handleServerPending)
+      .addCase(signupUserOP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload;
       })
-      .addCase(signinUserOP.rejected, handleServerRejected)
+      .addCase(signupUserOP.rejected, handleServerRejected)
       .addCase(refreshPage.pending, handleServerPending)
       .addCase(refreshPage.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -88,7 +112,9 @@ const authSlice = createSlice({
       .addCase(signinGoogleOauthOP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
-        state.token = action.payload;
+        state.token = action.payload.accessToken;
+        state.user = action.payload.user;
+        state.favorites = action.payload.favorites;
       })
       .addCase(signinGoogleOauthOP.rejected, handleServerRejected)
       .addCase(getGoogleOAuthUrlOP.pending, handleServerPending)

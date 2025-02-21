@@ -4,9 +4,9 @@ import searchFormStyles from '../SearchForm/SearchFormMain.module.css';
 import clsx from 'clsx';
 import { memo } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
-import { FaFilm, FaTv } from 'react-icons/fa';
+import { FaFilm, FaTv, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectUserName } from '../../redux/auth/selectors';
 import { logoutUserOP } from '../../redux/auth/operations';
 import { AppDispatch } from '../../redux/store';
 
@@ -17,6 +17,8 @@ const makeLinkClass = ({ isActive }: { isActive: boolean }) => {
 const Navigation = memo(function Navigation() {
   const isLogged = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch<AppDispatch>();
+  const userName = useSelector(selectUserName);
+
   const handleLogout = () => {
     dispatch(logoutUserOP());
     console.log('User logged out');
@@ -55,12 +57,33 @@ const Navigation = memo(function Navigation() {
         )}
         {isLogged && (
           <div>
-            <NavLink to="/auth/my-profile" className={css.link}>
-              UserName
+            {/* <NavLink to="/favorite" className={css.link}>
+              {userName}
+            </NavLink> */}
+            {/* <NavLink to="/favorite" className={css.profileButton}>
+              <FaUser className={css.userIcon} />
+              {userName}
             </NavLink>
+
             <NavLink onClick={handleLogout} to="/" className={css.link}>
               Log Out
-            </NavLink>
+            </NavLink> */}
+
+            <div className={css.profileContainer}>
+              <NavLink to="/favorite" className={css.profileButton}>
+                <FaUser className={css.userIcon} />
+                {userName}
+              </NavLink>
+
+              <div className={css.dropdownMenu}>
+                <NavLink to="/auth/my-profile" className={css.dropdownItem}>
+                  Settings
+                </NavLink>
+                <button onClick={handleLogout} className={css.dropdownItem}>
+                  Log Out
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
