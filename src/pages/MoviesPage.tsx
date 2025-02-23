@@ -8,10 +8,11 @@ import { Category } from '../components/Category/Category';
 import Pagination from '../components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { setMovieParam, setPage } from '../redux/movie/slice';
+import { AppDispatch } from '../redux/store';
 
 const MoviesPage: FC = () => {
   const isLoading = useSelector(selectLoading);
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const [params, setParams] = useSearchParams();
   const pageParam = params.get('page') ?? '1';
   const sectionParam = params.get('section') ?? 'now_playing';
