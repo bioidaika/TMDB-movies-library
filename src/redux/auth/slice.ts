@@ -16,14 +16,20 @@ export interface user {
   createdAt: string | null;
   updatedAt: string | null;
 }
+
 export interface favorite {
-  _id: string | null;
+  backdrop_path: string | null;
+  genres: [] | null;
+  id: number | null;
+  original_title: string | null;
+  overview: string | null;
+  poster_path: string | null;
+  release_date: string | null;
   title: string | null;
-  releaseDate: string | null;
-  genre: string | null;
+  vote_average: number | null;
+  vote_count: number | null;
+  contentType: string | null;
   userId: string | null;
-  createdAt: string | null;
-  updatedAt: string | null;
 }
 
 export interface authState {
