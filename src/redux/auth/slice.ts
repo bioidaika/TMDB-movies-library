@@ -19,7 +19,7 @@ export interface user {
 
 export interface favorite {
   backdrop_path: string | null;
-  genres: [] | null;
+  genres: Array<number> | null;
   id: number | null;
   original_title: string | null;
   overview: string | null;

@@ -57,26 +57,17 @@ const Navigation = memo(function Navigation() {
         )}
         {isLogged && (
           <div>
-            {/* <NavLink to="/favorite" className={css.link}>
-              {userName}
-            </NavLink> */}
-            {/* <NavLink to="/favorite" className={css.profileButton}>
-              <FaUser className={css.userIcon} />
-              {userName}
-            </NavLink>
-
-            <NavLink onClick={handleLogout} to="/" className={css.link}>
-              Log Out
-            </NavLink> */}
-
             <div className={css.profileContainer}>
-              <NavLink to="/favorite" className={css.profileButton}>
+              <NavLink to="/saved" className={css.profileButton}>
                 <FaUser className={css.userIcon} />
                 {userName}
               </NavLink>
 
               <div className={css.dropdownMenu}>
-                <NavLink to="/auth/my-profile" className={css.dropdownItem}>
+                <NavLink to="/saved" className={css.dropdownItem}>
+                  Saved
+                </NavLink>
+                <NavLink to="/profile-settings" className={css.dropdownItem}>
                   Settings
                 </NavLink>
                 <button onClick={handleLogout} className={css.dropdownItem}>

@@ -24,6 +24,7 @@ import { AppDispatch } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshPage } from '../../redux/auth/operations';
 import { selectIsLoading, selectToken } from '../../redux/auth/selectors';
+import { FavoritePage } from '../../pages/FavoritePage';
 
 export default function App() {
   const isLoading = useSelector(selectIsLoading);
@@ -67,19 +68,21 @@ export default function App() {
             <Route path="/search/movie/" element={<SearchPage />} />
             <Route
               path="/auth/login"
-              element={<PrivateRoute redirectTo="/favorite" component={<SignInPage />} />}
+              element={<PrivateRoute redirectTo="/saved" component={<SignInPage />} />}
             />
             <Route
               path="/auth/signup"
-              element={<PrivateRoute redirectTo="/favorite" component={<SignUpPage />} />}
+              element={<PrivateRoute redirectTo="/saved" component={<SignUpPage />} />}
             />
             <Route
-              path="/favorite"
-              element={<RestrictRoute redirectTo="/auth/login" component={<div>My profile</div>} />}
+              path="/saved"
+              element={<RestrictRoute redirectTo="/auth/login" component={<FavoritePage />} />}
             />
             <Route
               path="/profile-settings"
-              element={<RestrictRoute redirectTo="/auth/login" component={<div>My profile</div>} />}
+              element={
+                <RestrictRoute redirectTo="/auth/login" component={<div>Profile-settings</div>} />
+              }
             />
             <Route path="/confirm-google-auth" element={<ConfirmGoogleAuth />} />
 

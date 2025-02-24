@@ -1,0 +1,50 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+
+.list_item {
+  margin-top: 0px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.list_item:hover {
+  transform: scale(1.05);
+}
+
+.title,
+.details,
+.description {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.list_item:hover .title,
+.list_item:hover .details,
+.list_item:hover .description {
+  color: rgba(1, 180, 228);
+}
+
+.title {
+  width: 220px;
+}
+
+.description {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.img_poster {
+  width: 220px;
+  height: 330px;
+  justify-content: center;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center;
+}
