@@ -33,6 +33,7 @@ export default function App() {
   useEffect(() => {
     if (token) dispatch(refreshPage());
   }, [dispatch]);
+
   // useEffect(() => {
   //   console.log('App useEffect');
 

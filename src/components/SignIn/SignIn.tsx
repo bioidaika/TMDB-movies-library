@@ -15,7 +15,7 @@ const SignIn: React.FC = () => {
   const isLoadingServer = useSelector(selectIsLoading);
   const error = useSelector(selectIsError);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(loginUserOP({ email, password }));
     // console.log('Email:', email);

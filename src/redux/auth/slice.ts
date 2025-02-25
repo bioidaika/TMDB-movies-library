@@ -77,9 +77,10 @@ const authSlice = createSlice({
       state.token = action.payload;
     },
     logoutAction(state) {
-      // state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
+      state.user = null;
+      state.favorites = null;
     },
   },
   extraReducers: builder => {
@@ -90,7 +91,6 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.token = action.payload.accessToken;
         state.user = action.payload.user;
-        state.favorites = action.payload.favorites;
       })
       .addCase(loginUserOP.rejected, handleServerRejected)
       .addCase(logoutUserOP.pending, handleServerPending)
@@ -98,6 +98,8 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoggedIn = false;
         state.token = null;
+        state.user = null;
+        state.favorites = null;
       })
       .addCase(logoutUserOP.rejected, handleServerRejected)
       .addCase(signupUserOP.pending, handleServerPending)
@@ -105,13 +107,15 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload;
+        state.user = action.payload.user;
+        state.favorites = action.payload.favorites;
       })
       .addCase(signupUserOP.rejected, handleServerRejected)
       .addCase(refreshPage.pending, handleServerPending)
       .addCase(refreshPage.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
-        state.token = action.payload;
+        state.favorites = action.payload;
       })
       .addCase(refreshPage.rejected, handleServerRejected)
       .addCase(signinGoogleOauthOP.pending, handleServerPending)

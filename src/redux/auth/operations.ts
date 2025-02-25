@@ -69,7 +69,7 @@ export const signupUserOP = createAsyncThunk(
       const response = await signupUser(data);
       if (response) {
         setAuthHeader(response.data.accessToken);
-        return response.data.accessToken;
+        return response.data;
       } else {
         return thunkAPI.rejectWithValue('No data available');
       }
@@ -139,8 +139,8 @@ export const refreshPage = createAsyncThunk('auth/refreshPage', async (_, thunkA
 
   try {
     setAuthHeader(token);
-    await myBackendAxios.get('/favorite');
-    return token;
+    const favorites = await myBackendAxios.get('/favorite');
+    return favorites.data.data;
   } catch {
     return thunkAPI.rejectWithValue('An unknown error occurred!!!');
   }
@@ -156,9 +156,12 @@ export const setupAxiosInterceptors = (store: Store) => {
         try {
           console.log('0');
           const { data } = await myBackendAxios.post('auth/refresh');
+          console.log('accessToken', data.data.accessToken);
+
           setAuthHeader(data.data.accessToken);
           originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
-          store.dispatch(setAccessToken(data.accessToken));
+          store.dispatch(setAccessToken(data.data.accessToken));
+          // store.dispatch(setAccessToken(data.data.accessToken));
           console.log('1');
           return myBackendAxios(originalRequest);
         } catch (err) {
