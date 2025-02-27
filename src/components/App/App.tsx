@@ -34,20 +34,6 @@ export default function App() {
     if (token) dispatch(refreshPage());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   console.log('App useEffect');
-
-  //   const token = localStorage.getItem('accessToken');
-  //   console.log(token);
-
-  //   if (!token) {
-  //     // Попробуйте обновить токен
-  //     dispatch(refreshTokenOP());
-  //     console.log(1);
-  //   }
-  //   console.log(2);
-  // }, [dispatch]);
-
   return (
     <div>
       <Navigation />

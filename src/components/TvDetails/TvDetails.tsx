@@ -22,7 +22,7 @@ const TvDetails = () => {
           </Link>
           <div className={css.container}>
             <img
-              src={`https://image.tmdb.org/t/p/w400/${selectedTV.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w300/${selectedTV.poster_path}`}
               alt={selectedTV.original_name}
             />
             <div className={css.description}>

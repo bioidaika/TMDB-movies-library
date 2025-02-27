@@ -22,10 +22,13 @@ const MovieDetails = () => {
             Back to Home
           </Link>
           <div className={css.container}>
-            <img
-              src={`https://image.tmdb.org/t/p/w400/${selectedMovie.poster_path}`}
-              alt={selectedMovie.original_title}
-            />
+            <div className={css.poster}>
+              <img
+                src={`https://image.tmdb.org/t/p/w300/${selectedMovie.poster_path}`}
+                alt={selectedMovie.original_title}
+              />
+              {/* <button className={css.btn}>Add to favorites</button> */}
+            </div>
             <div className={css.description}>
               <Title text={selectedMovie.original_title} size="45px" />
               <p>{`Vote Average: ${selectedMovie.vote_average.toFixed(1)}`}</p>

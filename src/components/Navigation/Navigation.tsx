@@ -65,7 +65,7 @@ const Navigation = memo(function Navigation() {
 
               <div className={css.dropdownMenu}>
                 <NavLink to="/saved" className={css.dropdownItem}>
-                  Saved
+                  Saved list
                 </NavLink>
                 <NavLink to="/profile-settings" className={css.dropdownItem}>
                   Settings

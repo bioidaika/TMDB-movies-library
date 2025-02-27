@@ -67,6 +67,7 @@
 
 .btn {
   color: black;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,4 +81,8 @@
   color: rgba(1, 180, 228);
   background-color: rgba(1, 180, 228, 0.1);
   transform: translateY(-3px);
+}
+
+.poster {
+  width: 100%;
 }
