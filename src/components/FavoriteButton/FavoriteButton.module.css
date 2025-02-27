@@ -1,0 +1,22 @@
+.favorite {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.notFavorite {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.favorite:hover,
+.notFavorite:hover {
+  opacity: 0.8;
+}

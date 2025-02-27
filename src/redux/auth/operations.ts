@@ -132,7 +132,7 @@ export const signinGoogleOauthOP = createAsyncThunk(
   }
 );
 
-export const refreshPage = createAsyncThunk('auth/refreshPage', async (_, thunkAPI) => {
+export const refreshPage = createAsyncThunk('user/favorite', async (_, thunkAPI) => {
   const state = <RootState>thunkAPI.getState();
   const token = state.auth.token;
   if (token === null) return thunkAPI.rejectWithValue('No token available');
@@ -175,14 +175,17 @@ export const setupAxiosInterceptors = (store: Store) => {
     }
   );
 };
-export const refreshTokenOP = createAsyncThunk('auth/refresh', async () => {
-  try {
-    console.log('3');
-    const response = await myBackendAxios.post('/auth/refresh', {}, { withCredentials: true });
-    const newAccessToken = response.data.data.accessToken;
-    console.log('newAccessToken', newAccessToken);
-    return newAccessToken;
-  } catch {
-    // dispatch(logoutUserOP());
-  }
-});
+
+// export const addFavorite = createAsyncThunk('user/addFavorite', async (_, thunkAPI) => {
+//   try {
+//   } catch {
+//     return thunkAPI.rejectWithValue('An unknown error occurred!!!');
+//   }
+// });
+
+// export const removeFavorite = createAsyncThunk('user/addFavorite', async (_, thunkAPI) => {
+//   try {
+//   } catch {
+//     return thunkAPI.rejectWithValue('An unknown error occurred!!!');
+//   }
+// });

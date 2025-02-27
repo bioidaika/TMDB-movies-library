@@ -132,12 +132,6 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getGoogleOAuthUrlOP.rejected, handleServerRejected);
-    // .addCase(refreshTokenOP.pending, handleServerPending)
-    // .addCase(refreshTokenOP.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.token = action.payload;
-    // })
-    // .addCase(refreshTokenOP.rejected, handleServerRejected)
   },
 });
 

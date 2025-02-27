@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFavorite } from '../../redux/auth/selectors';
 import css from './FavoriteButton.module.css';
-import { AppDispatch } from '../../redux/store';
+// import { AppDispatch } from '../../redux/store';
+// import { addFavorite, removeFavorite } from '../../redux/auth/operations';
 
 interface FavoriteButtonProps {
   movieId: number;
