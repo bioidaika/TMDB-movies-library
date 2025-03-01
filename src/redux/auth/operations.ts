@@ -10,6 +10,7 @@ import {
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
 import { Store } from '@reduxjs/toolkit';
+import { IfavoriteItem } from '../../types/types';
 interface LoginData {
   email: string;
   password: string;
@@ -176,12 +177,17 @@ export const setupAxiosInterceptors = (store: Store) => {
   );
 };
 
-// export const addFavorite = createAsyncThunk('user/addFavorite', async (_, thunkAPI) => {
-//   try {
-//   } catch {
-//     return thunkAPI.rejectWithValue('An unknown error occurred!!!');
-//   }
-// });
+export const addFavorite = createAsyncThunk<IfavoriteItem, IfavoriteItem>(
+  'user/addFavorite',
+  async (data: IfavoriteItem, thunkAPI) => {
+    try {
+      const response = await myBackendAxios.post('/favorite', data);
+      return response.data.data;
+    } catch {
+      return thunkAPI.rejectWithValue('An unknown error occurred!!!');
+    }
+  }
+);
 
 // export const removeFavorite = createAsyncThunk('user/addFavorite', async (_, thunkAPI) => {
 //   try {

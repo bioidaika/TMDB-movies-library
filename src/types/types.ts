@@ -147,3 +147,17 @@ export interface Movie {
 export interface Auth {
   auth: authState;
 }
+
+export interface IfavoriteItem {
+  backdrop_path: string;
+  genres: number[];
+  media_id: number;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  vote_average: number;
+  vote_count: number;
+  contentType: string;
+}
