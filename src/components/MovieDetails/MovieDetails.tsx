@@ -6,6 +6,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { isActive } from '../../types/types';
 import clsx from 'clsx';
 import Title from '../Title/Title';
+import { FavoriteButton } from '../FavoriteButton/FavoriteButton';
 
 const MovieDetails = () => {
   const selectedMovie = useSelector(selectSelectedMovie);
@@ -28,6 +29,7 @@ const MovieDetails = () => {
                 alt={selectedMovie.original_title}
               />
               {/* <button className={css.btn}>Add to favorites</button> */}
+              <FavoriteButton movieId={selectedMovie.id} />
             </div>
             <div className={css.description}>
               <Title text={selectedMovie.original_title} size="45px" />

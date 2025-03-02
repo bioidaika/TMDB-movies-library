@@ -28,18 +28,22 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
     vote_count: pickedMovie.vote_count,
     contentType: 'movie',
   };
+  console.log('Component FavoriteButton');
 
   if (!FavoriteList) return null;
-  const isFavorite = FavoriteList.some(item => item.id === movieId);
+  //  console.log('Component FavoriteButton2');
+  const isFavorite = FavoriteList.some(item => item.media_id === movieId);
+  console.log('is Favorite', isFavorite); // false
+
   const handleClick = () => {
     // if (isFavorite) dispatch(removeFavorite(movieId));
     // else dispatch(addFavorite(movieId));
     if (!isFavorite) dispatch(addFavorite(data));
   };
-
+  console.log('Component FavoriteButton3');
   return (
     <button className={isFavorite ? css.favorite : css.notFavorite} onClick={handleClick}>
-      Add to favorites
+      {isFavorite ? 'Remove from Favorites ❤️' : 'Add to Favorites 🤍'}
     </button>
   );
 };

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  addFavorite,
   getGoogleOAuthUrlOP,
   loginUserOP,
   logoutUserOP,
@@ -7,6 +8,7 @@ import {
   signinGoogleOauthOP,
   signupUserOP,
 } from './operations';
+import { IfavoriteItem } from '../../types/types';
 export interface user {
   _id: string | null;
   name: string | null;
@@ -17,25 +19,25 @@ export interface user {
   updatedAt: string | null;
 }
 
-export interface favorite {
-  backdrop_path: string | null;
-  genres: Array<number> | null;
-  id: number | null;
-  original_title: string | null;
-  overview: string | null;
-  poster_path: string | null;
-  release_date: string | null;
-  title: string | null;
-  vote_average: number | null;
-  vote_count: number | null;
-  contentType: string | null;
-  userId: string | null;
-}
+// export interface favorite {
+//   backdrop_path: string | null;
+//   genres: Array<number> | null;
+//   media_id: number | null;
+//   original_title: string | null;
+//   overview: string | null;
+//   poster_path: string | null;
+//   release_date: string | null;
+//   title: string | null;
+//   vote_average: number | null;
+//   vote_count: number | null;
+//   contentType: string | null;
+//   userId: string | null;
+// }
 
 export interface authState {
   token: string | null;
   user: user | null;
-  favorites: favorite[] | null;
+  favorites: IfavoriteItem[] | null;
   isLoading: boolean | null;
   isLoggedIn: boolean | null;
   isRefreshing: boolean;
@@ -131,7 +133,10 @@ const authSlice = createSlice({
       .addCase(getGoogleOAuthUrlOP.fulfilled, state => {
         state.isLoading = false;
       })
-      .addCase(getGoogleOAuthUrlOP.rejected, handleServerRejected);
+      .addCase(getGoogleOAuthUrlOP.rejected, handleServerRejected)
+      .addCase(addFavorite.fulfilled, (state, action) => {
+        state.favorites?.push(action.payload);
+      });
   },
 });
 

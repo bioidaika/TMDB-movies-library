@@ -182,7 +182,7 @@ export const addFavorite = createAsyncThunk<IfavoriteItem, IfavoriteItem>(
   async (data: IfavoriteItem, thunkAPI) => {
     try {
       const response = await myBackendAxios.post('/favorite', data);
-      return response.data.data;
+      return response.data.data as IfavoriteItem;
     } catch {
       return thunkAPI.rejectWithValue('An unknown error occurred!!!');
     }
