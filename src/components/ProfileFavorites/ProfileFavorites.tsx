@@ -15,9 +15,11 @@ export const ProfileFavorites: React.FC = () => {
         {favorites && favorites.length === 0 && <div>No results</div>}
         {favorites &&
           favorites.map(item => (
-            <li key={item.id} className={css.list_item}>
+            <li key={item.media_id} className={css.list_item}>
               <Link
-                to={item.contentType === 'movie' ? `/movies/${item.id}` : `/tv/${item.id}`}
+                to={
+                  item.contentType === 'movie' ? `/movies/${item.media_id}` : `/tv/${item.media_id}`
+                }
                 state={location}
               >
                 {/*  refactoring start */}
