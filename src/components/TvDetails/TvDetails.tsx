@@ -5,6 +5,7 @@ import { Suspense, useRef } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { isActive } from '../../types/types';
 import clsx from 'clsx';
+import { FavoriteButton } from '../FavoriteButton/FavoriteButton';
 
 const TvDetails = () => {
   const selectedTV = useSelector(selectSelectedTV);
@@ -25,6 +26,7 @@ const TvDetails = () => {
               src={`https://image.tmdb.org/t/p/w300/${selectedTV.poster_path}`}
               alt={selectedTV.original_name}
             />
+            <FavoriteButton movieId={selectedTV.id} mediaType={'tv'} />
             <div className={css.description}>
               <h1>{selectedTV.original_name}</h1>
               <p>{`Vote Average: ${selectedTV.vote_average.toFixed(1)}`}</p>

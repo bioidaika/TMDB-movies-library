@@ -91,6 +91,7 @@ const movieSlice = createSlice({
       .addCase(getSelectedMovieByID.fulfilled, (state, action: PayloadAction<IMovieByID>) => {
         state.selectedMovie = action.payload;
         state.loading = false;
+        state.selectedTV = null;
       })
       .addCase(getSelectedMovieByID.rejected, handleRejected)
       .addCase(getMovieListByParam.pending, handlePending)
@@ -123,6 +124,7 @@ const movieSlice = createSlice({
       .addCase(getSelectedTvByID.fulfilled, (state, action: PayloadAction<ITVByID>) => {
         state.selectedTV = action.payload;
         state.loading = false;
+        state.selectedMovie = null;
       })
       .addCase(getSelectedTvByID.rejected, handleRejected);
   },

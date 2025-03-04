@@ -15,7 +15,7 @@ const ConfirmGoogleAuth: React.FC = () => {
       //   console.log('Code:', code);
       dispatch(signinGoogleOauthOP(code))
         .then(() => {
-          navigate('/auth/my-profile');
+          navigate('/saved');
         })
         .catch(error => {
           console.error('Google OAuth failed:', error);

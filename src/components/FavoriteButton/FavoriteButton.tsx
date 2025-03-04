@@ -14,9 +14,6 @@ interface FavoriteButtonProps {
 export const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, mediaType }) => {
   const dispatch = useDispatch<AppDispatch>();
   const FavoriteList = useSelector(selectFavorite);
-  //   const location = useLocation();
-  //   const path = location.pathname.split('/')[1];
-  //   console.log('path', path);
   const pickedMovie = useSelector(selectSelectedMovie);
   const pickedTV = useSelector(selectSelectedTV);
 
@@ -50,27 +47,9 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, mediaTy
       contentType: mediaType,
     };
   }
-  //   pickedMedia =
-  //     mediaType === 'movie' ? useSelector(selectSelectedMovie) : useSelector(selectSelectedTV);
-  //   if (!pickedMedia) return null;
-
-  //   const dataTV = {
-  //     backdrop_path: pickedMedia.backdrop_path,
-  //     genres: pickedMedia.genres.map(item => item.id),
-  //     media_id: pickedMedia.id,
-  //     original_title: pickedMedia.original_name,
-  //     overview: pickedMedia.overview,
-  //     poster_path: pickedMedia.poster_path,
-  //     release_date: pickedMedia.first_air_date,
-  //     title: pickedMedia.name,
-  //     vote_average: pickedMedia.vote_average,
-  //     vote_count: pickedMedia.vote_count,
-  //     contentType: mediaType,
-  //   };
   console.log('Component FavoriteButton');
 
   if (!FavoriteList) return null;
-  //  console.log('Component FavoriteButton2');
   const isFavorite = FavoriteList.some(item => item.media_id === movieId);
   console.log('is Favorite', isFavorite); // false
 

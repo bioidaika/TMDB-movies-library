@@ -137,7 +137,6 @@ export const refreshPage = createAsyncThunk('user/favorite', async (_, thunkAPI)
   const state = <RootState>thunkAPI.getState();
   const token = state.auth.token;
   if (token === null) return thunkAPI.rejectWithValue('No token available');
-
   try {
     setAuthHeader(token);
     const favorites = await myBackendAxios.get('/favorite');
@@ -154,11 +153,20 @@ export const setupAxiosInterceptors = (store: Store) => {
       const originalRequest = error.config;
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
+        const sessionId = document.cookie.split('; ').find(row => row.startsWith('sessionId='));
+        const refreshToken = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('refreshToken='));
+        if (!sessionId || !refreshToken) {
+          console.warn('Session expired or cookies are missing. Logging out...');
+          store.dispatch(logoutAction());
+          return Promise.reject(error);
+        }
+
         try {
           console.log('0');
           const { data } = await myBackendAxios.post('auth/refresh');
           console.log('accessToken', data.data.accessToken);
-
           setAuthHeader(data.data.accessToken);
           originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
           store.dispatch(setAccessToken(data.data.accessToken));
@@ -167,7 +175,6 @@ export const setupAxiosInterceptors = (store: Store) => {
           return myBackendAxios(originalRequest);
         } catch (err) {
           store.dispatch(logoutAction());
-          // logoutUserOP();
           return Promise.reject(err);
         }
       }
