@@ -19,21 +19,6 @@ export interface user {
   updatedAt: string | null;
 }
 
-// export interface favorite {
-//   backdrop_path: string | null;
-//   genres: Array<number> | null;
-//   media_id: number | null;
-//   original_title: string | null;
-//   overview: string | null;
-//   poster_path: string | null;
-//   release_date: string | null;
-//   title: string | null;
-//   vote_average: number | null;
-//   vote_count: number | null;
-//   contentType: string | null;
-//   userId: string | null;
-// }
-
 export interface authState {
   token: string | null;
   user: user | null;
