@@ -127,7 +127,7 @@ const authSlice = createSlice({
         if (state.favorites) {
           state.favorites = state.favorites.filter(
             item =>
-              item.media_id !== action.payload.media_id &&
+              item.media_id !== action.payload.media_id ||
               item.contentType !== action.payload.contentType
           );
         }

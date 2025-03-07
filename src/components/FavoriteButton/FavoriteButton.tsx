@@ -47,11 +47,11 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, mediaTy
       contentType: mediaType,
     };
   }
-  console.log('Component FavoriteButton');
+  //   console.log('Component FavoriteButton');
 
   if (!FavoriteList) return null;
   const isFavorite = FavoriteList.some(item => item.media_id === movieId);
-  console.log('is Favorite', isFavorite); // false
+  //   console.log('is Favorite', isFavorite); // false
 
   const handleClick = () => {
     // if (isFavorite) dispatch(removeFavorite(movieId));
@@ -59,12 +59,12 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, mediaTy
     if (!isFavorite) dispatch(addFavorite(dataMovie));
     else {
       const { media_id, contentType } = dataMovie;
-      console.log('media_id', media_id); // 1
-      console.log('contentType', contentType); // movie
+      //   console.log('media_id', media_id); // 1
+      //   console.log('contentType', contentType); // movie
       dispatch(removeFavorite({ media_id, contentType }));
     }
   };
-  console.log('Component FavoriteButton3');
+  //   console.log('Component FavoriteButton3');
   return (
     <button className={isFavorite ? css.favorite : css.notFavorite} onClick={handleClick}>
       {isFavorite ? 'Remove from Favorites ❤️' : 'Add to Favorites 🤍'}
