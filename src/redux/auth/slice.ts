@@ -5,6 +5,7 @@ import {
   loginUserOP,
   logoutUserOP,
   refreshPage,
+  removeFavorite,
   signinGoogleOauthOP,
   signupUserOP,
 } from './operations';
@@ -121,6 +122,15 @@ const authSlice = createSlice({
       .addCase(getGoogleOAuthUrlOP.rejected, handleServerRejected)
       .addCase(addFavorite.fulfilled, (state, action) => {
         state.favorites?.push(action.payload);
+      })
+      .addCase(removeFavorite.fulfilled, (state, action) => {
+        if (state.favorites) {
+          state.favorites = state.favorites.filter(
+            item =>
+              item.media_id !== action.payload.media_id &&
+              item.contentType !== action.payload.contentType
+          );
+        }
       });
   },
 });

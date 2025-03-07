@@ -16,6 +16,11 @@ interface LoginData {
   password: string;
 }
 
+interface removeFavoriteData {
+  media_id: number;
+  contentType: string;
+}
+
 interface RegisterData {
   email: string;
   password: string;
@@ -196,9 +201,14 @@ export const addFavorite = createAsyncThunk<IfavoriteItem, IfavoriteItem>(
   }
 );
 
-// export const removeFavorite = createAsyncThunk('user/addFavorite', async (_, thunkAPI) => {
-//   try {
-//   } catch {
-//     return thunkAPI.rejectWithValue('An unknown error occurred!!!');
-//   }
-// });
+export const removeFavorite = createAsyncThunk(
+  'user/removeFavorite',
+  async (data: removeFavoriteData, thunkAPI) => {
+    try {
+      await myBackendAxios.delete('/favorite', { data });
+      return data;
+    } catch {
+      return thunkAPI.rejectWithValue('An unknown error occurred during remove fav!!!');
+    }
+  }
+);

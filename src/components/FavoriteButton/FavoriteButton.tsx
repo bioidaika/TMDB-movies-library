@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFavorite } from '../../redux/auth/selectors';
 import css from './FavoriteButton.module.css';
-import { addFavorite } from '../../redux/auth/operations';
+import { addFavorite, removeFavorite } from '../../redux/auth/operations';
 import { AppDispatch } from '../../redux/store';
 import { selectSelectedMovie, selectSelectedTV } from '../../redux/movie/selectors';
 import { IfavoriteItem } from '../../types/types';
@@ -57,6 +57,12 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, mediaTy
     // if (isFavorite) dispatch(removeFavorite(movieId));
     // else dispatch(addFavorite(movieId));
     if (!isFavorite) dispatch(addFavorite(dataMovie));
+    else {
+      const { media_id, contentType } = dataMovie;
+      console.log('media_id', media_id); // 1
+      console.log('contentType', contentType); // movie
+      dispatch(removeFavorite({ media_id, contentType }));
+    }
   };
   console.log('Component FavoriteButton3');
   return (
