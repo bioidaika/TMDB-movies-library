@@ -172,17 +172,12 @@ export interface user {
   updatedAt: string | null;
 }
 
-export interface LoginData {
-  email: string;
-  password: string;
-}
-
 export interface removeFavoriteData {
   media_id: number;
   contentType: string;
 }
 
-export interface RegisterData {
+export interface ICredentials {
   email: string;
   password: string;
 }
