@@ -1,8 +1,15 @@
+.header {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 .list {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  justify-content: center;
+  margin: 20px auto;
+  justify-content: left;
+  /* justify-content: stretch; */
 }
 
 .list_item {

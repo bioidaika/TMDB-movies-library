@@ -114,7 +114,7 @@ export const signupUser = async (data: { email: string; password: string }) => {
 };
 
 export const logoutUser = async () => {
-  await myBackendAxios.post(`auth/logout/`);
+  await myBackendAxios.delete(`auth/logout/`);
 };
 
 export const getGoogleOAuthURL = async () => {

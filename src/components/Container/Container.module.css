@@ -1,6 +1,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  max-width: 1500px;
+  justify-content: baseline;
+  max-width: 1000px;
   margin: 20px auto;
 }

@@ -11,6 +11,7 @@ export const ProfileFavorites: React.FC = () => {
   const location = useLocation();
   return (
     <div>
+      <h1 className={css.header}>Saved Movies & TV Shows</h1>
       <ul className={css.list}>
         {favorites && favorites.length === 0 && <div>No results</div>}
         {favorites &&

@@ -8,6 +8,7 @@
 .list_item {
   margin-top: 0px;
   margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .list_item:hover {
