@@ -161,3 +161,28 @@ export interface IfavoriteItem {
   vote_count: number;
   contentType: string;
 }
+
+export interface user {
+  _id: string | null;
+  name: string | null;
+  email: string | null;
+  gender: string | null;
+  avatar: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+}
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export interface removeFavoriteData {
+  media_id: number;
+  contentType: string;
+}
+
+export interface RegisterData {
+  email: string;
+  password: string;
+}
