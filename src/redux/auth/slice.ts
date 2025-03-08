@@ -9,16 +9,7 @@ import {
   signinGoogleOauthOP,
   signupUserOP,
 } from './operations';
-import { IfavoriteItem } from '../../types/types';
-export interface user {
-  _id: string | null;
-  name: string | null;
-  email: string | null;
-  gender: string | null;
-  avatar: string | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-}
+import { IfavoriteItem, user } from '../../types/types';
 
 export interface authState {
   token: string | null;
@@ -38,10 +29,6 @@ export const initialState: authState = {
   isRefreshing: false,
   error: null,
 };
-
-export interface tokenType {
-  accessToken: string;
-}
 
 const handleServerPending = (state: authState) => {
   state.isLoading = true;

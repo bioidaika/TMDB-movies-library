@@ -10,21 +10,8 @@ import {
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
 import { Store } from '@reduxjs/toolkit';
-import { IfavoriteItem } from '../../types/types';
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { ICredentials, IfavoriteItem, removeFavoriteData } from '../../types/types';
 
-interface removeFavoriteData {
-  media_id: number;
-  contentType: string;
-}
-
-interface RegisterData {
-  email: string;
-  password: string;
-}
 export const setAuthHeader = (token: string) => {
   myBackendAxios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
@@ -33,7 +20,7 @@ const clearAuthHeader = () => {
   myBackendAxios.defaults.headers.common.Authorization = '';
 };
 
-export const loginUserOP = createAsyncThunk('auth/login', async (data: LoginData, thunkAPI) => {
+export const loginUserOP = createAsyncThunk('auth/login', async (data: ICredentials, thunkAPI) => {
   try {
     const response = await loginUser(data);
     if (response) {
@@ -70,7 +57,7 @@ export const logoutUserOP = createAsyncThunk('auth/logout', async (_, thunkAPI) 
 
 export const signupUserOP = createAsyncThunk(
   'auth/signup',
-  async (data: RegisterData, thunkAPI) => {
+  async (data: ICredentials, thunkAPI) => {
     try {
       const response = await signupUser(data);
       if (response) {
