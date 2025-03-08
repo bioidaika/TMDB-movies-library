@@ -13,7 +13,7 @@ import { AppDispatch } from '../redux/store';
 const MoviesPage: FC = () => {
   const isLoading = useSelector(selectLoading);
   const dispatch = useDispatch<AppDispatch>();
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const pageParam = params.get('page') ?? '1';
   const sectionParam = params.get('section') ?? 'now_playing';
   const queryParams = ['now_playing', 'popular', 'top_rated', 'upcoming'];

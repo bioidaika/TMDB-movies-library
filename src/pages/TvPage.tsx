@@ -6,11 +6,12 @@ import { useSearchParams } from 'react-router-dom';
 import { getTVShowByParam } from '../redux/movie/operations';
 import Pagination from '../components/Pagination/Pagination';
 import TvList from '../components/TvList/TvList';
+import { AppDispatch } from '../redux/store';
 
 const TvPage = () => {
   const queryParams = ['airing_today', 'on_the_air', 'popular', 'top_rated'];
-  const dispatch = useDispatch<any>();
-  const [params, setParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const [params] = useSearchParams();
   const pageParam = params.get('page') ?? '1';
   const sectionParam = params.get('section') ?? 'airing_today';
 

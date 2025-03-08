@@ -5,7 +5,7 @@ import Container from '../components/Container/Container';
 import Title from '../components/Title/Title';
 
 export default function SearchPage() {
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const queryURL = params.get('query') ?? ' ';
 
   return (
