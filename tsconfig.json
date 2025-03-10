@@ -21,7 +21,7 @@
     "src/**/*.tsx",
     "src/**/*.js",
     "src/**/*.jsx",
-    "src/components/MovieReviews/MovieReviews.tsx"
+    "src/components/Reviews/Reviews.tsx"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

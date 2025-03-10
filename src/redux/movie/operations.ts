@@ -2,12 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   getMovieByID,
   getMovieList,
+  getMovieReviews,
   getTrendingMovies,
   getTvByID,
   getTVList,
+  getTvReviews,
   searchMovieQuery,
 } from '../../components/api';
-import { IData, IDataTV, IMovie, IMovieByID, ITVByID } from '../../types/types';
+import { IData, IDataTV, IMovie, IMovieByID, IReviews, ITVByID } from '../../types/types';
 
 export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   'movie/trending-movies',
@@ -111,6 +113,45 @@ export const searchMovieReq = createAsyncThunk<IMovie[], string>(
       const response = await searchMovieQuery(option);
       if (response) {
         return response as IMovie[];
+      } else {
+        return thunkAPI.rejectWithValue('No data available');
+      }
+    } catch (error) {
+      if (error instanceof Error) return thunkAPI.rejectWithValue(error.message);
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
+export const getReviewsMovieOP = createAsyncThunk<IReviews[], string>(
+  'movie/reviews',
+  async (option, thunkAPI) => {
+    try {
+      if (option === '') return thunkAPI.rejectWithValue('No data available');
+      const response = await getMovieReviews(option);
+      if (response) {
+        return response as IReviews[];
+      } else {
+        return thunkAPI.rejectWithValue('No data available');
+      }
+    } catch (error) {
+      if (error instanceof Error) return thunkAPI.rejectWithValue(error.message);
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
+export const getReviewsTVOP = createAsyncThunk<IReviews[], string>(
+  'tv/reviews',
+  async (option, thunkAPI) => {
+    try {
+      const response = await getTvReviews(option);
+      if (response) {
+        return response as IReviews[];
       } else {
         return thunkAPI.rejectWithValue('No data available');
       }
