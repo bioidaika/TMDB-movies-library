@@ -8,7 +8,6 @@ import {
   IDataTV,
   ITVByID,
   ITVCast,
-  ITVReviews,
 } from '../types/types';
 
 const axiosTheMovieDB = axios.create({
@@ -66,7 +65,7 @@ export const getMovieReviews = async (movieID: string) => {
 export const getTvReviews = async (series_id: string) => {
   const response = await axiosTheMovieDB.get(`tv/${series_id}/reviews`);
   //   console.log(response.data.results);
-  return response.data.results as ITVReviews[];
+  return response.data.results as IReviews[];
 };
 
 export const searchMovieQuery = async (searchQuery: string) => {
