@@ -9,7 +9,7 @@ import Loader from '../Loader/Loader';
 
 export default function MovieReviews() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [, setError] = useState(false);
   const { movieID } = useParams();
   const [selectedReviews, setSelectedReviews] = useState<IReviews[]>([]);
   useEffect(() => {
@@ -19,12 +19,18 @@ export default function MovieReviews() {
         setError(false);
         const data = await getMovieReviews(movieID || '');
         setSelectedReviews(data);
-        data.length != 0 ? toast.success('Success') : toast.error('No results');
+        if (data.length !== 0) {
+          toast.success('Success');
+        } else {
+          toast.error('No results');
+        }
       } catch (e: unknown) {
         setError(true);
-        e instanceof AxiosError
-          ? toast.error(e.response?.data?.status_message)
-          : toast.error('An unkown error occured');
+        if (e instanceof AxiosError) {
+          toast.error(e.response?.data?.status_message);
+        } else {
+          toast.error('An unknown error occurred');
+        }
       } finally {
         setIsLoading(false);
       }
@@ -35,12 +41,10 @@ export default function MovieReviews() {
     <div>
       <Toaster />
       {isLoading && <Loader />}
-      {/* {error && <b>HTTP error!</b>} */}
       {!isLoading && (
         <>
-          <h1>Reviews</h1>
           <ul className={css.reviews__list}>
-            {selectedReviews &&
+            {selectedReviews && selectedReviews.length > 0 ? (
               selectedReviews.map(item => (
                 <li key={item.id} className={css.reviews__card}>
                   <h2>
@@ -53,8 +57,10 @@ export default function MovieReviews() {
                   </h2>
                   <p>{item.content}</p>
                 </li>
-              ))}
-            {selectedReviews.length === 0 && <p>{`We don't have any reviews for this movie.`}</p>}
+              ))
+            ) : (
+              <p className={css.no_reviews}>{`We don't have any reviews for this movie.`}</p>
+            )}
           </ul>
         </>
       )}

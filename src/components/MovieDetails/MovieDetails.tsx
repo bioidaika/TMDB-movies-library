@@ -25,7 +25,7 @@ const MovieDetails = () => {
           <div className={css.container}>
             <div className={css.poster}>
               <img
-                src={`https://image.tmdb.org/t/p/w300/${selectedMovie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w300${selectedMovie.poster_path}`}
                 alt={selectedMovie.original_title}
               />
               <FavoriteButton movieId={selectedMovie.id} mediaType={'movie'} />

@@ -22,11 +22,14 @@ const TvDetails = () => {
             Back to Home
           </Link>
           <div className={css.container}>
-            <img
-              src={`https://image.tmdb.org/t/p/w300/${selectedTV.poster_path}`}
-              alt={selectedTV.original_name}
-            />
-            <FavoriteButton movieId={selectedTV.id} mediaType={'tv'} />
+            <div className={css.poster}>
+              <img
+                src={`https://image.tmdb.org/t/p/w300/${selectedTV.poster_path}`}
+                alt={selectedTV.original_name}
+              />
+              <FavoriteButton movieId={selectedTV.id} mediaType={'tv'} />
+            </div>
+
             <div className={css.description}>
               <h1>{selectedTV.original_name}</h1>
               <p>{`Vote Average: ${selectedTV.vote_average.toFixed(1)}`}</p>

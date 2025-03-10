@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import css from './TvReviews.module.css';
-import { getMovieReviews, getTvReviews } from '../api';
+import { getTvReviews } from '../api';
 import toast, { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
@@ -9,7 +9,7 @@ import Loader from '../Loader/Loader';
 
 export default function TvReviews() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [, setError] = useState(false);
   const { series_id } = useParams();
   const [selectedReviews, setSelectedReviews] = useState<ITVReviews[]>([]);
   useEffect(() => {
@@ -19,12 +19,18 @@ export default function TvReviews() {
         setError(false);
         const data = await getTvReviews(series_id || '');
         setSelectedReviews(data);
-        data.length != 0 ? toast.success('Success') : toast.error('No results');
+        if (data.length !== 0) {
+          toast.success('Success');
+        } else {
+          toast.error('No results');
+        }
       } catch (e: unknown) {
         setError(true);
-        e instanceof AxiosError
-          ? toast.error(e.response?.data?.status_message)
-          : toast.error('An unkown error occured');
+        if (e instanceof AxiosError) {
+          toast.error(e.response?.data?.status_message);
+        } else {
+          toast.error('An unknown error occurred');
+        }
       } finally {
         setIsLoading(false);
       }

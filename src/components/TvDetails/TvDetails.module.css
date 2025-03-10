@@ -5,13 +5,16 @@
 .container {
   display: flex;
   flex-direction: row;
-  margin: 0px 20%;
+  justify-content: center;
+  margin: 0px auto;
+  width: 100%;
 }
 .description {
   display: flex;
   flex-direction: column;
   text-align: left;
   margin-left: 10px;
+  max-width: 500px;
 }
 
 .list {
@@ -80,4 +83,10 @@
   color: rgba(1, 180, 228);
   background-color: rgba(1, 180, 228, 0.1);
   transform: translateY(-3px);
+}
+
+.poster {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

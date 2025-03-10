@@ -41,7 +41,7 @@ export const getMovieByID = async (movieID: string): Promise<IMovieByID> => {
 
 export const getTvByID = async (series_id: string): Promise<ITVByID> => {
   const response = await axiosTheMovieDB.get(`tv/${series_id}`);
-  console.log(response.data);
+  // console.log(response.data);
   return response.data as ITVByID;
 };
 
