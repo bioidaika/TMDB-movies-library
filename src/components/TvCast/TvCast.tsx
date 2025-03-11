@@ -9,7 +9,7 @@ import Loader from '../Loader/Loader';
 
 export default function TvCast() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [, setError] = useState<boolean>(false);
   const { series_id } = useParams();
   const [selectedCast, setSelectedCast] = useState<ITVCast[] | null>(null);
   const defaultSRC = `https://assets.mycast.io/actor_images/actor-an-unknown-actor-465215_large.jpg`;
@@ -20,12 +20,18 @@ export default function TvCast() {
         setError(false);
         const data = await getTVCasts(series_id || '');
         setSelectedCast(data);
-        data.length != 0 ? toast.success('Success') : toast.error('No results');
+        if (data.length !== 0) {
+          toast.success('Success');
+        } else {
+          toast.error('No results');
+        }
       } catch (e: unknown) {
         setError(true);
-        e instanceof AxiosError
-          ? toast.error(e.response?.data?.status_message)
-          : toast.error('An unkown error occured');
+        if (e instanceof AxiosError) {
+          toast.error(e.response?.data?.status_message);
+        } else {
+          toast.error('An unknown error occurred');
+        }
       } finally {
         setIsLoading(false);
       }

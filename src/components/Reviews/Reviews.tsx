@@ -14,7 +14,6 @@ export default function Reviews() {
   const selectedReviews = useSelector(selectSelectedReviews);
   const { movieID, series_id } = useParams();
   const Params = useParams();
-  // console.log(Params);
 
   useEffect(() => {
     if (Params.movieID) {
