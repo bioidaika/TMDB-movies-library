@@ -1,14 +1,5 @@
 import axios from 'axios';
-import {
-  IMovie,
-  IMovieByID,
-  ICast,
-  IReviews,
-  IData,
-  IDataTV,
-  ITVByID,
-  ITVCast,
-} from '../types/types';
+import { IMovie, IMovieByID, ICast, IReviews, IData, IDataTV, ITVByID } from '../../types/types';
 
 const axiosTheMovieDB = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
@@ -50,10 +41,10 @@ export const getMovieCasts = async (movieID: string): Promise<ICast[]> => {
   return response.data.cast as ICast[];
 };
 
-export const getTVCasts = async (series_id: string): Promise<ITVCast[]> => {
+export const getTVCasts = async (series_id: string): Promise<ICast[]> => {
   const response = await axiosTheMovieDB.get(`tv/${series_id}/credits`);
   //   console.log(response.data.cast);
-  return response.data.cast as ITVCast[];
+  return response.data.cast as ICast[];
 };
 
 export const getMovieReviews = async (movieID: string) => {

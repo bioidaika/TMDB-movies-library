@@ -58,7 +58,7 @@ const TvDetails = () => {
               </NavLink>
             </li>
           </ul>
-          <Suspense fallback={''}>
+          <Suspense fallback={'Loading...'}>
             <Outlet />
           </Suspense>
         </div>

@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectError, selectLoading } from '../redux/movie/selectors';
 import { getSelectedMovieByID } from '../redux/movie/operations';
-import Loader from '../components/Loader/Loader';
 import MovieDetails from '../components/MovieDetails/MovieDetails';
 import { AppDispatch } from '../redux/store';
+import Loader from '../components/Loader/Loader';
 
 export default function MovieDetailsPage() {
   const { movieID } = useParams();

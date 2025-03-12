@@ -6,7 +6,7 @@ import {
   myBackendAxios,
   signInGoogle,
   signupUser,
-} from '../../components/api';
+} from '../api/api';
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
 import { Store } from '@reduxjs/toolkit';
@@ -134,7 +134,7 @@ export const refreshPage = createAsyncThunk('user/favorite', async (_, thunkAPI)
     const favorites = await myBackendAxios.get('/favorite');
     return favorites.data.data;
   } catch {
-    return thunkAPI.rejectWithValue('An unknown error occurred!!!');
+    return thunkAPI.rejectWithValue('Session expired or cookies are missing. Please login again');
   }
 });
 
@@ -162,7 +162,6 @@ export const setupAxiosInterceptors = (store: Store) => {
           setAuthHeader(data.data.accessToken);
           originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
           store.dispatch(setAccessToken(data.data.accessToken));
-          // store.dispatch(setAccessToken(data.data.accessToken));
           console.log('1');
           return myBackendAxios(originalRequest);
         } catch (err) {

@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  getCastsMovieOP,
+  getCastsTVOP,
   getMovieListByParam,
   getReviewsMovieOP,
   getReviewsTVOP,
@@ -9,7 +11,16 @@ import {
   getTVShowByParam,
   searchMovieReq,
 } from './operations';
-import { IData, IDataTV, IMovie, IMovieByID, IReviews, ITVByID, ITVShow } from '../../types/types';
+import {
+  ICast,
+  IData,
+  IDataTV,
+  IMovie,
+  IMovieByID,
+  IReviews,
+  ITVByID,
+  ITVShow,
+} from '../../types/types';
 
 export interface MovieState {
   movieList: IMovie[];
@@ -21,6 +32,7 @@ export interface MovieState {
   random_Background: string | '';
   selectedMovie: IMovieByID | null;
   selectedTV: ITVByID | null;
+  selectedCast: ICast[];
   selectedReviews: IReviews[];
   currentPage: number;
   totalPages: number;
@@ -37,6 +49,7 @@ export const initialState: MovieState = {
   random_Background: '',
   selectedMovie: null,
   selectedTV: null,
+  selectedCast: [],
   selectedReviews: [],
   currentPage: 1,
   totalPages: 0,
@@ -139,6 +152,16 @@ const movieSlice = createSlice({
       .addCase(getReviewsTVOP.pending, handlePending)
       .addCase(getReviewsTVOP.fulfilled, (state, action: PayloadAction<IReviews[]>) => {
         state.selectedReviews = action.payload;
+        state.loading = false;
+      })
+      .addCase(getCastsMovieOP.pending, handlePending)
+      .addCase(getCastsMovieOP.fulfilled, (state, action: PayloadAction<ICast[]>) => {
+        state.selectedCast = action.payload;
+        state.loading = false;
+      })
+      .addCase(getCastsTVOP.pending, handlePending)
+      .addCase(getCastsTVOP.fulfilled, (state, action: PayloadAction<ICast[]>) => {
+        state.selectedCast = action.payload;
         state.loading = false;
       });
   },

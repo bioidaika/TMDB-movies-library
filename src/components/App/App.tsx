@@ -4,7 +4,7 @@ const HomePage = lazy(() => import('../../pages/HomePage'));
 const MoviesPage = lazy(() => import('../../pages/MoviesPage'));
 const NotFoundPage = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'));
 const MovieDetailsPage = lazy(() => import('../../pages/MovieDetailsPage'));
-const MovieCast = lazy(() => import('../MovieCast/MovieCast'));
+const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));
 const TvPage = lazy(() => import('../../pages/TvPage'));
 const SearchPage = lazy(() => import('../../pages/SearchPage'));
@@ -13,7 +13,6 @@ import { Route, Routes } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import Footer from '../Footer/Footer';
 import TvDetailsPage from '../../pages/TvDetailsPage';
-import TvCast from '../TvCast/TvCast';
 import { PrivateRoute } from '../../pages/PrivateRoute';
 import { RestrictRoute } from '../../pages/RestrictRoute';
 import ConfirmGoogleAuth from '../ConfirmGoogleAuth/ConfirmGoogleAuth';
@@ -43,12 +42,12 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/movies" element={<MoviesPage />} />
             <Route path="/movies/:movieID" element={<MovieDetailsPage />}>
-              <Route path="cast" element={<MovieCast />} />
+              <Route path="cast" element={<Cast />} />
               <Route path="reviews" element={<Reviews />} />
             </Route>
             <Route path="/tv" element={<TvPage />} />
             <Route path="/tv/:series_id" element={<TvDetailsPage />}>
-              <Route path="cast" element={<TvCast />} />
+              <Route path="cast" element={<Cast />} />
               <Route path="reviews" element={<Reviews />} />
             </Route>
             <Route path="/search/movie/" element={<SearchPage />} />
