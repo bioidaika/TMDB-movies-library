@@ -28,15 +28,13 @@ export default function Reviews() {
     <div>
       {isLoading && <Loader />}
       {!isLoading && (
-        <>
-          <ul className={css.reviews__list}>
-            {selectedReviews && selectedReviews.length > 0 ? (
-              selectedReviews.map(item => <ReviewCard key={item.id} item={item} />)
-            ) : (
-              <p className={css.no_reviews}>{`We don't have any reviews for this movie.`}</p>
-            )}
-          </ul>
-        </>
+        <ul className={css.reviews__list}>
+          {selectedReviews && selectedReviews.length > 0 ? (
+            selectedReviews.map(item => <ReviewCard key={item.id} item={item} />)
+          ) : (
+            <p className={css.no_reviews}>{`We don't have any reviews for this movie.`}</p>
+          )}
+        </ul>
       )}
     </div>
   );
