@@ -33,3 +33,11 @@
 ### 📚 API integrations
 - TMDB API — for searching and displaying movie/TV show data
 - Movies Library Backend — for managing users and favorites
+
+### 🔐 Security and authorization
+- JWT tokens are stored in cookies (httpOnly, secure).
+- Auto-update of the token via auth/refresh.
+- Redux Persist saves the token between sessions.
+
+### 🌎 Deployment
+The project is deployed on Vercel, the backend runs on Render (free server, possible delay of 50+ seconds after downtime).
