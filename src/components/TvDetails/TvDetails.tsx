@@ -32,7 +32,9 @@ const TvDetails = () => {
 
             <div className={css.description}>
               <h1>{selectedTV.original_name}</h1>
-              <p>{`Vote Average: ${selectedTV.vote_average.toFixed(1)}`}</p>
+              <p>{`Vote Average: ${selectedTV.vote_average.toFixed(1)} (${
+                selectedTV.vote_count
+              })`}</p>
               <h2>Overview</h2>
               <p>{selectedTV.overview}</p>
               <h2>Genres</h2>
