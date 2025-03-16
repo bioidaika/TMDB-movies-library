@@ -18,7 +18,6 @@ export const myBackendAxios = axios.create({
 
 export const getTrendingMovies = async (range: string): Promise<IMovie[]> => {
   const response = await axiosTheMovieDB.get(`trending/movie/${range}`);
-  // console.log(response.data.results);
   // console.log(response.data);
   return response.data.results as IMovie[];
 };
