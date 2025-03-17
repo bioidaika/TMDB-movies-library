@@ -30,17 +30,6 @@
   border-radius: 8px;
 }
 
-h2 {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 10px 0 5px;
-}
-
-p {
-  font-size: 14px;
-  color: #666;
-}
-
 .no_casts {
   text-align: center;
   font-size: 18px;
