@@ -35,19 +35,32 @@ const MovieDetails = () => {
               <p>{`Vote Average: ${selectedMovie.vote_average.toFixed(1)}/10 (${
                 selectedMovie.vote_count
               })`}</p>
-              <span
-                className={css.rating}
-                style={
-                  {
-                    background: `linear-gradient(90deg, gold ${
-                      Number(selectedMovie.vote_average.toFixed(1)) * 10
-                    }%, gray ${(10 - Number(selectedMovie.vote_average.toFixed(1))) * 10}%)`,
-                    backgroundClip: 'text',
-                  } as React.CSSProperties
-                }
-              >
-                {'★★★★★★★★★★'}
-              </span>
+              {Number(selectedMovie.vote_average.toFixed(1)) > 1 ? (
+                <span
+                  className={css.rating}
+                  style={
+                    {
+                      background: `linear-gradient(90deg, gold ${Math.round(
+                        selectedMovie.vote_average * 10
+                      )}%, gray ${Math.round(selectedMovie.vote_average * 10)}%) text`,
+                      color: 'transparent',
+                    } as React.CSSProperties
+                  }
+                >
+                  {'★★★★★★★★★★'}
+                </span>
+              ) : (
+                <span
+                  className={css.rating}
+                  style={
+                    {
+                      color: 'gray',
+                    } as React.CSSProperties
+                  }
+                >
+                  {'★★★★★★★★★★'}
+                </span>
+              )}
 
               <Title text={`Overview`} />
               <p>{selectedMovie.overview}</p>
