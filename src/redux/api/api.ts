@@ -62,9 +62,6 @@ export const searchMovieQuery = async (searchQuery: string) => {
   const response = await axiosTheMovieDB.get(`search/movie?query=${searchQuery}`);
   const responseTV = await axiosTheMovieDB.get(`search/tv?query=${searchQuery}`);
   const data = [...response.data.results, ...responseTV.data.results];
-  // console.log('data', data);
-  // console.log('response Movie', response.data.results);
-  // console.log('response TV', responseTV.data.results);
   return data;
 };
 
