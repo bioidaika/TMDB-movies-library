@@ -1,11 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  addFavoriteItem,
+  getFavoriteItems,
   getGoogleOAuthURL,
   loginUser,
   logoutUser,
   myBackendAxios,
+  removeFavoriteItem,
   signInGoogle,
   signupUser,
+  refreshAuthToken,
 } from '../api/api';
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
@@ -131,8 +135,8 @@ export const refreshPage = createAsyncThunk('user/favorite', async (_, thunkAPI)
   if (token === null) return thunkAPI.rejectWithValue('No token available');
   try {
     setAuthHeader(token);
-    const favorites = await myBackendAxios.get('/favorite');
-    return favorites.data.data;
+    const favorites = await getFavoriteItems();
+    return favorites.data as IfavoriteItem[];
   } catch {
     return thunkAPI.rejectWithValue('Session expired or cookies are missing. Please login again');
   }
@@ -157,7 +161,8 @@ export const setupAxiosInterceptors = (store: Store) => {
 
         try {
           console.log('0');
-          const { data } = await myBackendAxios.post('auth/refresh');
+          // const { data } = await myBackendAxios.post('auth/refresh');
+          const { data } = await refreshAuthToken(); // returns only data = data.data.accessToken
           console.log('accessToken', data.data.accessToken);
           setAuthHeader(data.data.accessToken);
           originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
@@ -179,8 +184,8 @@ export const addFavorite = createAsyncThunk<IfavoriteItem, IfavoriteItem>(
   'user/addFavorite',
   async (data: IfavoriteItem, thunkAPI) => {
     try {
-      const response = await myBackendAxios.post('/favorite', data);
-      return response.data.data as IfavoriteItem;
+      const response = await addFavoriteItem(data);
+      return response.data as IfavoriteItem;
     } catch {
       return thunkAPI.rejectWithValue('An unknown error occurred!!!');
     }
@@ -191,7 +196,7 @@ export const removeFavorite = createAsyncThunk(
   'user/removeFavorite',
   async (data: removeFavoriteData, thunkAPI) => {
     try {
-      await myBackendAxios.delete('/favorite', { data });
+      await removeFavoriteItem(data);
       return data;
     } catch {
       return thunkAPI.rejectWithValue('An unknown error occurred during remove fav!!!');

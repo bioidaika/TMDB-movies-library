@@ -1,5 +1,15 @@
 import axios from 'axios';
-import { IMovie, IMovieByID, ICast, IReviews, IData, IDataTV, ITVByID } from '../../types/types';
+import {
+  IMovie,
+  IMovieByID,
+  ICast,
+  IReviews,
+  IData,
+  IDataTV,
+  ITVByID,
+  removeFavoriteData,
+  IfavoriteItem,
+} from '../../types/types';
 
 const axiosTheMovieDB = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
@@ -113,4 +123,24 @@ export const signInGoogle = async (code: string) => {
   const response = await myBackendAxios.post('auth/confirm-google-auth', { code });
   // console.log('response', response.data);
   return response.data;
+};
+
+export const addFavoriteItem = async (data: IfavoriteItem) => {
+  const response = await myBackendAxios.post('/favorite', data);
+  return response.data;
+};
+
+export const removeFavoriteItem = async (data: removeFavoriteData) => {
+  await myBackendAxios.delete('/favorite', { data });
+  return data;
+};
+
+export const getFavoriteItems = async () => {
+  const response = await myBackendAxios.get('/favorite');
+  return response.data;
+};
+
+export const refreshAuthToken = async () => {
+  const response = await myBackendAxios.post('/auth/refresh');
+  return response;
 };
