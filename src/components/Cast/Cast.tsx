@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { getCastsMovieOP, getCastsTVOP } from '../../redux/movie/operations';
 import Loader from '../Loader/Loader';
+import Title from '../Title/Title';
 
 export default function Cast() {
   const dispatch = useDispatch<AppDispatch>();
@@ -42,8 +43,7 @@ export default function Cast() {
                   alt={item.name}
                   style={{ width: '200px', height: '300px', objectFit: 'cover' }}
                 />
-
-                <h2>{item.name}</h2>
+                <Title text={item.name} size="16px" />
                 <p>Character: {item.character || 'Unknown'}</p>
                 <p>Popularity: {item.popularity.toFixed(1)}</p>
               </li>
