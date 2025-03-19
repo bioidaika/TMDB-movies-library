@@ -38,7 +38,7 @@ const MovieList: FC<FilteredMovieProps> = ({ children }) => {
                 {item.poster_path == null && (
                   <img
                     loading="lazy"
-                    src={`https://davooda.com/images/outline/outline-file-document-question-mark-icon_360_w.png`}
+                    src={'/src/assets/no_image.png'}
                     alt={'Unknown image'}
                     className={css.img_poster}
                   />

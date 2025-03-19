@@ -9,6 +9,7 @@ import Pagination from '../components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { setMovieParam, setPage } from '../redux/movie/slice';
 import { AppDispatch } from '../redux/store';
+import Container from '../components/Container/Container';
 
 const MoviesPage: FC = () => {
   const isLoading = useSelector(selectLoading);
@@ -32,8 +33,10 @@ const MoviesPage: FC = () => {
       <div>
         <Toaster />
         <Category queryParams={queryParams}>
-          <MovieList />
-          <Pagination />
+          <Container>
+            <MovieList />
+            <Pagination />
+          </Container>
         </Category>
       </div>
     )

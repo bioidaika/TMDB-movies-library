@@ -37,7 +37,6 @@ export const Category: FC<MoviesProps> = memo(({ children, queryParams }) => {
       <div className={css.trending__box}>
         <h2 className={css.trending__header}>Category</h2>
         <ul className={css.trending__list}>
-          {/* // code start */}
           {queryParams?.map((item, index) => {
             return (
               <li key={index}>
@@ -47,39 +46,6 @@ export const Category: FC<MoviesProps> = memo(({ children, queryParams }) => {
               </li>
             );
           })}
-          {/* //code end */}
-          {/* <li>
-            <button
-              className={makeLinkClass('now_playing')}
-              onClick={evt => HandleClick(evt, 'now_playing')}
-            >
-              <span className={css.trending__text}>Now playing</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={makeLinkClass('popular')}
-              onClick={evt => HandleClick(evt, 'popular')}
-            >
-              <span className={css.trending__text}>Popular</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={makeLinkClass('top_rated')}
-              onClick={evt => HandleClick(evt, 'top_rated')}
-            >
-              <span className={css.trending__text}>Top Rated</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={makeLinkClass('upcoming')}
-              onClick={evt => HandleClick(evt, 'upcoming')}
-            >
-              <span className={css.trending__text}>Upcoming</span>
-            </button>
-          </li> */}
         </ul>
       </div>
       {children}

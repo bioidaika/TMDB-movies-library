@@ -11,7 +11,7 @@ import {
   getTvReviews,
   searchMovieQuery,
 } from '../api/api';
-import { ICast, IData, IDataTV, IMovie, IMovieByID, IReviews, ITVByID } from '../../types/types';
+import { ICast, IData, IMovie, IMovieByID, IReviews, ITVByID } from '../../types/types';
 
 export const getTrendingMovieList = createAsyncThunk<IMovie[], string>(
   'movie/trending-movies',
@@ -51,13 +51,13 @@ export const getMovieListByParam = createAsyncThunk<IData, { range: string; page
   }
 );
 
-export const getTVShowByParam = createAsyncThunk<IDataTV, { range: string; pageN: number }>(
+export const getTVShowByParam = createAsyncThunk<IData, { range: string; pageN: number }>(
   'tv/category',
   async ({ range, pageN }, thunkAPI) => {
     try {
       const response = await getTVList(range, pageN);
       if (response) {
-        return response as IDataTV;
+        return response as IData;
       } else {
         return thunkAPI.rejectWithValue('No data available');
       }

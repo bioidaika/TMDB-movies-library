@@ -5,8 +5,9 @@ import { setMovieParam, setPage } from '../redux/movie/slice';
 import { useSearchParams } from 'react-router-dom';
 import { getTVShowByParam } from '../redux/movie/operations';
 import Pagination from '../components/Pagination/Pagination';
-import TvList from '../components/TvList/TvList';
 import { AppDispatch } from '../redux/store';
+import MovieList from '../components/MovieList/MovieList';
+import Container from '../components/Container/Container';
 
 const TvPage = () => {
   const queryParams = ['airing_today', 'on_the_air', 'popular', 'top_rated'];
@@ -29,8 +30,10 @@ const TvPage = () => {
   return (
     <div>
       <Category queryParams={queryParams}>
-        <TvList />
-        <Pagination />
+        <Container>
+          <MovieList />
+          <Pagination />
+        </Container>
       </Category>
     </div>
   );
