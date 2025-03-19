@@ -4,6 +4,14 @@
   max-width: 1200px;
 }
 
+.rating {
+  display: inline-block;
+  font-size: 24px;
+  letter-spacing: 2px;
+  width: 260px;
+  color: transparent;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -38,6 +46,8 @@
 
 .list__item {
   margin-right: 10px;
+  font-size: 14px;
+  color: #666;
 }
 
 .isActive {

@@ -6,6 +6,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { isActive } from '../../types/types';
 import clsx from 'clsx';
 import { FavoriteButton } from '../FavoriteButton/FavoriteButton';
+import Title from '../Title/Title';
 
 const TvDetails = () => {
   const selectedTV = useSelector(selectSelectedTV);
@@ -29,15 +30,40 @@ const TvDetails = () => {
               />
               <FavoriteButton movieId={selectedTV.id} mediaType={'tv'} />
             </div>
-
             <div className={css.description}>
-              <h1>{selectedTV.original_name}</h1>
-              <p>{`Vote Average: ${selectedTV.vote_average.toFixed(1)} (${
+              <Title text={selectedTV.original_name} size="45px" />
+              <p>{`Vote Average: ${selectedTV.vote_average.toFixed(1)}/10 (${
                 selectedTV.vote_count
               })`}</p>
-              <h2>Overview</h2>
+              {Number(selectedTV.vote_average.toFixed(1)) > 1 ? (
+                <span
+                  className={css.rating}
+                  style={
+                    {
+                      background: `linear-gradient(90deg, gold ${Math.round(
+                        selectedTV.vote_average * 10
+                      )}%, gray ${Math.round(selectedTV.vote_average * 10)}%) text`,
+                      color: 'transparent',
+                    } as React.CSSProperties
+                  }
+                >
+                  {'★★★★★★★★★★'}
+                </span>
+              ) : (
+                <span
+                  className={css.rating}
+                  style={
+                    {
+                      color: 'gray',
+                    } as React.CSSProperties
+                  }
+                >
+                  {'★★★★★★★★★★'}
+                </span>
+              )}
+              <Title text={`Overview`} />
               <p>{selectedTV.overview}</p>
-              <h2>Genres</h2>
+              <Title text={`Genres`} />
               <ul className={css.list}>
                 {selectedTV.genres.map(item => (
                   <li className={css.list__item} key={item.id}>
@@ -47,7 +73,7 @@ const TvDetails = () => {
               </ul>
             </div>
           </div>
-          <h2>Additional information</h2>
+          <Title text={`Additional information`} />
           <ul className={css.add_info_list}>
             <li className={css.add_info_item}>
               <NavLink to="cast" className={makeLinkClass}>

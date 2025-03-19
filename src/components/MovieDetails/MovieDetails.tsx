@@ -61,7 +61,6 @@ const MovieDetails = () => {
                   {'★★★★★★★★★★'}
                 </span>
               )}
-
               <Title text={`Overview`} />
               <p>{selectedMovie.overview}</p>
               <Title text={`Genres`} />
