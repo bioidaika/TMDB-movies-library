@@ -1,7 +1,6 @@
 import { Movie } from '../../types/types';
 
 export const selectMovieList = (state: Movie) => state.movie.movieList;
-export const selectTVList = (state: Movie) => state.movie.tvList;
 export const selectTrendingOption = (state: Movie) => state.movie.trending;
 export const selectLoading = (state: Movie) => state.movie.loading;
 export const selectRandom_BG = (state: Movie) => state.movie.random_Background;

@@ -5,7 +5,6 @@ import {
   ICast,
   IReviews,
   IData,
-  IDataTV,
   ITVByID,
   removeFavoriteData,
   IfavoriteItem,
@@ -86,7 +85,7 @@ export const getMovieList = async (range: string, pageN: number): Promise<IData>
   return response.data as IData;
 };
 
-export const getTVList = async (range: string, pageN: number): Promise<IDataTV> => {
+export const getTVList = async (range: string, pageN: number): Promise<IData> => {
   const response = await axiosTheMovieDB.get(`tv/${range}`, {
     params: {
       page: pageN,
@@ -94,7 +93,7 @@ export const getTVList = async (range: string, pageN: number): Promise<IDataTV> 
   });
   // console.log(response.data);
   // return response.data.results as IMovie[];
-  return response.data as IDataTV;
+  return response.data as IData;
 };
 
 export const loginUser = async (data: { email: string; password: string }) => {
