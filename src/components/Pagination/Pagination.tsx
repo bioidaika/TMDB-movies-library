@@ -3,14 +3,12 @@ import css from './Pagination.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '../../redux/movie/slice';
 import { selectCurrentPage, selectTotalPages } from '../../redux/movie/selectors';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const Pagination = () => {
-  const navigate = useNavigate();
   const totalPages = useSelector(selectTotalPages);
   const currentPage = useSelector(selectCurrentPage);
-  const [params, setParams] = useSearchParams();
+  const [, setParams] = useSearchParams();
   const dispatch = useDispatch();
 
   const handlePageClick = (event: { selected: number }) => {
@@ -36,7 +34,7 @@ const Pagination = () => {
         pageLinkClassName={css.pageLink}
         activeLinkClassName={css.activePage}
         pageRangeDisplayed={2}
-        pageCount={totalPages}
+        pageCount={Math.max(totalPages, 1)}
         previousLabel="< previous"
         renderOnZeroPageCount={null}
         forcePage={currentPage - 1}
