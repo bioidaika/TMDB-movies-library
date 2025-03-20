@@ -1,9 +1,9 @@
 // NotFoundPage.tsx
 import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import css from './NotFoundPage.module.css';
+import css from './NotFound.module.css';
 
-export default function NotFoundPage() {
+export default function NotFound() {
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? '/');
 

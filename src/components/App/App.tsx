@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect } from 'react';
 import Navigation from '../Navigation/Navigation';
 const HomePage = lazy(() => import('../../pages/HomePage'));
 const MoviesPage = lazy(() => import('../../pages/MoviesPage'));
-const NotFoundPage = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'));
+const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
 const MovieDetailsPage = lazy(() => import('../../pages/MovieDetailsPage'));
 const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));

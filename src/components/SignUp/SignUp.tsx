@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import { AppDispatch } from '../../redux/store';
 import { getGoogleOAuthUrlOP, signupUserOP } from '../../redux/auth/operations';
-import LoadingNotification from '../SignIn/LoadingNotification/LoadingNotification';
+import LoadingNotification from '../LoadingNotification/LoadingNotification';
 import { FcGoogle } from 'react-icons/fc';
 import { setError } from '../../redux/auth/slice';
 

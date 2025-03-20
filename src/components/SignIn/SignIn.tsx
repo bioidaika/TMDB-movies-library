@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { getGoogleOAuthUrlOP, loginUserOP } from '../../redux/auth/operations';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
-import LoadingNotification from './LoadingNotification/LoadingNotification';
+import LoadingNotification from '../LoadingNotification/LoadingNotification';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
