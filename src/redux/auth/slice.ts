@@ -17,7 +17,6 @@ export interface authState {
   favorites: IfavoriteItem[] | null;
   isLoading: boolean | null;
   isLoggedIn: boolean | null;
-  isRefreshing: boolean;
   error: string | null;
 }
 export const initialState: authState = {
@@ -26,7 +25,6 @@ export const initialState: authState = {
   favorites: null,
   isLoading: null,
   isLoggedIn: null,
-  isRefreshing: false,
   error: null,
 };
 
