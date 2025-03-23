@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import css from '../SignIn.module.css';
+import css from './LoadingNotification.module.css';
 
 const LoadingNotification: React.FC = () => {
   const [dots, setDots] = useState('');

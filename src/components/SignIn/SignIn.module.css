@@ -96,19 +96,6 @@
   margin-right: 10px;
 }
 
-.notification {
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 4px;
-  background-color: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeeba;
-  font-size: 14px;
-  text-align: center;
-  font-family: 'Arial', sans-serif;
-  font-weight: bold;
-}
-
 .error {
   margin-bottom: 15px;
   padding: 10px;
