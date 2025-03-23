@@ -10,6 +10,7 @@ import {
   signInGoogle,
   signupUser,
   refreshAuthToken,
+  resetPass,
 } from '../api/api';
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
@@ -43,6 +44,24 @@ export const loginUserOP = createAsyncThunk('auth/login', async (data: ICredenti
     }
   }
 });
+
+export const requestResetPasswordOP = createAsyncThunk(
+  'auth/requestResetPassword',
+  async (data: { email: string }, thunkAPI) => {
+    try {
+      const response = await resetPass(data);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error && 'response' in error)
+        return thunkAPI.rejectWithValue(
+          (error as { response: { data: { error: string } } }).response.data.error
+        );
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
 
 export const logoutUserOP = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {

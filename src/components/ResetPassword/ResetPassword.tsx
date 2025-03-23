@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-import css from './SignIn.module.css';
+import css from './ResetPassword.module.css';
 import { NavLink } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
-import { getGoogleOAuthUrlOP, loginUserOP } from '../../redux/auth/operations';
 import { selectIsError, selectIsLoading } from '../../redux/auth/selectors';
 import LoadingNotification from '../LoadingNotification/LoadingNotification';
+import { requestResetPasswordOP } from '../../redux/auth/operations';
 
 const ResetPassword: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const isLoadingServer = useSelector(selectIsLoading);
   const error = useSelector(selectIsError);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(loginUserOP({ email, password }));
-    // console.log('Email:', email);
-    // console.log('Password:', password);
-  };
-
-  const handleGoogleSignIn = () => {
-    dispatch(getGoogleOAuthUrlOP());
+    dispatch(requestResetPasswordOP({ email }));
   };
   return (
     <div className={css.container}>
@@ -40,27 +32,16 @@ const ResetPassword: React.FC = () => {
             onChange={e => setEmail(e.target.value)}
             required
           />
-          <input
-            className={css.input}
-            type="password"
-            placeholder="Password"
-            id="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-          <NavLink to="/auth/reset-password" className={css.forgotPassword}>
-            Forgot password?
-          </NavLink>
           <button type="submit" className={css.submitBtn}>
-            Sign In
+            Continue
           </button>
           <div className={css.divider} />
         </form>
-        <button type="button" onClick={handleGoogleSignIn} className={css.googleBtn}>
-          <FcGoogle className={css.googleIcon} />
-          Sign in with Google
-        </button>
+        <NavLink to="/auth/reset-password">
+          <button type="button" className={css.submitBtn}>
+            Back to Sign In
+          </button>
+        </NavLink>
       </div>
     </div>
   );

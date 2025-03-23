@@ -143,3 +143,8 @@ export const refreshAuthToken = async () => {
   const response = await myBackendAxios.post('/auth/refresh');
   return response;
 };
+
+export const resetPass = async (data: { email: string }) => {
+  const response = await myBackendAxios.post(`auth/request-reset-email`, data);
+  return response.data;
+};
