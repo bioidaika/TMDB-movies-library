@@ -6,3 +6,5 @@ export const selectIsError = (state: Auth) => state.auth.error;
 export const selectToken = (state: Auth) => state.auth.token;
 export const selectUserName = (state: Auth) => state.auth.user?.name;
 export const selectFavorite = (state: Auth) => state.auth.favorites;
+export const selectRequestResetPassword = (state: Auth) => state.auth.requestResetPassword;
+export const selectEmailReset = (state: Auth) => state.auth.emailReset;

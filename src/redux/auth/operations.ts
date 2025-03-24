@@ -50,7 +50,7 @@ export const requestResetPasswordOP = createAsyncThunk(
   async (data: { email: string }, thunkAPI) => {
     try {
       const response = await resetPass(data);
-      return response.data;
+      return response.message;
     } catch (error) {
       if (error instanceof Error && 'response' in error)
         return thunkAPI.rejectWithValue(

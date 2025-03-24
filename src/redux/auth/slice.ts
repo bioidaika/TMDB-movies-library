@@ -6,6 +6,7 @@ import {
   logoutUserOP,
   refreshPage,
   removeFavorite,
+  requestResetPasswordOP,
   signinGoogleOauthOP,
   signupUserOP,
 } from './operations';
@@ -18,6 +19,8 @@ export interface authState {
   isLoading: boolean | null;
   isLoggedIn: boolean | null;
   error: string | null;
+  requestResetPassword: boolean | null;
+  emailReset: string | '';
 }
 export const initialState: authState = {
   token: null,
@@ -26,6 +29,8 @@ export const initialState: authState = {
   isLoading: null,
   isLoggedIn: null,
   error: null,
+  requestResetPassword: null,
+  emailReset: '',
 };
 
 const handleServerPending = (state: authState) => {
@@ -54,6 +59,12 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.user = null;
       state.favorites = null;
+    },
+    setRequestResetPassword(state, action: PayloadAction<boolean>) {
+      state.requestResetPassword = action.payload;
+    },
+    setEmailReset(state, action: PayloadAction<string>) {
+      state.emailReset = action.payload;
     },
   },
   extraReducers: builder => {
@@ -84,6 +95,14 @@ const authSlice = createSlice({
         state.favorites = action.payload.favorites;
       })
       .addCase(signupUserOP.rejected, handleServerRejected)
+      .addCase(requestResetPasswordOP.pending, handleServerPending)
+      .addCase(requestResetPasswordOP.fulfilled, state => {
+        state.isLoading = false;
+        state.requestResetPassword = true;
+        // state.requestResetPassword =
+      })
+      .addCase(requestResetPasswordOP.rejected, handleServerRejected)
+
       .addCase(refreshPage.pending, handleServerPending)
       .addCase(refreshPage.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -123,4 +142,6 @@ const authSlice = createSlice({
 export const setError = authSlice.actions.setError;
 export const setAccessToken = authSlice.actions.setAccessToken;
 export const logoutAction = authSlice.actions.logoutAction;
+export const setRequestResetPassword = authSlice.actions.setRequestResetPassword;
+export const setEmailReset = authSlice.actions.setEmailReset;
 export const authReducer = authSlice.reducer;
