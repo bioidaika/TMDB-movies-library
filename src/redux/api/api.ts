@@ -144,7 +144,22 @@ export const refreshAuthToken = async () => {
   return response;
 };
 
-export const resetPass = async (data: { email: string }) => {
+export const reguestResetPass = async (data: { email: string }) => {
   const response = await myBackendAxios.post(`auth/request-reset-email`, data);
   return response.data;
 };
+
+export const ResetPass = async (token: string, data: { password: string }) => {
+  const response = await myBackendAxios.post(`auth/reset-password?token=${token}`, data);
+  console.log('data.token:', token);
+  console.log('response.data:', response);
+
+  return response.data;
+};
+
+// export const searchMovieQuery = async (searchQuery: string) => {
+//   const response = await axiosTheMovieDB.get(`search/movie?query=${searchQuery}`);
+//   const responseTV = await axiosTheMovieDB.get(`search/tv?query=${searchQuery}`);
+//   const data = [...response.data.results, ...responseTV.data.results];
+//   return data;
+// };

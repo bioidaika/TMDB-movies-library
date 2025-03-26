@@ -10,7 +10,8 @@ import {
   signInGoogle,
   signupUser,
   refreshAuthToken,
-  resetPass,
+  reguestResetPass,
+  ResetPass,
 } from '../api/api';
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
@@ -49,8 +50,26 @@ export const requestResetPasswordOP = createAsyncThunk(
   'auth/requestResetPassword',
   async (data: { email: string }, thunkAPI) => {
     try {
-      const response = await resetPass(data);
+      const response = await reguestResetPass(data);
       return response.message;
+    } catch (error) {
+      if (error instanceof Error && 'response' in error)
+        return thunkAPI.rejectWithValue(
+          (error as { response: { data: { error: string } } }).response.data.error
+        );
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
+export const resetPasswordOP = createAsyncThunk(
+  'auth/resetPassword',
+  async ({ token, password }: { token: string; password: string }, thunkAPI) => {
+    try {
+      const response = await ResetPass(token, { password });
+      return response.data;
     } catch (error) {
       if (error instanceof Error && 'response' in error)
         return thunkAPI.rejectWithValue(

@@ -8,3 +8,4 @@ export const selectUserName = (state: Auth) => state.auth.user?.name;
 export const selectFavorite = (state: Auth) => state.auth.favorites;
 export const selectRequestResetPassword = (state: Auth) => state.auth.requestResetPassword;
 export const selectEmailReset = (state: Auth) => state.auth.emailReset;
+export const selectPasswordChanged = (state: Auth) => state.auth.passwordChanged;

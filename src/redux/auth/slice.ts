@@ -7,6 +7,7 @@ import {
   refreshPage,
   removeFavorite,
   requestResetPasswordOP,
+  resetPasswordOP,
   signinGoogleOauthOP,
   signupUserOP,
 } from './operations';
@@ -20,6 +21,7 @@ export interface authState {
   isLoggedIn: boolean | null;
   error: string | null;
   requestResetPassword: boolean | null;
+  passwordChanged: boolean | null;
   emailReset: string | '';
 }
 export const initialState: authState = {
@@ -29,7 +31,8 @@ export const initialState: authState = {
   isLoading: null,
   isLoggedIn: null,
   error: null,
-  requestResetPassword: null,
+  requestResetPassword: false,
+  passwordChanged: false,
   emailReset: '',
 };
 
@@ -75,6 +78,7 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.token = action.payload.accessToken;
         state.user = action.payload.user;
+        state.favorites = action.payload.favorites;
       })
       .addCase(loginUserOP.rejected, handleServerRejected)
       .addCase(logoutUserOP.pending, handleServerPending)
@@ -102,6 +106,14 @@ const authSlice = createSlice({
         // state.requestResetPassword =
       })
       .addCase(requestResetPasswordOP.rejected, handleServerRejected)
+      .addCase(resetPasswordOP.pending, handleServerPending)
+      .addCase(resetPasswordOP.fulfilled, state => {
+        state.isLoading = false;
+        state.passwordChanged = true;
+        // state.requestResetPassword = true;
+        // state.requestResetPassword =
+      })
+      .addCase(resetPasswordOP.rejected, handleServerRejected)
 
       .addCase(refreshPage.pending, handleServerPending)
       .addCase(refreshPage.fulfilled, (state, action) => {
