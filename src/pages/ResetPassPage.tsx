@@ -1,9 +1,9 @@
 import ResetPassword from '../components/ResetPassword/ResetPassword';
 
-export const ResetPasswordPage = () => {
+export const ResetPassPage = () => {
   return (
-    <div>
+    <>
       <ResetPassword />
-    </div>
+    </>
   );
 };

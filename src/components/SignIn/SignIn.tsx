@@ -49,7 +49,7 @@ const SignIn: React.FC = () => {
             onChange={e => setPassword(e.target.value)}
             required
           />
-          <NavLink to="/auth/reset-password" className={css.forgotPassword}>
+          <NavLink to="/auth/request-reset-email" className={css.forgotPassword}>
             Forgot password?
           </NavLink>
           <button type="submit" className={css.submitBtn}>

@@ -5,13 +5,14 @@ import css from './SearchForm.module.css';
 import { useDispatch } from 'react-redux';
 import { searchMovieReq } from '../../redux/movie/operations';
 import { IoSearch } from 'react-icons/io5';
+import { AppDispatch } from '../../redux/store';
 
 interface SearchFormProps {
   styleModule?: { [key: string]: string };
 }
 
 const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
   const queryURL = params.get('query') ?? '';
@@ -37,9 +38,8 @@ const SearchForm: FC<SearchFormProps> = memo(({ styleModule = css }) => {
     try {
       if (queryURL === '') return;
       dispatch(searchMovieReq(queryURL));
-    } catch (e: any) {
+    } catch {
       toast.error(`Error: ${queryURL}`);
-    } finally {
     }
   }
 

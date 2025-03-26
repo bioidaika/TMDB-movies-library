@@ -1,6 +1,7 @@
+import React from 'react';
+import css from './ResetEmail.module.css';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import css from './ResetPassword.module.css';
-import { useParams, useSearchParams } from 'react-router-dom';
 import { AppDispatch } from '../../redux/store';
 import {
   selectEmailReset,
@@ -9,14 +10,10 @@ import {
   selectRequestResetPassword,
 } from '../../redux/auth/selectors';
 import LoadingNotification from '../LoadingNotification/LoadingNotification';
-import { useState } from 'react';
-import { setError } from '../../redux/auth/slice';
+import { requestResetPasswordOP } from '../../redux/auth/operations';
+import { setEmailReset, setRequestResetPassword } from '../../redux/auth/slice';
 
-const ResetPassword: React.FC = () => {
-  const [params, setParams] = useSearchParams();
-  const tokenURL = params.get('token') ?? '';
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const ResetEmail: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const isLoadingServer = useSelector(selectIsLoading);
   const emailReset = useSelector(selectEmailReset);
@@ -25,11 +22,12 @@ const ResetPassword: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      console.error('Passwords do not match');
-      setError('Passwords do not match');
-      return;
-    }
+    dispatch(requestResetPasswordOP({ email: emailReset }));
+  };
+
+  const handleBacktoLogin = () => {
+    dispatch(setRequestResetPassword(false));
+    dispatch(setEmailReset(''));
   };
 
   return (
@@ -47,27 +45,18 @@ const ResetPassword: React.FC = () => {
           </div>
         ) : (
           <>
-            <h2 className={css.title}>Reset Password</h2>
+            <h2 className={css.title}>Forgot your Password?</h2>
             <p className={css.text}>
-              The password should be at least 8 characters long for your security.
+              Enter your email address and we'll send you a link to reset your password.
             </p>
             <form onSubmit={handleSubmit} className={css.innerForm}>
               <input
                 className={css.input}
-                type="password"
-                placeholder="Password"
-                id="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-              />
-              <input
-                className={css.input}
-                type="password"
-                placeholder="Confirm Password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
+                type="email"
+                placeholder="Email"
+                id="email"
+                value={emailReset}
+                onChange={e => dispatch(setEmailReset(e.target.value))}
                 required
               />
               <button type="submit" className={css.submitBtn}>
@@ -77,14 +66,14 @@ const ResetPassword: React.FC = () => {
             </form>
           </>
         )}
-        {/* <NavLink to="/auth/login">
+        <NavLink to="/auth/login">
           <button type="button" className={css.backBtn} onClick={() => handleBacktoLogin()}>
             Back to Log In
           </button>
-        </NavLink> */}
+        </NavLink>
       </div>
     </div>
   );
 };
 
-export default ResetPassword;
+export default ResetEmail;

@@ -23,7 +23,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshPage } from '../../redux/auth/operations';
 import { selectIsLoading, selectToken } from '../../redux/auth/selectors';
 import { FavoritePage } from '../../pages/FavoritePage';
-import { ResetPasswordPage } from '../../pages/ResetPasswordPage';
+import { ResetEmailPage } from '../../pages/ResetEmailPage';
+import { ResetPassPage } from '../../pages/ResetPassPage';
 
 export default function App() {
   const isLoading = useSelector(selectIsLoading);
@@ -57,8 +58,12 @@ export default function App() {
               element={<PrivateRoute redirectTo="/saved" component={<SignInPage />} />}
             />
             <Route
-              path="/auth/reset-password"
-              element={<PrivateRoute redirectTo="/saved" component={<ResetPasswordPage />} />}
+              path="/auth/request-reset-email"
+              element={<PrivateRoute redirectTo="/saved" component={<ResetEmailPage />} />}
+            />
+            <Route
+              path="/auth/reset-password/"
+              element={<PrivateRoute redirectTo="/saved" component={<ResetPassPage />} />}
             />
             <Route
               path="/auth/signup"
