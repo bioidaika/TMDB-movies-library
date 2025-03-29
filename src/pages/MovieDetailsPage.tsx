@@ -19,9 +19,9 @@ export default function MovieDetailsPage() {
 
   return (
     <div>
-      {isLoading && <Loader />}
       {error && <div>The resource you requested could not be found.</div>}
       <MovieDetails />
+      {isLoading && <Loader />}
     </div>
   );
 }
