@@ -43,7 +43,6 @@ const handleServerPending = (state: authState) => {
 
 const handleServerRejected = (state: authState, action: PayloadAction<string | unknown>) => {
   state.isLoading = false;
-  // state.error = (action.payload as { message?: string })?.message || 'An error occurred';
   state.error = (action.payload as string) || 'An error occurred';
 };
 
