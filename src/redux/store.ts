@@ -22,7 +22,7 @@ const movieConfig = {
 const authConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token', 'user', 'favorites'],
+  whitelist: ['token', 'user', 'favorites', 'isLoggedIn'],
 };
 
 const persistorMovieReducer = persistReducer(movieConfig, movieReducer);

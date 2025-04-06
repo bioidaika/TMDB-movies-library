@@ -167,7 +167,7 @@ export const signinGoogleOauthOP = createAsyncThunk(
   }
 );
 
-export const refreshPage = createAsyncThunk('user/favorite', async (_, thunkAPI) => {
+export const refreshPage = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
   const state = <RootState>thunkAPI.getState();
   const token = state.auth.token;
   if (token === null) return thunkAPI.rejectWithValue('No token available');
@@ -199,7 +199,6 @@ export const setupAxiosInterceptors = (store: Store) => {
 
         try {
           console.log('0');
-          // const { data } = await myBackendAxios.post('auth/refresh');
           const { data } = await refreshAuthToken(); // returns only data = data.data.accessToken
           console.log('accessToken', data.data.accessToken);
           setAuthHeader(data.data.accessToken);

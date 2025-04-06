@@ -120,7 +120,13 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.favorites = action.payload;
       })
-      .addCase(refreshPage.rejected, handleServerRejected)
+      .addCase(refreshPage.rejected, state => {
+        state.isLoading = false;
+        state.isLoggedIn = false;
+        state.token = null;
+        state.user = null;
+        state.favorites = null;
+      })
       .addCase(signinGoogleOauthOP.pending, handleServerPending)
       .addCase(signinGoogleOauthOP.fulfilled, (state, action) => {
         state.isLoading = false;

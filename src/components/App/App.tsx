@@ -8,6 +8,7 @@ const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));
 const TvPage = lazy(() => import('../../pages/TvPage'));
 const SearchPage = lazy(() => import('../../pages/SearchPage'));
+const SettingsPage = lazy(() => import('../../pages/SettingsPage'));
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Loader from '../Loader/Loader';
@@ -28,11 +29,12 @@ import { ResetPassPage } from '../../pages/ResetPassPage';
 
 export default function App() {
   const isLoading = useSelector(selectIsLoading);
+
   const token = useSelector(selectToken);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     if (token) dispatch(refreshPage());
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return (
     <div>
@@ -75,9 +77,7 @@ export default function App() {
             />
             <Route
               path="/profile-settings"
-              element={
-                <RestrictRoute redirectTo="/auth/login" component={<div>Profile-settings</div>} />
-              }
+              element={<RestrictRoute redirectTo="/auth/login" component={<SettingsPage />} />}
             />
             <Route path="/confirm-google-auth" element={<ConfirmGoogleAuth />} />
 

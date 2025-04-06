@@ -37,12 +37,6 @@ export interface IData {
   total_pages: number;
   total_results: number;
 }
-// export interface IDataTV {
-//   page: number;
-//   results: ITVShow[];
-//   total_pages: number;
-//   total_results: number;
-// }
 
 export interface IMovieByID {
   id: number;
