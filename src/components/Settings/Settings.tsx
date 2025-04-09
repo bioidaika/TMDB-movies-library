@@ -9,6 +9,7 @@ export const Settings: React.FC = () => {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     console.log('Updated user info:', inputValue);
+    const formData = new FormData(evt.currentTarget);
   };
 
   return (
@@ -18,27 +19,34 @@ export const Settings: React.FC = () => {
         <p>{inputValue.name}</p>
       </div>
       <form onSubmit={handleSubmit} className={css.updateForm}>
-        <label htmlFor="name">Name</label>
+        <label className="css.label" htmlFor="name">
+          Name
+        </label>
         <input
           type="text"
           name="name"
           placeholder="Name..."
-          //   className={styleModule.searchInput}
+          className={css.input}
           value={inputValue?.name || ''}
           onChange={e => setInputValue({ ...inputValue, name: e.target.value })}
         />
-        <label htmlFor="email">Email</label>
+        <label className="css.label" htmlFor="email">
+          Email
+        </label>
         <input
           type="email"
           name="email"
           placeholder="Email..."
-          //   className={styleModule.searchInput}
+          className={css.input}
           value={inputValue?.email || ''}
           onChange={e => setInputValue({ ...inputValue, email: e.target.value })}
         />
-        <label htmlFor="gender">Gender</label>
+        <label className="css.label" htmlFor="gender">
+          Gender
+        </label>
         <select
           name="gender"
+          className={css.input}
           value={inputValue?.gender || ''}
           onChange={e => setInputValue({ ...inputValue, gender: e.target.value })}
         >
