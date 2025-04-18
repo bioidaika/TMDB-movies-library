@@ -157,6 +157,15 @@ export const ResetPass = async (token: string, data: { password: string }) => {
   return response.data;
 };
 
+export const UpdateAvatar = async (data: FormData) => {
+  const response = await myBackendAxios.post('/user/upload-avatar', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
 // export const searchMovieQuery = async (searchQuery: string) => {
 //   const response = await axiosTheMovieDB.get(`search/movie?query=${searchQuery}`);
 //   const responseTV = await axiosTheMovieDB.get(`search/tv?query=${searchQuery}`);

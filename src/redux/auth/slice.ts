@@ -10,6 +10,7 @@ import {
   resetPasswordOP,
   signinGoogleOauthOP,
   signupUserOP,
+  updateAvatarOP,
 } from './operations';
 import { IfavoriteItem, user } from '../../types/types';
 
@@ -151,6 +152,13 @@ const authSlice = createSlice({
               item.media_id !== action.payload.media_id ||
               item.contentType !== action.payload.contentType
           );
+        }
+      })
+      .addCase(updateAvatarOP.pending, handleServerPending)
+      .addCase(updateAvatarOP.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.avatar = action.payload;
+          state.isLoading = false;
         }
       });
   },

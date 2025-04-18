@@ -12,6 +12,7 @@ import {
   refreshAuthToken,
   reguestResetPass,
   ResetPass,
+  UpdateAvatar,
 } from '../api/api';
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
@@ -237,6 +238,24 @@ export const removeFavorite = createAsyncThunk(
       return data;
     } catch {
       return thunkAPI.rejectWithValue('An unknown error occurred during remove fav!!!');
+    }
+  }
+);
+
+export const updateAvatarOP = createAsyncThunk(
+  'user/updateAvatar',
+  async (data: FormData, thunkAPI) => {
+    try {
+      const response = await UpdateAvatar(data);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error && 'response' in error)
+        return thunkAPI.rejectWithValue(
+          (error as { response: { data: { error: string } } }).response.data.error
+        );
+      else {
+        return thunkAPI.rejectWithValue('An unknown error occurred');
+      }
     }
   }
 );
