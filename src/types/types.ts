@@ -136,6 +136,12 @@ export interface user {
   updatedAt: string | null;
 }
 
+export interface IupdateUser {
+  name: string | null;
+  email: string | null;
+  gender: string | null;
+}
+
 export interface removeFavoriteData {
   media_id: number;
   contentType: string;

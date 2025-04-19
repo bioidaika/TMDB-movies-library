@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/auth/selectors';
 import css from './Settings.module.css';
-import { updateAvatarOP } from '../../redux/auth/operations';
-import App from '../App/App';
+import { updateUserOP } from '../../redux/auth/operations';
 import { AppDispatch } from '../../redux/store';
 
 export const Settings: React.FC = () => {
@@ -26,11 +25,14 @@ export const Settings: React.FC = () => {
     evt.preventDefault();
     setLoading(true);
     try {
+      const userForm = new FormData();
+      userForm.append('name', inputValue.name!);
+      userForm.append('email', inputValue.email!);
+      userForm.append('gender', inputValue.gender!);
       if (avatarFile) {
-        const avatarForm = new FormData();
-        avatarForm.append('avatar', avatarFile);
-        dispatch(updateAvatarOP(avatarForm));
+        userForm.append('avatar', avatarFile);
       }
+      dispatch(updateUserOP(userForm));
     } catch (error) {
       console.error('Error updating user info:', error);
     }

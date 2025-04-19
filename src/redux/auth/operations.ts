@@ -12,7 +12,7 @@ import {
   refreshAuthToken,
   reguestResetPass,
   ResetPass,
-  UpdateAvatar,
+  updateUserAPI,
 } from '../api/api';
 import { RootState } from '../store';
 import { logoutAction, setAccessToken } from './slice';
@@ -242,11 +242,11 @@ export const removeFavorite = createAsyncThunk(
   }
 );
 
-export const updateAvatarOP = createAsyncThunk(
-  'user/updateAvatar',
+export const updateUserOP = createAsyncThunk(
+  'user/updateUser',
   async (data: FormData, thunkAPI) => {
     try {
-      const response = await UpdateAvatar(data);
+      const response = await updateUserAPI(data);
       return response.data;
     } catch (error) {
       if (error instanceof Error && 'response' in error)

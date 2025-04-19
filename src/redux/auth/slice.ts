@@ -10,7 +10,7 @@ import {
   resetPasswordOP,
   signinGoogleOauthOP,
   signupUserOP,
-  updateAvatarOP,
+  updateUserOP,
 } from './operations';
 import { IfavoriteItem, user } from '../../types/types';
 
@@ -103,15 +103,12 @@ const authSlice = createSlice({
       .addCase(requestResetPasswordOP.fulfilled, state => {
         state.isLoading = false;
         state.requestResetPassword = true;
-        // state.requestResetPassword =
       })
       .addCase(requestResetPasswordOP.rejected, handleServerRejected)
       .addCase(resetPasswordOP.pending, handleServerPending)
       .addCase(resetPasswordOP.fulfilled, state => {
         state.isLoading = false;
         state.passwordChanged = true;
-        // state.requestResetPassword = true;
-        // state.requestResetPassword =
       })
       .addCase(resetPasswordOP.rejected, handleServerRejected)
 
@@ -154,13 +151,12 @@ const authSlice = createSlice({
           );
         }
       })
-      .addCase(updateAvatarOP.pending, handleServerPending)
-      .addCase(updateAvatarOP.fulfilled, (state, action) => {
-        if (state.user) {
-          state.user.avatar = action.payload;
-          state.isLoading = false;
-        }
-      });
+      .addCase(updateUserOP.pending, handleServerPending)
+      .addCase(updateUserOP.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(updateUserOP.rejected, handleServerRejected);
   },
 });
 
