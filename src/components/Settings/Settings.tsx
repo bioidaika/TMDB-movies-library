@@ -39,7 +39,7 @@ export const Settings: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={css.settings}>
       <div className={css.main}>
         <div className={css.avatarWrap}>
           <img
@@ -47,13 +47,21 @@ export const Settings: React.FC = () => {
             alt="User Avatar"
             className={css.avatar}
           />
-          <input type="file" accept="image/*" onChange={handleAvatarChange} />
+          <label className={css.fileLabel}>
+            Choose file
+            <input
+              type="file"
+              accept="image/*"
+              className={css.fileInput}
+              onChange={handleAvatarChange}
+            />
+          </label>
         </div>
-        <p>{inputValue.name}</p>
+        <p>{userInfo?.name}</p>
       </div>
 
       <form onSubmit={handleSubmit} className={css.updateForm}>
-        <label className="css.label" htmlFor="name">
+        <label className={css.label} htmlFor="name">
           Name
         </label>
         <input
@@ -64,7 +72,7 @@ export const Settings: React.FC = () => {
           value={inputValue?.name || ''}
           onChange={e => setInputValue({ ...inputValue, name: e.target.value })}
         />
-        <label className="css.label" htmlFor="email">
+        <label className={css.label} htmlFor="email">
           Email
         </label>
         <input
@@ -75,7 +83,7 @@ export const Settings: React.FC = () => {
           value={inputValue?.email || ''}
           onChange={e => setInputValue({ ...inputValue, email: e.target.value })}
         />
-        <label className="css.label" htmlFor="gender">
+        <label className={css.label} htmlFor="gender">
           Gender
         </label>
         <select

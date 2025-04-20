@@ -6,7 +6,7 @@ import { memo } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import { FaFilm, FaTv, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoggedIn, selectUserName } from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectUser, selectUserName } from '../../redux/auth/selectors';
 import { logoutUserOP } from '../../redux/auth/operations';
 import { AppDispatch } from '../../redux/store';
 
@@ -18,6 +18,7 @@ const Navigation = memo(function Navigation() {
   const isLogged = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch<AppDispatch>();
   const userName = useSelector(selectUserName);
+  const userInfo = useSelector(selectUser);
 
   const handleLogout = () => {
     dispatch(logoutUserOP());
@@ -59,7 +60,13 @@ const Navigation = memo(function Navigation() {
           <div>
             <div className={css.profileContainer}>
               <NavLink to="/saved" className={css.profileButton}>
-                <FaUser className={css.userIcon} />
+                {/* <FaUser className={css.userIcon} /> */}
+                {userInfo?.avatar ? (
+                  <img src={userInfo.avatar} alt="User Avatar" className={css.avatar} />
+                ) : (
+                  <FaUser className={css.userIcon} />
+                )}
+
                 {userName}
               </NavLink>
 
