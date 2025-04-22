@@ -85,6 +85,12 @@ const MovieDetails = () => {
                 Reviews
               </NavLink>
             </li>
+            {/* THÊM NÚT DOWNLOAD TẠI ĐÂY */}
+            <li className={css.add_info_item}>
+              <NavLink to="download" className={makeLinkClass}>
+                Download
+              </NavLink>
+            </li>
           </ul>
           <Suspense fallback={''}>
             <Outlet />

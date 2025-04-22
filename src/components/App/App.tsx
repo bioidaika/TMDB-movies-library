@@ -26,6 +26,7 @@ import { selectIsLoading, selectToken } from '../../redux/auth/selectors';
 import { FavoritePage } from '../../pages/FavoritePage';
 import { ResetEmailPage } from '../../pages/ResetEmailPage';
 import { ResetPassPage } from '../../pages/ResetPassPage';
+import DownloadPage from "../../pages/DownloadPage";
 
 export default function App() {
   const isLoading = useSelector(selectIsLoading);
@@ -82,6 +83,9 @@ export default function App() {
             <Route path="/confirm-google-auth" element={<ConfirmGoogleAuth />} />
 
             <Route path="*" element={<NotFoundPage />} />
+			<Route path="/movies/:tmdbId/download" element={<DownloadPage />} />
+			<Route path="/tv/:tmdbId/download" element={<DownloadPage />} />
+			
           </Routes>
         </Suspense>
       )}
