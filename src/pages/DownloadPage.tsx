@@ -42,6 +42,7 @@ export default function DownloadPage() {
 
   const [downloads, setDownloads] = useState<DownloadInfo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isCacheReady, setIsCacheReady] = useState(false); // Trạng thái cache
 
   const apiKey = "AIzaSyBP4xj1jX_KFM-sY8m_9pgq0TAugxKwcZA";
   const sheetIds = [
@@ -50,8 +51,80 @@ export default function DownloadPage() {
     // thêm sheet ID nếu cần
   ];
 
+  // Load cache ngầm ngay khi mở website
+  useEffect(() => {
+    async function preloadCache() {
+      const cacheKeys = ["sheetCache_movie", "sheetCache_tv"];
+      for (const cacheKey of cacheKeys) {
+        const isTv = cacheKey === "sheetCache_tv";
+        const cachedData = getCacheWithTTL(cacheKey) || {};
+
+        for (const sheetId of sheetIds) {
+          if (!cachedData[sheetId]) {
+            try {
+              const metaRes = await axios.get(
+                `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
+              );
+              const sheets: string[] = metaRes.data.sheets.map((s: any) => s.properties.title);
+
+              // Lọc sheet: accent-insensitive
+              const filteredSheets = sheets.filter((name) => {
+                const normName = normalizeText(name);
+                if (isTv) {
+                  return normName.includes("phim bo");
+                } else {
+                  const exclude = ["phim bo", "bbcode", "trending", "news"];
+                  return !exclude.some((kw) => normName.includes(kw));
+                }
+              });
+
+              const sheetData: Record<string, any[]> = {};
+              for (const sheetName of filteredSheets) {
+                const dataRes = await axios.get(
+                  `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
+                    sheetName
+                  )}?key=${apiKey}`
+                );
+                const rows: string[][] = dataRes.data.values;
+                if (!rows || rows.length < 2) continue;
+
+                // Normalize headers
+                const headers = rows[0].map((h) => normalizeText(h.trim()));
+                const data = rows.slice(1).map((row) => {
+                  const obj: Record<string, string> = {};
+                  row.forEach((cell, idx) => {
+                    obj[headers[idx]] = cell;
+                  });
+                  return obj;
+                });
+
+                // Chỉ lưu 3 cột cần thiết vào cache
+                sheetData[sheetName] = data.map((item) => ({
+                  tmdbId: item["tmdb id"]?.trim(),
+                  downloadLink: item["download link"]?.trim(),
+                  size: item["size"]?.trim(),
+                }));
+              }
+
+              // Lưu dữ liệu sheetId vào cache
+              cachedData[sheetId] = sheetData;
+              setCacheWithTTL(cacheKey, cachedData, 22); // TTL = 22 phút
+            } catch (err) {
+              console.error(`Error preloading sheet ${sheetId}:`, err);
+            }
+          }
+        }
+      }
+      setIsCacheReady(true); // Đặt trạng thái cache sẵn sàng
+    }
+
+    preloadCache();
+  }, []);
+
   useEffect(() => {
     async function fetchAll() {
+      if (!isCacheReady) return; // Chỉ tải dữ liệu khi cache đã sẵn sàng
+
       setLoading(true);
       const allResults: DownloadInfo[] = [];
 
@@ -59,65 +132,10 @@ export default function DownloadPage() {
       const cacheKey = isTvPage ? "sheetCache_tv" : "sheetCache_movie";
 
       // Lấy cache từ LocalStorage
-      const cachedData = getCacheWithTTL(cacheKey) || {};
+      let cachedData = getCacheWithTTL(cacheKey) || {};
 
       for (const sheetId of sheetIds) {
         try {
-          // Kiểm tra nếu sheetId đã có trong cache
-          if (!cachedData[sheetId]) {
-            const metaRes = await axios.get(
-              `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
-            );
-            const sheets: string[] = metaRes.data.sheets.map((s: any) => s.properties.title);
-
-            // Lọc sheet: accent-insensitive
-            const filteredSheets = sheets.filter((name) => {
-              const normName = normalizeText(name);
-              if (isTvPage) {
-                // TV page: chỉ lấy sheet có 'phim bo'
-                return normName.includes("phim bo");
-              } else {
-                // Movie page: loại bỏ sheet chứa các keyword
-                const exclude = ["phim bo", "bbcode", "trending", "news"];
-                return !exclude.some((kw) => normName.includes(kw));
-              }
-            });
-
-            console.debug({ sheetId, sheets, filteredSheets });
-
-            const sheetData: Record<string, any[]> = {};
-            for (const sheetName of filteredSheets) {
-              const dataRes = await axios.get(
-                `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
-                  sheetName
-                )}?key=${apiKey}`
-              );
-              const rows: string[][] = dataRes.data.values;
-              if (!rows || rows.length < 2) continue;
-
-              // Normalize headers
-              const headers = rows[0].map((h) => normalizeText(h.trim()));
-              const data = rows.slice(1).map((row) => {
-                const obj: Record<string, string> = {};
-                row.forEach((cell, idx) => {
-                  obj[headers[idx]] = cell;
-                });
-                return obj;
-              });
-
-              // Chỉ lưu 3 cột cần thiết vào cache
-              sheetData[sheetName] = data.map((item) => ({
-                tmdbId: item["tmdb id"]?.trim(),
-                downloadLink: item["download link"]?.trim(),
-                size: item["size"]?.trim(),
-              }));
-            }
-
-            // Lưu dữ liệu sheetId vào cache
-            cachedData[sheetId] = sheetData;
-            setCacheWithTTL(cacheKey, cachedData, 22); // TTL = 22 phút
-          }
-
           // Lấy dữ liệu từ cache
           const cachedSheetData = cachedData[sheetId];
           for (const [sheetName, rows] of Object.entries(cachedSheetData)) {
@@ -135,6 +153,13 @@ export default function DownloadPage() {
           }
         } catch (err) {
           console.error(`Error processing sheet ${sheetId}:`, err);
+
+          // Nếu gặp lỗi, sử dụng cache cũ
+          if (cachedData[sheetId]) {
+            console.warn(`Using old cache for sheet ${sheetId}`);
+          } else {
+            console.error(`No cache available for sheet ${sheetId}`);
+          }
         }
       }
 
@@ -143,56 +168,62 @@ export default function DownloadPage() {
     }
 
     fetchAll();
-  }, [tmdbId, isTvPage]);
+  }, [tmdbId, isTvPage, isCacheReady]);
 
   return (
     <div style={{ padding: "2rem" }}>
-      <h1>
-        {isTvPage ? "TV Series" : "Movie"} Download Links (TMDb ID: {tmdbId})
-      </h1>
-
-      {loading ? (
-        <p>Đang tải dữ liệu từ Google Sheets...</p>
-      ) : downloads.length === 0 ? (
-        <p style={{ color: "#888" }}>
-          Không tìm thấy link tải nào cho TMDb ID: {tmdbId}
-        </p>
+      {!isCacheReady ? (
+        <p>Đang chuẩn bị dữ liệu, vui lòng đợi...</p>
       ) : (
-        downloads.map((item, idx) => (
-          <div
-            key={idx}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "10px",
-              padding: "1rem",
-              marginBottom: "1rem",
-              backgroundColor: "#f9f9f9",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-            }}
-          >
-            <p>
-              <strong>Sheet:</strong> {item.sheetName} (ID: {item.sheetId})
+        <>
+          <h1>
+            {isTvPage ? "TV Series" : "Movie"} Download Links (TMDb ID: {tmdbId})
+          </h1>
+
+          {loading ? (
+            <p>Đang tải dữ liệu từ Google Sheets...</p>
+          ) : downloads.length === 0 ? (
+            <p style={{ color: "#888" }}>
+              Không tìm thấy link tải nào cho TMDb ID: {tmdbId}
             </p>
-            <p>
-              <strong>🔗 Link tải:</strong>{" "}
-              <a
-                href={item.downloadLink}
-                target="_blank"
-                rel="noopener noreferrer"
+          ) : (
+            downloads.map((item, idx) => (
+              <div
+                key={idx}
                 style={{
-                  color: "#0077cc",
-                  textDecoration: "underline",
-                  wordBreak: "break-all",
+                  border: "1px solid #ccc",
+                  borderRadius: "10px",
+                  padding: "1rem",
+                  marginBottom: "1rem",
+                  backgroundColor: "#f9f9f9",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
                 }}
               >
-                {item.downloadLink}
-              </a>
-            </p>
-            <p>
-              <strong>✅ Size:</strong> {item.size}
-            </p>
-          </div>
-        ))
+                <p>
+                  <strong>Sheet:</strong> {item.sheetName} (ID: {item.sheetId})
+                </p>
+                <p>
+                  <strong>🔗 Link tải:</strong>{" "}
+                  <a
+                    href={item.downloadLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: "#0077cc",
+                      textDecoration: "underline",
+                      wordBreak: "break-all",
+                    }}
+                  >
+                    {item.downloadLink}
+                  </a>
+                </p>
+                <p>
+                  <strong>✅ Size:</strong> {item.size}
+                </p>
+              </div>
+            ))
+          )}
+        </>
       )}
     </div>
   );
