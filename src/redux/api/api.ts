@@ -151,9 +151,6 @@ export const reguestResetPass = async (data: { email: string }) => {
 
 export const ResetPass = async (token: string, data: { password: string }) => {
   const response = await myBackendAxios.post(`auth/reset-password?token=${token}`, data);
-  console.log('data.token:', token);
-  console.log('response.data:', response);
-
   return response.data;
 };
 

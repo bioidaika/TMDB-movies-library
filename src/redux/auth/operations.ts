@@ -197,22 +197,17 @@ export const setupAxiosInterceptors = (store: Store) => {
           store.dispatch(logoutAction());
           return Promise.reject(error);
         }
-
         try {
-          console.log('0');
           const { data } = await refreshAuthToken(); // returns only data = data.data.accessToken
-          console.log('accessToken', data.data.accessToken);
           setAuthHeader(data.data.accessToken);
           originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
           store.dispatch(setAccessToken(data.data.accessToken));
-          console.log('1');
           return myBackendAxios(originalRequest);
         } catch (err) {
           store.dispatch(logoutAction());
           return Promise.reject(err);
         }
       }
-      console.log('3');
       return Promise.reject(error);
     }
   );
