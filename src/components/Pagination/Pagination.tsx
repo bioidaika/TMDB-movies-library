@@ -12,7 +12,7 @@ const Pagination = () => {
   const dispatch = useDispatch();
 
   const handlePageClick = (event: { selected: number }) => {
-    console.log('event.selected', event.selected + 1);
+    // console.log('event.selected', event.selected + 1);
     dispatch(setPage(event.selected + 1));
     const pageNumber = event.selected + 1;
     setParams(prevParams => {

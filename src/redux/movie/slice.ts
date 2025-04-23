@@ -11,20 +11,10 @@ import {
   getTVShowByParam,
   searchMovieReq,
 } from './operations';
-import {
-  ICast,
-  IData,
-  // IDataTV,
-  IMovie,
-  IMovieByID,
-  IReviews,
-  ITVByID,
-  // ITVShow,
-} from '../../types/types';
+import { ICast, IData, IMovie, IMovieByID, IReviews, ITVByID } from '../../types/types';
 
 export interface MovieState {
   movieList: IMovie[];
-  // tvList: IMovie[];
   loading: boolean;
   error: string | null;
   trending: 'day' | 'week';
@@ -41,7 +31,6 @@ export interface MovieState {
 
 export const initialState: MovieState = {
   movieList: [],
-  // tvList: [],
   loading: false,
   error: null,
   trending: 'day',
@@ -126,7 +115,6 @@ const movieSlice = createSlice({
       .addCase(getMovieListByParam.rejected, handleRejected)
       .addCase(getTVShowByParam.pending, handlePending)
       .addCase(getTVShowByParam.fulfilled, (state, action: PayloadAction<IData>) => {
-        // state.tvList = action.payload.results;
         state.movieList = action.payload.results;
         //limit for pages = 500 themoviedb API
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions

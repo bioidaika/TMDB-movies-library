@@ -20,7 +20,6 @@ const ResetPassword: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('tokenURL:', tokenURL);
     if (password !== confirmPassword) {
       console.error('Passwords do not match');
       setError('Passwords do not match');
