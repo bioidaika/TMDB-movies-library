@@ -9,6 +9,14 @@ interface DownloadInfo {
   size: string;
 }
 
+// Helper: remove accents and lowercase
+function normalizeText(text: string) {
+  return text
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase();
+}
+
 export default function DownloadPage() {
   const { tmdbId } = useParams<{ tmdbId: string }>();
   const isTvPage = !!useMatch("/tv/:tmdbId/download");
@@ -16,83 +24,82 @@ export default function DownloadPage() {
   const [downloads, setDownloads] = useState<DownloadInfo[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const apiKey = "AIzaSyBP4xjX_KFM-sY8m_9pgq0TAugxKwcZA";
+  const apiKey = "AIzaSyBP4xj1jX_KFM-sY8m_9pgq0TAugxKwcZA";
   const sheetIds = [
     "1QfG84of1a2OcUoIhFfPugXudyhwiRH3F-g2MLhaPjos",
     "1ouLbT5GRUOGgVpx_sS9qYivGytf4yBdubWURjq-LhLs",
-    // ... thêm nếu cần
+    // thêm sheet ID nếu cần
   ];
 
   useEffect(() => {
-    const fetchAll = async () => {
+    async function fetchAll() {
       setLoading(true);
       const allResults: DownloadInfo[] = [];
 
       for (const sheetId of sheetIds) {
         try {
-          // Lấy metadata của spreadsheet để lấy danh sách sheet
           const metaRes = await axios.get(
             `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
           );
-          const sheets: string[] = metaRes.data.sheets.map(
-            (s: any) => s.properties.title
-          );
+          const sheets: string[] = metaRes.data.sheets.map((s: any) => s.properties.title);
 
-          // Lọc sheet dựa trên loại trang: TV chỉ lấy sheet chứa "phim bộ", movie thì bỏ những sheet chứa các từ khóa
-          const ignoreKeywords = ["bbcode", "trending", "news", "phim bộ"];
+          // Lọc sheet: accent-insensitive
           const filteredSheets = sheets.filter((name) => {
-            const lower = name.toLowerCase();
+            const normName = normalizeText(name);
             if (isTvPage) {
-              return lower.includes("phim bộ");
+              // TV page: chỉ lấy sheet có 'phim bo'
+              return normName.includes("phim bo");
             } else {
-              return !ignoreKeywords.some((k) => lower.includes(k));
+              // Movie page: loại bỏ sheet chứa các keyword
+              const exclude = ["phim bo", "bbcode", "trending", "news"];
+              return !exclude.some((kw) => normName.includes(kw));
             }
           });
 
-          // Duyệt từng sheet đã lọc
+          console.debug({ sheetId, sheets, filteredSheets });
+
           for (const sheetName of filteredSheets) {
-            const dataUrl =
+            const dataRes = await axios.get(
               `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
                 sheetName
-              )}?key=${apiKey}`;
-            const res = await axios.get(dataUrl);
-            const rows: string[][] = res.data.values;
+              )}?key=${apiKey}`
+            );
+            const rows: string[][] = dataRes.data.values;
             if (!rows || rows.length < 2) continue;
 
-            const headers = rows[0];
-            const data = rows.slice(1).map((row) =>
-              (headers as string[]).reduce(
-                (obj: Record<string, any>, key: string, i: number) => ({
-                  ...obj,
-                  [key]: row[i],
-                }),
-                {}
-              )
+            // Normalize headers
+            const headers = rows[0].map((h) => normalizeText(h.trim()));
+            const data = rows.slice(1).map((row) => {
+              const obj: Record<string, string> = {};
+              row.forEach((cell, idx) => {
+                obj[headers[idx]] = cell;
+              });
+              return obj;
+            });
+
+            // Filter by TMDb ID (trimmed)
+            const matches = data.filter((item) =>
+              item["tmdb id"]?.trim() === tmdbId
             );
 
-            // Lọc theo TMDb ID
-            const matches = data.filter(
-              (item: Record<string, any>) => item["TMDb id"] === tmdbId
-            );
+            console.debug({ sheetName, totalRows: data.length, matchesCount: matches.length });
 
-            // Map thành DownloadInfo
-            const mapped = matches.map((item: Record<string, any>) => ({
+            const mapped = matches.map((item) => ({
               sheetId,
               sheetName,
-              downloadLink: item["Download Link"],
-              size: item["Size"],
+              downloadLink: item["download link"].trim(),
+              size: item["size"].trim(),
             }));
-
             allResults.push(...mapped);
           }
         } catch (err) {
-          console.error(`Lỗi khi xử lý sheet ${sheetId}:`, err);
+          console.error(`Error processing sheet ${sheetId}:`, err);
         }
       }
 
       setDownloads(allResults);
       setLoading(false);
-    };
+    }
 
     fetchAll();
   }, [tmdbId, isTvPage]);
@@ -100,7 +107,7 @@ export default function DownloadPage() {
   return (
     <div style={{ padding: "2rem" }}>
       <h1>
-        Download Links for {isTvPage ? "TV Series" : "Movie"} (TMDb ID: {tmdbId})
+        {isTvPage ? "TV Series" : "Movie"} Download Links (TMDb ID: {tmdbId})
       </h1>
 
       {loading ? (
