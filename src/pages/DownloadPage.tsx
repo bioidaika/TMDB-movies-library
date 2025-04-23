@@ -1,6 +1,6 @@
 import { useParams, useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getGoogleSheetMetadata, getGoogleSheetData } from "../redux/api/spreadsheet";
+import axios from "axios";
 
 interface DownloadInfo {
   sheetId: string;
@@ -17,15 +17,8 @@ function normalizeText(text: string) {
     .toLowerCase();
 }
 
-// Cache structure
-const cache: {
-  data: DownloadInfo[] | null;
-  timestamp: number | null;
-} = {
-  data: null,
-  timestamp: null,
-};
-
+// Biến toàn cục để lưu cache
+let cache: { data: DownloadInfo[]; timestamp: number } | null = null;
 const CACHE_TTL = 22 * 60 * 1000; // 22 phút (ms)
 
 export default function DownloadPage() {
@@ -35,6 +28,7 @@ export default function DownloadPage() {
   const [downloads, setDownloads] = useState<DownloadInfo[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const apiKey = "AIzaSyBP4xj1jX_KFM-sY8m_9pgq0TAugxKwcZA";
   const sheetIds = [
     "1QfG84of1a2OcUoIhFfPugXudyhwiRH3F-g2MLhaPjos",
     "1ouLbT5GRUOGgVpx_sS9qYivGytf4yBdubWURjq-LhLs",
@@ -47,20 +41,21 @@ export default function DownloadPage() {
 
       // Kiểm tra cache
       const now = Date.now();
-      if (cache.data && cache.timestamp && now - cache.timestamp < CACHE_TTL) {
-        console.debug("Sử dụng dữ liệu từ cache");
+      if (cache && now - cache.timestamp < CACHE_TTL) {
+        console.log("Serving from cache");
         setDownloads(cache.data);
         setLoading(false);
         return;
       }
 
-      console.debug("Cache hết hạn hoặc chưa có, gọi API...");
       const allResults: DownloadInfo[] = [];
 
       for (const sheetId of sheetIds) {
         try {
-          const metaRes = await getGoogleSheetMetadata(sheetId);
-          const sheets: string[] = metaRes.sheets.map((s: any) => s.properties.title);
+          const metaRes = await axios.get(
+            `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
+          );
+          const sheets: string[] = metaRes.data.sheets.map((s: any) => s.properties.title);
 
           // Lọc sheet: accent-insensitive
           const filteredSheets = sheets.filter((name) => {
@@ -78,8 +73,12 @@ export default function DownloadPage() {
           console.debug({ sheetId, sheets, filteredSheets });
 
           for (const sheetName of filteredSheets) {
-            const dataRes = await getGoogleSheetData(sheetId, sheetName);
-            const rows: string[][] = dataRes.values;
+            const dataRes = await axios.get(
+              `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
+                sheetName
+              )}?key=${apiKey}`
+            );
+            const rows: string[][] = dataRes.data.values;
             if (!rows || rows.length < 2) continue;
 
             // Normalize headers
@@ -112,9 +111,8 @@ export default function DownloadPage() {
         }
       }
 
-      // Lưu dữ liệu vào cache
-      cache.data = allResults;
-      cache.timestamp = Date.now();
+      // Lưu vào cache
+      cache = { data: allResults, timestamp: Date.now() };
 
       setDownloads(allResults);
       setLoading(false);
