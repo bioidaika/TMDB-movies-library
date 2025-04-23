@@ -17,10 +17,6 @@ function normalizeText(text: string) {
     .toLowerCase();
 }
 
-// Biến toàn cục để lưu cache
-let cache: { data: DownloadInfo[]; timestamp: number } | null = null;
-const CACHE_TTL = 22 * 60 * 1000; // 22 phút (ms)
-
 export default function DownloadPage() {
   const { tmdbId } = useParams<{ tmdbId: string }>();
   const isTvPage = !!useMatch("/tv/:tmdbId/download");
@@ -38,16 +34,6 @@ export default function DownloadPage() {
   useEffect(() => {
     async function fetchAll() {
       setLoading(true);
-
-      // Kiểm tra cache
-      const now = Date.now();
-      if (cache && now - cache.timestamp < CACHE_TTL) {
-        console.log("Serving from cache");
-        setDownloads(cache.data);
-        setLoading(false);
-        return;
-      }
-
       const allResults: DownloadInfo[] = [];
 
       for (const sheetId of sheetIds) {
@@ -110,9 +96,6 @@ export default function DownloadPage() {
           console.error(`Error processing sheet ${sheetId}:`, err);
         }
       }
-
-      // Lưu vào cache
-      cache = { data: allResults, timestamp: Date.now() };
 
       setDownloads(allResults);
       setLoading(false);
