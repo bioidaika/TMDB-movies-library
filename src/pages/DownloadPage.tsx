@@ -1,6 +1,6 @@
 import { useParams, useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getGoogleSheetMetadata, getGoogleSheetData } from "../redux/api/spreadsheet";
 
 interface DownloadInfo {
   sheetId: string;
@@ -35,7 +35,6 @@ export default function DownloadPage() {
   const [downloads, setDownloads] = useState<DownloadInfo[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const apiKey = "AIzaSyBP4xj1jX_KFM-sY8m_9pgq0TAugxKwcZA";
   const sheetIds = [
     "1QfG84of1a2OcUoIhFfPugXudyhwiRH3F-g2MLhaPjos",
     "1ouLbT5GRUOGgVpx_sS9qYivGytf4yBdubWURjq-LhLs",
@@ -60,10 +59,8 @@ export default function DownloadPage() {
 
       for (const sheetId of sheetIds) {
         try {
-          const metaRes = await axios.get(
-            `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
-          );
-          const sheets: string[] = metaRes.data.sheets.map((s: any) => s.properties.title);
+          const metaRes = await getGoogleSheetMetadata(sheetId);
+          const sheets: string[] = metaRes.sheets.map((s: any) => s.properties.title);
 
           // Lọc sheet: accent-insensitive
           const filteredSheets = sheets.filter((name) => {
@@ -81,12 +78,8 @@ export default function DownloadPage() {
           console.debug({ sheetId, sheets, filteredSheets });
 
           for (const sheetName of filteredSheets) {
-            const dataRes = await axios.get(
-              `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
-                sheetName
-              )}?key=${apiKey}`
-            );
-            const rows: string[][] = dataRes.data.values;
+            const dataRes = await getGoogleSheetData(sheetId, sheetName);
+            const rows: string[][] = dataRes.values;
             if (!rows || rows.length < 2) continue;
 
             // Normalize headers
