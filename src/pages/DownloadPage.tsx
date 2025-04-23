@@ -17,6 +17,25 @@ function normalizeText(text: string) {
     .toLowerCase();
 }
 
+// Helper: Get cache with TTL
+function getCacheWithTTL(key: string) {
+  const cached = localStorage.getItem(key);
+  if (!cached) return null;
+
+  const { data, expiry } = JSON.parse(cached);
+  if (Date.now() > expiry) {
+    localStorage.removeItem(key); // Xóa cache nếu hết hạn
+    return null;
+  }
+  return data;
+}
+
+// Helper: Set cache with TTL
+function setCacheWithTTL(key: string, data: any, ttlMinutes: number) {
+  const expiry = Date.now() + ttlMinutes * 60 * 1000; // TTL tính bằng phút
+  localStorage.setItem(key, JSON.stringify({ data, expiry }));
+}
+
 export default function DownloadPage() {
   const { tmdbId } = useParams<{ tmdbId: string }>();
   const isTvPage = !!useMatch("/tv/:tmdbId/download");
@@ -36,59 +55,81 @@ export default function DownloadPage() {
       setLoading(true);
       const allResults: DownloadInfo[] = [];
 
+      // Tạo cacheKey riêng biệt cho movie và tv
+      const cacheKey = isTvPage ? "sheetCache_tv" : "sheetCache_movie";
+
+      // Lấy cache từ LocalStorage
+      const cachedData = getCacheWithTTL(cacheKey) || {};
+
       for (const sheetId of sheetIds) {
         try {
-          const metaRes = await axios.get(
-            `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
-          );
-          const sheets: string[] = metaRes.data.sheets.map((s: any) => s.properties.title);
-
-          // Lọc sheet: accent-insensitive
-          const filteredSheets = sheets.filter((name) => {
-            const normName = normalizeText(name);
-            if (isTvPage) {
-              // TV page: chỉ lấy sheet có 'phim bo'
-              return normName.includes("phim bo");
-            } else {
-              // Movie page: loại bỏ sheet chứa các keyword
-              const exclude = ["phim bo", "bbcode", "trending", "news"];
-              return !exclude.some((kw) => normName.includes(kw));
-            }
-          });
-
-          console.debug({ sheetId, sheets, filteredSheets });
-
-          for (const sheetName of filteredSheets) {
-            const dataRes = await axios.get(
-              `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
-                sheetName
-              )}?key=${apiKey}`
+          // Kiểm tra nếu sheetId đã có trong cache
+          if (!cachedData[sheetId]) {
+            const metaRes = await axios.get(
+              `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
             );
-            const rows: string[][] = dataRes.data.values;
-            if (!rows || rows.length < 2) continue;
+            const sheets: string[] = metaRes.data.sheets.map((s: any) => s.properties.title);
 
-            // Normalize headers
-            const headers = rows[0].map((h) => normalizeText(h.trim()));
-            const data = rows.slice(1).map((row) => {
-              const obj: Record<string, string> = {};
-              row.forEach((cell, idx) => {
-                obj[headers[idx]] = cell;
-              });
-              return obj;
+            // Lọc sheet: accent-insensitive
+            const filteredSheets = sheets.filter((name) => {
+              const normName = normalizeText(name);
+              if (isTvPage) {
+                // TV page: chỉ lấy sheet có 'phim bo'
+                return normName.includes("phim bo");
+              } else {
+                // Movie page: loại bỏ sheet chứa các keyword
+                const exclude = ["phim bo", "bbcode", "trending", "news"];
+                return !exclude.some((kw) => normName.includes(kw));
+              }
             });
 
-            // Filter by TMDb ID (trimmed)
-            const matches = data.filter((item) =>
-              item["tmdb id"]?.trim() === tmdbId
-            );
+            console.debug({ sheetId, sheets, filteredSheets });
 
-            console.debug({ sheetName, totalRows: data.length, matchesCount: matches.length });
+            const sheetData: Record<string, any[]> = {};
+            for (const sheetName of filteredSheets) {
+              const dataRes = await axios.get(
+                `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
+                  sheetName
+                )}?key=${apiKey}`
+              );
+              const rows: string[][] = dataRes.data.values;
+              if (!rows || rows.length < 2) continue;
+
+              // Normalize headers
+              const headers = rows[0].map((h) => normalizeText(h.trim()));
+              const data = rows.slice(1).map((row) => {
+                const obj: Record<string, string> = {};
+                row.forEach((cell, idx) => {
+                  obj[headers[idx]] = cell;
+                });
+                return obj;
+              });
+
+              // Chỉ lưu 3 cột cần thiết vào cache
+              sheetData[sheetName] = data.map((item) => ({
+                tmdbId: item["tmdb id"]?.trim(),
+                downloadLink: item["download link"]?.trim(),
+                size: item["size"]?.trim(),
+              }));
+            }
+
+            // Lưu dữ liệu sheetId vào cache
+            cachedData[sheetId] = sheetData;
+            setCacheWithTTL(cacheKey, cachedData, 22); // TTL = 22 phút
+          }
+
+          // Lấy dữ liệu từ cache
+          const cachedSheetData = cachedData[sheetId];
+          for (const [sheetName, rows] of Object.entries(cachedSheetData)) {
+            const matches = (rows as { tmdbId: string; downloadLink: string; size: string }[]).filter(
+              (item) => item.tmdbId === tmdbId
+            );
 
             const mapped = matches.map((item) => ({
               sheetId,
               sheetName,
-              downloadLink: item["download link"].trim(),
-              size: item["size"].trim(),
+              downloadLink: item.downloadLink,
+              size: item.size,
             }));
             allResults.push(...mapped);
           }
