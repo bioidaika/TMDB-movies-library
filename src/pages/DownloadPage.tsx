@@ -17,6 +17,17 @@ function normalizeText(text: string) {
     .toLowerCase();
 }
 
+// Cache structure
+const cache: {
+  data: DownloadInfo[] | null;
+  timestamp: number | null;
+} = {
+  data: null,
+  timestamp: null,
+};
+
+const CACHE_TTL = 22 * 60 * 1000; // 22 phút (ms)
+
 export default function DownloadPage() {
   const { tmdbId } = useParams<{ tmdbId: string }>();
   const isTvPage = !!useMatch("/tv/:tmdbId/download");
@@ -34,6 +45,17 @@ export default function DownloadPage() {
   useEffect(() => {
     async function fetchAll() {
       setLoading(true);
+
+      // Kiểm tra cache
+      const now = Date.now();
+      if (cache.data && cache.timestamp && now - cache.timestamp < CACHE_TTL) {
+        console.debug("Sử dụng dữ liệu từ cache");
+        setDownloads(cache.data);
+        setLoading(false);
+        return;
+      }
+
+      console.debug("Cache hết hạn hoặc chưa có, gọi API...");
       const allResults: DownloadInfo[] = [];
 
       for (const sheetId of sheetIds) {
@@ -96,6 +118,10 @@ export default function DownloadPage() {
           console.error(`Error processing sheet ${sheetId}:`, err);
         }
       }
+
+      // Lưu dữ liệu vào cache
+      cache.data = allResults;
+      cache.timestamp = Date.now();
 
       setDownloads(allResults);
       setLoading(false);
