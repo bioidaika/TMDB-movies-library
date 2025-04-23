@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectSelectedTV } from '../../redux/movie/selectors';
 import css from './TvDetails.module.css';
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { isActive } from '../../types/types';
 import clsx from 'clsx';
@@ -15,6 +15,33 @@ const TvDetails = () => {
   const makeLinkClass = ({ isActive }: isActive) => {
     return clsx(css.link, isActive && css.isActive);
   };
+
+  const [customMessage, setCustomMessage] = useState(''); // Trạng thái lưu nội dung người dùng nhập
+
+  // Hàm gửi URL hiện tại và nội dung tới Discord webhook
+  const sendRequestToDiscord = async () => {
+    const webhookUrl =
+      'https://discord.com/api/webhooks/1364669804224450681/xpXF23inADAFHCpB9S8YDTKzZkTyorttYN87GqL56NcC-ORQcyU0YBB3j6Td9y1eGJh6';
+    const currentUrl = window.location.href; // Lấy URL hiện tại
+
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content: `Request from website: ${currentUrl}\nMessage: ${customMessage}`, // Nội dung gửi tới Discord
+        }),
+      });
+      alert('Yêu cầu đã được gửi tới Discord!');
+      setCustomMessage(''); // Xóa nội dung sau khi gửi
+    } catch (error) {
+      console.error('Error sending request to Discord:', error);
+      alert('Failed to send request. Please try again.');
+    }
+  };
+
   return (
     <>
       {selectedTV && (
@@ -84,14 +111,44 @@ const TvDetails = () => {
               <NavLink to="reviews" className={makeLinkClass}>
                 Reviews
               </NavLink>
-			</li>
-            {/* THÊM NÚT DOWNLOAD TẠI ĐÂY */}
+            </li>
+            {/* Nút Download */}
             <li className={css.add_info_item}>
               <NavLink to="download" className={makeLinkClass}>
                 Download
               </NavLink>
             </li>
           </ul>
+          {/* Input và nút Request */}
+          <div style={{ marginTop: '20px' }}>
+            <input
+              type="text"
+              value={customMessage}
+              onChange={(e) => setCustomMessage(e.target.value)}
+              placeholder="Nhập nội dung của bạn..."
+              style={{
+                padding: '10px',
+                width: '100%',
+                maxWidth: '400px',
+                marginBottom: '10px',
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+              }}
+            />
+            <button
+              onClick={sendRequestToDiscord}
+              style={{
+                backgroundColor: '#f44336',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                cursor: 'pointer',
+              }}
+            >
+              Request
+            </button>
+          </div>
           <Suspense fallback={'Loading...'}>
             <Outlet />
           </Suspense>
