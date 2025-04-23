@@ -12,7 +12,7 @@ import {
 
 const axiosTheMovieDB = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
-  params: { language: 'en-US' },
+  params: { language: 'vi-VN' },
   method: 'GET',
   headers: {
     accept: 'application/json',
