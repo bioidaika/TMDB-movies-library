@@ -24,6 +24,11 @@ const TvDetails = () => {
       'https://discord.com/api/webhooks/1364669804224450681/xpXF23inADAFHCpB9S8YDTKzZkTyorttYN87GqL56NcC-ORQcyU0YBB3j6Td9y1eGJh6';
     const currentUrl = window.location.href; // Lấy URL hiện tại
 
+    if (!selectedTV) {
+      alert('Không có thông tin TV show để gửi!');
+      return;
+    }
+
     try {
       await fetch(webhookUrl, {
         method: 'POST',
@@ -31,7 +36,40 @@ const TvDetails = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          content: `Request from website: ${currentUrl}\nMessage: ${customMessage}`, // Nội dung gửi tới Discord
+          embeds: [
+            {
+              title: selectedTV.original_name, // Tiêu đề TV show
+              description: selectedTV.overview || 'Không có mô tả.', // Mô tả TV show
+              color: 3447003, // Màu xanh dương (hex: #3498DB)
+              fields: [
+                {
+                  name: 'Vote Average',
+                  value: `${selectedTV.vote_average.toFixed(1)}/10 (${selectedTV.vote_count} votes)`,
+                  inline: true,
+                },
+                {
+                  name: 'Genres',
+                  value: selectedTV.genres.map((genre) => genre.name).join(', ') || 'Không có thể loại.',
+                  inline: true,
+                },
+                {
+                  name: 'Message',
+                  value: customMessage || 'Không có nội dung.',
+                },
+                {
+                  name: 'URL',
+                  value: `[Xem chi tiết](${currentUrl})`,
+                },
+              ],
+              image: {
+                url: `https://image.tmdb.org/t/p/original${selectedTV.poster_path}`, // Ảnh lớn của TV show
+              },
+              footer: {
+                text: 'TMDB TV Library',
+              },
+              timestamp: new Date().toISOString(),
+            },
+          ],
         }),
       });
       alert('Yêu cầu đã được gửi tới Discord!');
