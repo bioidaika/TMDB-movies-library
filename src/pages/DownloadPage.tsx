@@ -23,11 +23,10 @@ function getCacheWithTTL(key: string) {
   if (!cached) return null;
 
   const { data, expiry } = JSON.parse(cached);
-  if (Date.now() > expiry) {
-    localStorage.removeItem(key); // Xóa cache nếu hết hạn
-    return null;
-  }
-  return data;
+  const isExpired = Date.now() > expiry;
+
+  // Trả về cả dữ liệu và trạng thái hết hạn
+  return { data, isExpired };
 }
 
 // Helper: Set cache with TTL
@@ -57,10 +56,12 @@ export default function DownloadPage() {
       const cacheKeys = ["sheetCache_movie", "sheetCache_tv"];
       for (const cacheKey of cacheKeys) {
         const isTv = cacheKey === "sheetCache_tv";
-        const cachedData = getCacheWithTTL(cacheKey) || {};
+        const cachedResult = getCacheWithTTL(cacheKey);
+        const cachedData = cachedResult?.data || {}; // Sử dụng cache cũ nếu có
+        const isExpired = cachedResult?.isExpired || false;
 
         for (const sheetId of sheetIds) {
-          if (!cachedData[sheetId]) {
+          if (!cachedData[sheetId] || isExpired) {
             try {
               const metaRes = await axios.get(
                 `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${apiKey}`
@@ -132,7 +133,8 @@ export default function DownloadPage() {
       const cacheKey = isTvPage ? "sheetCache_tv" : "sheetCache_movie";
 
       // Lấy cache từ LocalStorage
-      let cachedData = getCacheWithTTL(cacheKey) || {};
+      const cachedResult = getCacheWithTTL(cacheKey);
+      const cachedData = cachedResult?.data || {}; // Sử dụng cache cũ nếu có
 
       for (const sheetId of sheetIds) {
         try {
