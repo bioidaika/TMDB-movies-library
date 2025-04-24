@@ -46,21 +46,10 @@ const Navigation = memo(function Navigation() {
         <div className={css.searchField}>
           <SearchForm styleModule={searchFormStyles} />
         </div>
-        {!isLogged && (
-          <div>
-            <NavLink to="/auth/login" className={css.link}>
-              Log In
-            </NavLink>
-            <NavLink to="/auth/signup" className={css.link}>
-              Sign Up
-            </NavLink>
-          </div>
-        )}
         {isLogged && (
           <div>
             <div className={css.profileContainer}>
               <NavLink to="/saved" className={css.profileButton}>
-                {/* <FaUser className={css.userIcon} /> */}
                 {userInfo?.avatar ? (
                   <img src={userInfo.avatar} alt="User Avatar" className={css.avatar} />
                 ) : (
